@@ -1,0 +1,13 @@
+- Apellido
+- Nombre
+- DNI + CUIL + Cargar Foto
+- Direccion + mapa?
+- Cel con verificacion WA
+- mail con verificacion
+- Carga de documento CV
+- Nivel de Estudios
+- Fecha de Nacimiento
+- Genero
+- Tarea (menu)
+- Organizacion / Referente
+- Hijos?

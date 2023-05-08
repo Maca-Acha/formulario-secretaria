@@ -2,6 +2,7 @@ function Formulario() {
     return(
         <div>
             <form>
+                <h1>Registro de personas</h1>
                 <div className="contenedor-nombre">
                     <label className="label">
                         Apellido
@@ -53,7 +54,7 @@ function Formulario() {
                         <option>otro</option>
                     </select>
                 </label>
-                <input type="submit" value="Submit" />
+                <input className="btn-enviar" type="submit" value="Enviar" />
             </form>
         </div>
     )

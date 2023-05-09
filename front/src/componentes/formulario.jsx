@@ -1,4 +1,8 @@
+import { useRef} from "react"
+
 function Formulario() {
+    const dni = useRef()
+
     return(
         <div>
             <form>
@@ -16,7 +20,8 @@ function Formulario() {
                 <div className="contenedor-dni">
                     <label className="label">
                         DNI
-                        <input type="text" name="dni" />
+                        <input type="text" ref={dni} name="dni" />
+                        {console.log(dni)}
                     </label>
                     <label className="label">
                         CUIL

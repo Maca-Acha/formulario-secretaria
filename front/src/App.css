@@ -30,7 +30,7 @@ input, select{
 }
 .contenedor-dni{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .contenedor-domicilio{
   display: flex;

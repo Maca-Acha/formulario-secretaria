@@ -6,17 +6,28 @@
   --white:#ffffff;
   --black:#333333;
   --blue:#37BBED;
-  --gray:#cecece;
+  --gray:#dfdfdf;
 
 }
-
+/* ENCABEZADO */
+.encabezado{
+  width: 100%;
+  height: 6vh;
+  background-color: var(--blue);
+}
 /* FORMULARIO */
+.contenedor-formulario{
+  display: flex;
+  justify-content: center;
+}
 form{
-  width: 38vw;
   height: 80vh;
   padding: 35px;
   box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
   border-radius: 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .label{
   display: flex;
@@ -27,10 +38,18 @@ input, select{
   border: none;
   border-radius: 5px;
   padding: 4px;
+  color:var(--black)
+}
+input:focus {
+  outline: none;
 }
 .contenedor-dni{
   display: flex;
   justify-content: space-between;
+}
+#cuil{
+  margin-left: 0.4vw;
+  margin-right: 0.4vw;
 }
 .contenedor-domicilio{
   display: flex;

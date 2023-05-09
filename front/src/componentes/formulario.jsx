@@ -1,29 +1,34 @@
-import { useRef} from "react"
+import { useRef, useState} from "react"
 
 function Formulario() {
+    const [nombre, setNombre]= useState('')
     const dni = useRef()
+
+    const handleSubmit = (e)=>{
+        e.preventDefault() 
+        console.log(nombre)   
+    }
 
     return(
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h1>Registro de personas</h1>
                 <div className="contenedor-nombre">
-                    <label className="label">
+                    <label className="label" >
                         Apellido
                         <input type="text" name="apellido" placeholder="Ej. Rodriguez" />
                     </label>
                     <label className="label">
                         Nombre Completo
-                        <input type="text" name="nombre" placeholder="Ej. Juan Ignacio"/>
+                        <input value={nombre} type="text" name="nombre" placeholder="Ej. Juan Ignacio" onChange={(e) => setNombre(e.target.value)}/>
                     </label>
                 </div>
                 <div className="contenedor-dni">
                     <label className="label">
                         DNI
-                        <input type="text" ref={dni} name="dni" />
-                        {console.log(dni)}
+                        <input type="text" ref={dni} name="dni"  />
                     </label>
-                    <label className="label">
+                    <label className="label" id="cuil">
                         CUIL
                         <input type="text" name="cuil" />
                     </label>

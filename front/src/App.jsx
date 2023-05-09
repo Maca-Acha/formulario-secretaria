@@ -6,7 +6,10 @@ function App() {
 
   return (
     <>
-      <Formulario/>
+      <div className='encabezado'></div>
+      <div className='contenedor-formulario'>
+        <Formulario/>
+      </div>
     </>
   )
 }

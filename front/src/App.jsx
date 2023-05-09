@@ -1,14 +1,16 @@
 import './App.css'
-import Formulario from './componentes/formulario'
-
+import Registro from './componentes/Registro'
+import logo from './assets/min_desarrollo_social.png'
 
 function App() {
 
   return (
     <>
-      <div className='encabezado'></div>
+      <div className='encabezado'>
+        <img src={logo} className='logo_ministerio' alt='min_desarrollo_social'/>
+      </div>
       <div className='contenedor-formulario'>
-        <Formulario/>
+        <Registro/>
       </div>
     </>
   )

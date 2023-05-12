@@ -6,7 +6,7 @@
   --white:#ffffff;
   --black:#333333;
   --blue:#37BBED;
-  --gray:#dfdfdf;
+  --gray:#f3f3f3;
 
 }
 /* ENCABEZADO */
@@ -26,35 +26,38 @@
   justify-content: center;
 }
 form{
-  height: 80vh;
   padding: 35px;
   box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
   border-radius: 33px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  gap: 2vh;
 }
 .label{
   display: flex;
   flex-direction: column;
 }
 input, select{
-  background-color: var(--gray);
+  font-size: 14px;
+  background-color: var(--gray) ;
+  color:var(--black);
+  padding: 4px;
   border: none;
   border-radius: 5px;
-  padding: 4px;
-  color:var(--black)
 }
-input:focus select:focus {
-  outline: none;
+input:focus, select:focus {
+  outline: none !important;
 }
-.contenedor-dni{
+.input_mediano{
+  width: 31%;
+}
+.input_grande{
+  width: 48%;
+}
+.contenedor-nombre, .contenedor-celMail{
   display: flex;
   justify-content: space-between;
-}
-#cuil{
-  margin-left: 0.4vw;
-  margin-right: 0.4vw;
+  flex-wrap: wrap
 }
 .contenedor-domicilio{
   display: flex;
@@ -73,4 +76,21 @@ input:focus select:focus {
   background-color: var(--white);
   color: var(--black);
   transition: 0.4s;
+}
+.cargar_archivo{
+  display: flex;
+  gap: 1rem;
+}
+.generos{
+  display: flex;
+  gap: 1rem;
+}
+.genero{
+  display: flex;
+  gap: .3rem;
+}
+.militancia, .contenedor-dni{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

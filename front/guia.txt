@@ -1,0 +1,14 @@
+- Apellido ^
+- Nombre ^ 
+- DNI + CUIL ^
+- Cargar foto ^
+- Direccion ^
+- Cel c/ verificacion WA ^ - Falta verificacion
+- Mail c/ verificacion ^ - Falta verificacion
+- Cargar CV ^
+- Nivel de Estudios ^
+- Fecha de Nacimiento ^
+- Genero ^
+-Tarea *
+- Organizacion / Referente * 
+- Hijos *

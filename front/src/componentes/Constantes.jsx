@@ -11,8 +11,9 @@ export const Generos = [
     "Otro"]
         
 export const Tareas = [
-    "Tarea-1",
-    "Tarea-2",
-    "Tarea-3",
-    "Tarea-4",
-    "Otro"]
+    {disabled:"disabled", text: "Especificar tarea"},
+    {disabled:"", text: "Tarea-1"},
+    {disabled:"", text: "Tarea-2"},
+    {disabled:"", text: "Tarea-3"},
+    {disabled:"", text: "Tarea-4"},
+    {disabled:"", text: "Otro"}]

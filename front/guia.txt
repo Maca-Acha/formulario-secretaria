@@ -9,6 +9,6 @@
 - Nivel de Estudios ^
 - Fecha de Nacimiento ^
 - Genero ^
--Tarea *
+- Tarea *
 - Organizacion / Referente * 
 - Hijos *

@@ -1,18 +1,35 @@
-import { useRef, useState} from "react"
+import { useRef, useEffect, useState } from "react"
+import Axios from "axios"
+import {useDispatch} from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
+import { addUsuario } from "../redux/reducers/usuarioSlice"
 
 function Registro() {
+    const dispatch = useDispatch()
     const dni = useRef()
     
-    const [nombre, setNombre]= useState('') /* PRUEBA */
+    /* const [nombre, setNombre]= useState('') /* PRUEBA 
     const handleSubmit = (e)=>{
         e.preventDefault() 
         console.log(nombre)   
+    } */
+    const [usuarios, setUsuarios] = useState([])
+    useEffect (()=>{
+        Axios.get("http://localhost:4000/api/usuarios")
+            .then(response => {
+                setUsuarios(response.data)
+        })
+    },[])
+
+    const handleAddUser = (usuarioId) => {
+        const usuario = usuarios.find(usuario => usuario.id == usuarioId);
+        console.log(usuario)
+        dispatch(addUsuario(usuario))
     }
 
     return(
         <main>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleAddUser}>
                 <h1>Registro de personas</h1>
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >
@@ -21,7 +38,7 @@ function Registro() {
                     </label>
                     <label className="label input_grande">
                         Nombre Completo
-                        <input value={nombre} type="text" name="nombre" placeholder="Ej. Juan Ignacio" onChange={(e) => setNombre(e.target.value)}/>
+                        <input  type="text" name="nombre" placeholder="Ej. Juan Ignacio"/>
                     </label>
                 </section>
                 <section className="contenedor-dni">
@@ -71,18 +88,21 @@ function Registro() {
                     <select>
                         <option disabled="disabled">Seleccione una opcion</option>
                         {Estudios.map((estudio, index)=>{
-                            return <option value={estudio} key={index}>{estudio}</option>
-                        })}
+                            return (
+                            <option value={estudio} key={index}>{estudio}</option>
+                        )})}
                     </select>
                 </label>
                 <label className="label">
                     Género 
                     <div className="generos">
                         {Generos.map((genero, index)=>{
-                            return <label className="genero" key={index}>
+                            return( 
+                                <label className="genero" key={index}>
                                     <input value={genero} type="radio" />
                                     {genero}
                                 </label>
+                                )
                             })}
                     </div>
                 </label>
@@ -90,9 +110,10 @@ function Registro() {
                     <label className="label input_mediano">
                         Tarea
                         <select>
-                        <option disabled="">Especificar tarea</option>
                         {Tareas.map((tarea, index)=>{
-                            return <option value={tarea} key={index}>{tarea}</option>
+                            return(
+                                <option value={tarea.text} disabled={tarea.disabled} key={index}>{tarea.text}</option>
+                                )
                         })}
                     </select>
                     </label>

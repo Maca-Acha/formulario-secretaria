@@ -3,18 +3,17 @@ const UserModel = require("../models/UserModel")
 const userController = {
     readUsers:(req,res) => {
         UserModel.find().then((response)=>{
-            console.log(response)
             res.json({response})
         })
     },
-    signUp: async(req,res) => {
-        const {email} = req.body
+    newUser: async(req,res) => {
+        const {apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos} = req.body
         try{
-            const userExist = await UserModel.findOne({email})
+            const userExist = await UserModel.findOne({mail})
             if (userExist){
                 res.json({success: false, error: "The username is already registered", response:null})
             }else{
-                const newUser = new UserModel (req.body)
+                const newUser = new UserModel ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos})
                 await newUser.save() //guarda en el mongo de mierda 
                 res.json({success: true, response: {newUser}, error: null})
             }

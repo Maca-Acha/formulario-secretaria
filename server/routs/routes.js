@@ -1,7 +1,10 @@
 const router = require ('express').Router()
+const userController = require('../controllers/userController')
 
-router.get("/api", (req,res) => {
-    res.send("api funciona")
+router.get("/", (req,res) => {
+    res.send("funciona")
 })
+router.route("/api/")
+.get(userController.readUsers)
 
 module.exports = router

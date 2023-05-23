@@ -1,10 +1,9 @@
 import { useRef, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
-import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
-/* import { addUsuario } from "../redux/reducers/usuarioSlice" */
-/* import { setUser } from "../redux/reducers/userSlice" */
-/* import { fetchUsuarios } from "../redux/reducers/usuarioSlice" */
+import { fetchUsuarios} from "../redux/reducers/usuarioSlice"
+import { nuevoUsuario } from "../redux/reducers/usuarioSlice"
+
 
 function Registro() {
     const usuarios = useSelector((state) => state.usuarios)
@@ -27,13 +26,13 @@ function Registro() {
     
     const handleAddUser = (e) => {
         e.preventDefault() 
-        console.log(nombre.current.value, dni.current.value)
+        dispatch(nuevoUsuario({apellido:apellido.current.value, nombre:nombre.current.value}))
         console.log(usuarios.usuarios)
     }
 
     return(
         <main>
-            <form onSubmit={handleAddUser}>
+            <form onSubmit={handleAddUser  }>
                 <h1>Registro de personas</h1>
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >

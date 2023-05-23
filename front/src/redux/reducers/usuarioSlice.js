@@ -15,6 +15,11 @@ export const fetchUsuarios = createAsyncThunk("usuarios/fechUsuarios", async() =
 const usuarioSlice = createSlice({
     name: "usuarios",
     initialState,
+    reducers:{
+        nuevoUsuario:(state, action) => {
+            state.usuarios.push(action.payload) 
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchUsuarios.pending, (state) => {
             state.loading = true
@@ -35,6 +40,6 @@ const usuarioSlice = createSlice({
 
 
 
-export const {  addUsuario } = usuarioSlice.actions 
+export const {  nuevoUsuario } = usuarioSlice.actions 
 
 export default usuarioSlice.reducer

@@ -4,7 +4,7 @@ const userController = require('../controllers/userController')
 router.get("/", (req,res) => {
     res.send("funciona")
 })
-router.route("/api")
+router.route("/api/usuarios")
 .get(userController.readUsers)
 .post(userController.newUser)
 

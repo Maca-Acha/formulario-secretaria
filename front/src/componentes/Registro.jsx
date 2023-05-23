@@ -1,30 +1,34 @@
-import { useRef, useEffect, useState } from "react"
-import Axios from "axios"
-import {useDispatch} from "react-redux"
+import { useRef, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
-import { addUsuario } from "../redux/reducers/usuarioSlice"
+import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
+/* import { addUsuario } from "../redux/reducers/usuarioSlice" */
+/* import { setUser } from "../redux/reducers/userSlice" */
+/* import { fetchUsuarios } from "../redux/reducers/usuarioSlice" */
 
 function Registro() {
+    const usuarios = useSelector((state) => state.usuarios)
     const dispatch = useDispatch()
-    const dni = useRef()
-    
-    /* const [nombre, setNombre]= useState('') /* PRUEBA 
-    const handleSubmit = (e)=>{
-        e.preventDefault() 
-        console.log(nombre)   
-    } */
-    const [usuarios, setUsuarios] = useState([])
-    useEffect (()=>{
-        Axios.get("http://localhost:4000/api/usuarios")
-            .then(response => {
-                setUsuarios(response.data)
-        })
-    },[])
 
-    const handleAddUser = (usuarioId) => {
-        const usuario = usuarios.find(usuario => usuario.id == usuarioId);
-        console.log(usuario)
-        dispatch(addUsuario(usuario))
+    const apellido = useRef()
+    const nombre = useRef()
+    const dni = useRef()
+    const cuil = useRef()
+    const fecha = useRef()
+    const domicilio = useRef()
+    const telefono = useRef()
+    const mail = useRef()
+
+    useEffect (()=>{
+        dispatch(fetchUsuarios())
+        
+    },[dispatch])
+
+    
+    const handleAddUser = (e) => {
+        e.preventDefault() 
+        console.log(nombre.current.value, dni.current.value)
+        console.log(usuarios.usuarios)
     }
 
     return(
@@ -34,11 +38,11 @@ function Registro() {
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >
                         Apellido
-                        <input type="text" name="apellido" placeholder="Ej. Rodriguez" />
+                        <input type="text" ref={apellido} name="apellido" placeholder="Ej. Rodriguez" />
                     </label>
                     <label className="label input_grande">
                         Nombre Completo
-                        <input  type="text" name="nombre" placeholder="Ej. Juan Ignacio"/>
+                        <input  type="text" ref={nombre} name="nombre" placeholder="Ej. Juan Ignacio"/>
                     </label>
                 </section>
                 <section className="contenedor-dni">
@@ -48,29 +52,29 @@ function Registro() {
                     </label>
                     <label className="label input_mediano">
                         CUIL
-                        <input type="text" name="cuil" placeholder="xx-xxxxxxxx-x"/>
+                        <input type="text" ref={cuil} name="cuil" placeholder="xx-xxxxxxxx-x"/>
                     </label>
                     <label className="label input_mediano" >
                         Fecha de nacimiento
-                        <input type="date" name="nacimiento" />
+                        <input type="date" ref={fecha} name="nacimiento" />
                     </label>
                     
                 </section>
                 <div className="contenedor-domicilio">
                     <label className="label width-domocilio">
                         Domicilio
-                        <input type="text" name="domicilio" placeholder="calle numero" />
+                        <input type="text" ref={domicilio} name="domicilio" placeholder="calle numero" />
                     </label>
                     <p>mapa</p>
                 </div>
                 <section className="contenedor-celMail">
                     <label className="label input_grande">
                         Telefono celular
-                        <input type="tel" name="telefono" placeholder="Ej. 115555555"/>
+                        <input type="tel" ref={telefono} name="telefono" placeholder="Ej. 115555555"/>
                     </label>
                     <label className="label input_grande">
                         Mail
-                        <input type="email" name="mail" placeholder="Ej. ejemplo@gamil.com" />
+                        <input type="email" ref={mail} name="mail" placeholder="Ej. ejemplo@gamil.com" />
                     </label>
                 </section>
                 <section className="cargar_archivo">

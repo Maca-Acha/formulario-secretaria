@@ -37,8 +37,7 @@ function Registro() {
             nacimiento:fecha.current.value, 
             direccion:domicilio.current.value, 
             cel:telefono.current.value, 
-            mail:mail.current.value,
-            cv:cv.current.files[0], 
+            mail:mail.current.value, 
         }))
         console.log(foto.current.files[0])
         console.log(usuarios.usuarios)

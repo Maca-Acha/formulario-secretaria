@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
 import { fetchUsuarios} from "../redux/reducers/usuarioSlice"
-import { nuevoUsuario } from "../redux/reducers/usuarioSlice"
+import { registrarUsuario } from "../redux/reducers/usuarioSlice"
 
 
 function Registro() {
@@ -17,6 +17,8 @@ function Registro() {
     const domicilio = useRef()
     const telefono = useRef()
     const mail = useRef()
+    const cv = useRef()
+    const foto = useRef()
 
     useEffect (()=>{
         dispatch(fetchUsuarios())
@@ -26,7 +28,19 @@ function Registro() {
     
     const handleAddUser = (e) => {
         e.preventDefault() 
-        dispatch(nuevoUsuario({apellido:apellido.current.value, nombre:nombre.current.value}))
+
+        dispatch(registrarUsuario({
+            apellido:apellido.current.value, 
+            nombre:nombre.current.value,
+            dni:dni.current.value,
+            cuil:cuil.current.value,
+            nacimiento:fecha.current.value, 
+            direccion:domicilio.current.value, 
+            cel:telefono.current.value, 
+            mail:mail.current.value,
+            cv:cv.current.files[0], 
+        }))
+        console.log(foto.current.files[0])
         console.log(usuarios.usuarios)
     }
 
@@ -79,11 +93,11 @@ function Registro() {
                 <section className="cargar_archivo">
                     <label className="label">
                         Cargar CV
-                        <input className="cargar" type="file" name="cv" accept=".pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                        <input className="cargar" ref={cv} type="file" name="cv" accept=".pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
                     </label>
                     <label className="label">
                         Cargar foto
-                        <input className="cargar" type="file" name="foto" accept="image/*"/>
+                        <input className="cargar" ref={foto} type="file" name="foto" accept="image/*"/>
                     </label>
                 </section>
                 <label className="label">

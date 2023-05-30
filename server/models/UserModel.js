@@ -9,7 +9,7 @@ const userSchema = new Schema({
     direccion: {type: String},
     cel: {type: String},
     mail: {type: String},
-    cv: {type: String},
+    cv: {type: Object},
     estudios: {type: String},
     nacimiento: {type: String},
     genero: {type: String},

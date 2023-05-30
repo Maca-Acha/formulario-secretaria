@@ -54,6 +54,9 @@ input:focus, select:focus {
 .input_grande{
   width: 48%;
 }
+::-webkit-calendar-picker-indicator {
+  filter: invert(70%);
+}
 .contenedor-nombre, .contenedor-celMail{
   display: flex;
   justify-content: space-between;

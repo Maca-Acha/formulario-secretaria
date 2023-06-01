@@ -48,7 +48,7 @@ function Registro() {
         formData.append('cv', cvFile);
         formData.append('foto', fotoFile);
         
-        axios.post('http://localhost:4000/api/usuarios', formData)
+        axios.post('http://localhost:4000/api/archivos', formData)
         .then(response => {
             console.log('Archivo guardado correctamente:', response.data);
         })

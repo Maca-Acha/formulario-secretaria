@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
 import { fetchUsuarios} from "../redux/reducers/usuarioSlice"
 import { registrarUsuario } from "../redux/reducers/usuarioSlice"
+import axios from 'axios';
 
 
 function Registro() {
@@ -28,7 +29,6 @@ function Registro() {
     
     const handleAddUser = (e) => {
         e.preventDefault() 
-
         dispatch(registrarUsuario({
             apellido:apellido.current.value, 
             nombre:nombre.current.value,
@@ -39,10 +39,26 @@ function Registro() {
             cel:telefono.current.value, 
             mail:mail.current.value, 
         }))
-        console.log(foto.current.files[0])
         console.log(usuarios.usuarios)
+
+        const cvFile = cv.current.files[0];
+        const fotoFile = foto.current.files[0];
+
+        const formData = new FormData();
+        formData.append('cv', cvFile);
+        formData.append('foto', fotoFile);
+        
+        axios.post('http://localhost:4000/api/usuarios', formData)
+        .then(response => {
+            console.log('Archivo guardado correctamente:', response.data);
+        })
+        .catch(error => {
+            console.error('Error al guardar el archivo:', error);
+        });
+
     }
 
+    
     return(
         <main>
             <form onSubmit={handleAddUser  }>
@@ -92,11 +108,11 @@ function Registro() {
                 <section className="cargar_archivo">
                     <label className="label">
                         Cargar CV
-                        <input className="cargar" ref={cv} type="file" name="cv" accept=".pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                        <input id="cvInput" className="cargar" ref={cv} type="file" name="cv" accept=".pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
                     </label>
                     <label className="label">
                         Cargar foto
-                        <input className="cargar" ref={foto} type="file" name="foto" accept="image/*"/>
+                        <input id="fotoInput" className="cargar" ref={foto} type="file" name="foto" accept="image/*"/>
                     </label>
                 </section>
                 <label className="label">

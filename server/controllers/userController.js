@@ -1,5 +1,6 @@
 const UserModel = require("../models/UserModel")
 
+
 const userController = {
     readUsers:(req,res) => {
         UserModel.find().then((response)=>{
@@ -8,7 +9,7 @@ const userController = {
     },
     newUser: async(req,res) => {
         const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos} = req.body
-        console.log(cv)
+
         try{
             const userExist = await UserModel.findOne({mail})
             if (userExist){

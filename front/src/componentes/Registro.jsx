@@ -1,13 +1,10 @@
-import { useRef, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useRef} from "react"
+import { useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
-import { fetchUsuarios} from "../redux/reducers/usuarioSlice"
 import { registrarUsuario } from "../redux/reducers/usuarioSlice"
 import axios from 'axios';
 
-
 function Registro() {
-    const usuarios = useSelector((state) => state.usuarios)
     const dispatch = useDispatch()
 
     const apellido = useRef()
@@ -21,12 +18,6 @@ function Registro() {
     const cv = useRef()
     const foto = useRef()
 
-    useEffect (()=>{
-        dispatch(fetchUsuarios())
-        
-    },[dispatch])
-
-    
     const handleAddUser = (e) => {
         e.preventDefault() 
         dispatch(registrarUsuario({
@@ -39,14 +30,14 @@ function Registro() {
             cel:telefono.current.value, 
             mail:mail.current.value, 
         }))
-        console.log(usuarios.usuarios)
 
         const cvFile = cv.current.files[0];
         const fotoFile = foto.current.files[0];
 
         const formData = new FormData();
+        const formDataFoto = new FormData();
         formData.append('cv', cvFile);
-        formData.append('foto', fotoFile);
+        formDataFoto.append('foto', fotoFile);
         
         axios.post('http://localhost:4000/api/archivos', formData)
         .then(response => {
@@ -55,13 +46,18 @@ function Registro() {
         .catch(error => {
             console.error('Error al guardar el archivo:', error);
         });
-
+        axios.post('http://localhost:4000/api/archivosFoto', formDataFoto)
+        .then(response => {
+            console.log('Archivo guardado correctamente:', response.data);
+        })
+        .catch(error => {
+            console.error('Error al guardar el archivo:', error);
+        });
     }
 
-    
     return(
         <main>
-            <form onSubmit={handleAddUser  }>
+            <form onSubmit={handleAddUser} encType="multipart/form-data">
                 <h1>Registro de personas</h1>
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >

@@ -2,16 +2,16 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, 'archivos')
+        cb(null, 'archivosFoto')
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`);
     }
 });
 
-const uploadCv = multer({ storage: storage }).single("cv");
-exports.uploadCv = uploadCv;
+const uploadFoto = multer({ storage: storage }).single("foto");
+exports.uploadFoto = uploadFoto;
 
 exports.uploadFiles = (req, res) => {
-  res.send({ data: 'cv guardado correctamente' });
+    res.send({ data: 'Foto guardada correctamente' });  
 };

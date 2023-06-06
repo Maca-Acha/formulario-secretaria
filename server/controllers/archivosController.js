@@ -13,5 +13,5 @@ const uploadCv = multer({ storage: storage }).single("cv");
 exports.uploadCv = uploadCv;
 
 exports.uploadFiles = (req, res) => {
-  res.send({ data: 'cv guardado correctamente' });
+    res.send({ data: 'cv guardado correctamente' });
 };

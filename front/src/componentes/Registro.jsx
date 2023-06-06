@@ -1,4 +1,4 @@
-import { useRef} from "react"
+import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas} from "./Constantes"
 import { registrarUsuario } from "../redux/reducers/usuarioSlice"
@@ -17,6 +17,12 @@ function Registro() {
     const mail = useRef()
     const cv = useRef()
     const foto = useRef()
+    const estudios = useRef()
+    const tareas = useRef()
+    const organizacion = useRef()
+    const referente = useRef()
+    const hijos = useRef()
+    const [generoSeleccionado, setGeneroSeleccionado] = useState("");
 
     const handleAddUser = (e) => {
         e.preventDefault() 
@@ -25,10 +31,16 @@ function Registro() {
             nombre:nombre.current.value,
             dni:dni.current.value,
             cuil:cuil.current.value,
-            nacimiento:fecha.current.value, 
             direccion:domicilio.current.value, 
             cel:telefono.current.value, 
             mail:mail.current.value, 
+            nacimiento:fecha.current.value, 
+            estudios:estudios.current.value, 
+            genero:generoSeleccionado,
+            tarea:tareas.current.value, 
+            organizacion:organizacion.current.value, 
+            referente:referente.current.value, 
+            hijos:hijos.current.value, 
         }))
 
         const cvFile = cv.current.files[0];
@@ -113,7 +125,7 @@ function Registro() {
                 </section>
                 <label className="label">
                     Nivel de Estudios
-                    <select>
+                    <select ref={estudios}>
                         <option disabled="disabled">Seleccione una opcion</option>
                         {Estudios.map((estudio, index)=>{
                             return (
@@ -127,7 +139,7 @@ function Registro() {
                         {Generos.map((genero, index)=>{
                             return( 
                                 <label className="genero" key={index}>
-                                    <input value={genero} type="radio" />
+                                    <input value={genero} type="radio" checked={generoSeleccionado === genero} onChange={() => setGeneroSeleccionado(genero)} />
                                     {genero}
                                 </label>
                                 )
@@ -137,7 +149,7 @@ function Registro() {
                 <section className="militancia">
                     <label className="label input_mediano">
                         Tarea
-                        <select>
+                        <select ref={tareas}>
                         {Tareas.map((tarea, index)=>{
                             return(
                                 <option value={tarea.text} disabled={tarea.disabled} key={index}>{tarea.text}</option>
@@ -147,16 +159,16 @@ function Registro() {
                     </label>
                     <label className="label input_mediano">
                         Organización
-                        <input type="text" name="orga" placeholder="Especificar organización" />
+                        <input type="text" name="orga" ref={organizacion} placeholder="Especificar organización" />
                     </label>
                     <label className="label input_mediano">
                         Referente
-                        <input type="text" name="referente" placeholder="Especificar referente" />
+                        <input type="text" name="referente" ref={referente} placeholder="Especificar referente" />
                     </label>
                 </section>
                 <label className="label">
                     Hijos
-                    <input type="text" name="hijos" placeholder="Cantidad de hijos" />
+                    <input type="text" name="hijos" ref={hijos} placeholder="Cantidad de hijos" />
                 </label>
                 <input className="btn-enviar" type="submit" value="Enviar" />
             </form>

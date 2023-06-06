@@ -46,9 +46,25 @@ const usuarioSlice = createSlice({
             state.usuarios = []
             state.error = action.error.message
         }) 
+
+        /* Fetch Ususarios */
+        builder.addCase(fetchUsuarios.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(fetchUsuarios.fulfilled, (state, action) => {
+            state.loading = false
+            state.usuarios = action.payload
+            state.error = ""
+        })
+        builder.addCase(fetchUsuarios.rejected, (state,action) =>{
+            state.loading = false
+            state.usuarios = []
+            state.error = action.error.message
+        })
     }
 })
 
-export const {  nuevoUsuario } = usuarioSlice.actions 
+export const { nuevoUsuario, usuarios } = usuarioSlice.actions;
+
 
 export default usuarioSlice.reducer

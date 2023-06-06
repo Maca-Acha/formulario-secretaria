@@ -24,7 +24,7 @@ export const AutocompletarDireccion = withGoogleMap((props) =>
     );
 
 
-/* import {Mapa, AutocompletarDireccion} from "./mapa" */
+/* import {Mapa, AutocompletarDireccion} from "./Mapa" */
 
 /* const onSearchBoxMounted = (ref) => {
     this.searchBox = ref;

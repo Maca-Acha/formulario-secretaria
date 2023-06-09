@@ -99,7 +99,7 @@ function Registro() {
                 <div className="contenedor-domicilio">
                     <label className="label width-domocilio">
                         Domicilio
-                        <input type="text" ref={domicilio} name="domicilio" placeholder="calle numero" />
+                        <input type="text" ref={domicilio} name="domicilio" placeholder="Calle y altura" />
                     </label>
                     <p>mapa</p>
                 </div>

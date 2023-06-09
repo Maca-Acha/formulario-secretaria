@@ -1,6 +1,6 @@
 import '../Registradas.css'
 import { useEffect } from "react"
-import { useDispatch, useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
 
 function Registradas(){

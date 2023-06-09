@@ -1,14 +1,28 @@
-*{
-  margin: 0;
-  padding: 0;
-}
-:root{
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #333333;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
   --white:#ffffff;
   --black:#333333;
   --blue:#37BBED;
   --gray:#f3f3f3;
-
 }
+*{
+  margin: 0;
+  padding: 0;
+}
+
 /* ENCABEZADO */
 .encabezado{
   width: 100%;
@@ -19,6 +33,66 @@
   max-height: 8vh;
   padding: .5rem;
   align-self: center;
+}
+/* INICIO */
+.cont-btns-inicio{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+  height: 70vh;
+  justify-content: center;
+
+}
+.fondo-inicio{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+  width: fit-content;
+  padding: 2rem;
+  box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+}
+.btn-inicio{
+  background-color: var(--blue);
+  color: var(--black);
+  padding: .7rem;
+  border-radius: 7px;
+  border: var(--blue) 3px solid;
+  width: 20vw;
+  font-size: 16px;
+  font-weight: 600;
+  transition: .4s;
+  text-decoration: none;
+  text-align: center;
+}
+.btn-inicio:hover{
+  background-color: #37bced7b;
+  transition: .4s;
+}
+.btn-crear-cuenta{
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  padding: .7rem;
+  border-radius: 7px;
+  border: #37BBED 3px solid;
+  width: 20vw;
+  font-size: 16px;
+  font-weight: 600 !important;
+  transition: .4s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-crear-cuenta:hover{
+  background-color: #37bced7b;
+  transition: .4s;
+}
+.input-inicio{
+  padding: .7rem;
+  width: 20vw;
 }
 /* FORMULARIO */
 .contenedor-formulario{
@@ -32,6 +106,7 @@ form{
   display: flex;
   flex-direction: column;
   gap: 2vh;
+  margin: 5vh 0;
 }
 .label{
   display: flex;
@@ -44,6 +119,7 @@ input, select{
   padding: 4px;
   border: none;
   border-radius: 5px;
+  padding: .4rem;
 }
 input:focus, select:focus {
   outline: none !important;
@@ -69,6 +145,7 @@ input:focus, select:focus {
   width: 90%;
 }
 .btn-enviar{
+  font-size: 16px;
   background-color: var(--blue);
   padding: 1vh 5vw;
   border-radius: 5px;

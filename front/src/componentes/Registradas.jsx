@@ -1,23 +1,25 @@
 import '../Registradas.css'
 import { useEffect } from "react"
+import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
+import Pdf from './pdf'
 
 function Registradas(){
     const dispatch = useDispatch()
     const usuarios = useSelector((state) => state.usuarios.usuarios);
 
     useEffect(() => {
-        dispatch(fetchUsuarios());
+        dispatch(fetchUsuarios());        
     }, [dispatch]);
 
     return(
         <div className='cont-contenedor-cards'>
             {usuarios? 
-            <div className="contenedor-cards">
+            <div className='contenedor-cards'>
                 {usuarios.map((usuario)=>{
                     return (
-                        <div className="card-usuarios" key={usuario._id}>
+                        <div className='card-usuarios' key={usuario._id}>
                             <div className='cont-card-foto'>
                                 <div>
                                     <p> {usuario.nombre} </p>
@@ -37,6 +39,9 @@ function Registradas(){
                             <p><span className='negrita'>Organización </span>{usuario.organizacion} </p>
                             <p><span className='negrita'>Referente: </span>{usuario.referente} </p>
                             <p><span className='negrita'>Hijos: </span>{usuario.hijos} </p>
+                            <div>
+                                <Link to={Pdf} target='_blanck'>Ver CV</Link>
+                            </div>
                         </div>
                 )})}
             </div>

@@ -2,7 +2,7 @@ export const Estudios = [
     "Primario",
     "Secundario",
     "Terciario",
-    "Univercitario",
+    "Universitario",
     "Otro"]
 export const Generos = [
     "Femenino",

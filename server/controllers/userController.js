@@ -1,6 +1,5 @@
 const UserModel = require("../models/UserModel")
 
-
 const userController = {
     readUsers:(req,res) => {
         UserModel.find().then((response)=>{

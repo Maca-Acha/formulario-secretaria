@@ -52,19 +52,19 @@ function Registro() {
         formDataFoto.append('foto', fotoFile);
         
         axios.post('http://localhost:4000/api/archivos', formData)
-        .then(response => {
-            console.log('Archivo guardado correctamente:', response.data);
-        })
-        .catch(error => {
-            console.error('Error al guardar el archivo:', error);
-        });
-        axios.post('http://localhost:4000/api/archivosFoto', formDataFoto)
-        .then(response => {
-            console.log('Archivo guardado correctamente:', response.data);
-        })
-        .catch(error => {
-            console.error('Error al guardar el archivo:', error);
-        });
+            .then(response => {
+                console.log('Archivo guardado correctamente:', response.data);
+            })
+            .catch(error => {
+                console.error('Error al guardar el archivo:', error);
+            });
+            axios.post('http://localhost:4000/api/archivosFoto', formDataFoto)
+            .then(response => {
+                console.log('Archivo guardado correctamente:', response.data);
+            })
+            .catch(error => {
+                console.error('Error al guardar el archivo:', error);
+            });
     }
 
     return(
@@ -116,7 +116,7 @@ function Registro() {
                 <section className="cargar_archivo">
                     <label className="label">
                         Cargar CV
-                        <input id="cvInput" className="cargar" ref={cv} type="file" name="cv" accept=".pdf, .doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                        <input id="cvInput" className="cargar" ref={cv} type="file" name="cv" accept=".pdf" />
                     </label>
                     <label className="label">
                         Cargar foto

@@ -10,7 +10,6 @@ app.use(express.json())
 app.use(cors())
 app.use(require("./routs/routes"))
 
-
 app.get("/", (req, res) => {
     res.send("Hola")
     })

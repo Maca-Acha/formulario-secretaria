@@ -12,14 +12,13 @@ router.post(
     controllerCv.uploadCv,
     controllerCv.uploadFiles)
 
-router.get("/api/archivos", (req,res) => {
-        res.send("funciona")
-    })
+/* router.get('/api/archivos', controllerCv.returnCvs); */
 
 router.post(
     "/api/archivosFoto",
     controllerFoto.uploadFoto,
     controllerFoto.uploadFiles)
+
 
 
 module.exports = router

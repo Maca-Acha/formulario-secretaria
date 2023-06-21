@@ -1,4 +1,4 @@
-require("dotenv").config() /* Revisar para que sirve*/
+require("dotenv").config() 
 require("./config/database")
 
 const express = require("express")

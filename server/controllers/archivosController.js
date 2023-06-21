@@ -16,6 +16,7 @@ exports.uploadCv = uploadCv;
 
 exports.uploadFiles = (req, res) => {
     uploadCv(req, res, async (err) => {
+        console.log(req.file);
         console.log(err);
         if (err) {
             return res.status(500).json({ error: 'Error al cargar el archivo' });
@@ -25,26 +26,31 @@ exports.uploadFiles = (req, res) => {
             if (!file) {
                 return res.status(400).json({ error: 'No se seleccionó ningún archivo' });
             }
-
             const apiUrl = 'http://localhost:4000/api/archivos';
-
             const formData = new FormData();
-            formData.append('cv', file.buffer, {
-                filename: file.originalname,
-                contentType: file.mimetype,
-                knownLength: file.size
-            });
+            formData.append('cv', file.buffer, file.originalname);
 
             const response = await axios.post(apiUrl, formData, {
                 headers: formData.getHeaders()
             });
             console.log(response.data);
-
             res.status(200).json({ message: 'Archivo cargado exitosamente' });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error al enviar el archivo a la API' });
         }
-    });
+    })
 };
-/* No funciona carga a la api */
+
+/* hasta no cargar la api no usar */
+/* exports.returnCvs = async (req, res) => {
+    try {
+        const response = await axios.get('http://localhost:4000/api/archivos');
+        console.log(response)
+        res.send("hola")
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener los datos de la API' });
+    }
+};
+ */

@@ -7,10 +7,9 @@ export default function Inicio(){
                 <h2>Iniciar Sesión</h2>
                 <input type="text" className="input-inicio" placeholder="Nombre de Cuenta" /> 
                 <input type="text" className="input-inicio" placeholder="Contrasena" /> 
-                <Link className="btn-inicio" >Iniciar sesión</Link>
+                <Link to="/Registradas" className="btn-inicio" >Iniciar sesión</Link>
                 <Link to="/Registrarse" className="btn-crear-cuenta">Crear cuenta</Link>
             </div>
-            
         </div>
     )
 }

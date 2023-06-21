@@ -1,5 +1,6 @@
 const Usuario = require("../models/UserModel")
 const bcryptjs = require ('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const userController = {
     readUsers:(req,res) => {
@@ -9,7 +10,6 @@ const userController = {
     },
     newUser: async(req,res) => {
         const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena} = req.body
-
         try{
             const userExist = await Usuario.findOne({mail})
             if (userExist){
@@ -18,7 +18,8 @@ const userController = {
                 const contraHasheada = bcryptjs.hashSync(contrasena, 10)
                 const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada})
                 await newUser.save()
-                res.json({success: true, response: {newUser}, error: null})
+                const token = jwt.sign({...newUser}, process.env.SECRETO)
+                res.json({success: true, response: {newUser, token}, error: null})
             }
         }catch(error){
             res.json({success: false, response: null, error: error})
@@ -33,7 +34,7 @@ const userController = {
             }
             const contrasenaSuccess = bcryptjs.compareSync(contrasena, dniExist.contrasena);
             if (contrasenaSuccess) {
-                const token = jwt.sign({ dni: dniExist.dni }, process.env.SECRETO)
+                const token = jwt.sign({...dniExist}, process.env.SECRETO)
                 return res.json({ success: true, response: { dniExist, token }, error: null });
             } else {
                 return res.json({ success: false, error: "La contraseña es incorrecta", response: null });

@@ -16,7 +16,8 @@ const userSchema = new Schema({
     tarea: {type: String},
     organizacion: {type: String},
     referente: {type: String},
-    hijos: {type: String}
+    hijos: {type: String},
+    contrasena: {type: String}
 })
 
 const UserModel = model('usuarios', userSchema)

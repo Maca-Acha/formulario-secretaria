@@ -23,6 +23,7 @@ function Registro() {
     const referente = useRef()
     const hijos = useRef()
     const [generoSeleccionado, setGeneroSeleccionado] = useState("");
+    const contrasena = useRef()
 
     const handleAddUser = (e) => {
         e.preventDefault() 
@@ -41,6 +42,7 @@ function Registro() {
             organizacion:organizacion.current.value, 
             referente:referente.current.value, 
             hijos:hijos.current.value, 
+            contrasena:contrasena.current.value
         }))
 
         const cvFile = cv.current.files[0];
@@ -169,6 +171,10 @@ function Registro() {
                 <label className="label">
                     Hijos
                     <input type="text" name="hijos" ref={hijos} placeholder="Cantidad de hijos" />
+                </label>
+                <label className="label">
+                    Contraseña
+                    <input type="text" name="contrasena" ref={contrasena} placeholder="Cree una contraseña"/>
                 </label>
                 <input className="btn-enviar" type="submit" value="Enviar" />
             </form>

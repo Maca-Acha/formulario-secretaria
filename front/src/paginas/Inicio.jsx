@@ -5,8 +5,8 @@ export default function Inicio(){
         <div className="cont-btns-inicio">
             <div className="fondo-inicio">
                 <h2>Iniciar Sesión</h2>
-                <input type="text" className="input-inicio" placeholder="Nombre de Cuenta" /> 
-                <input type="text" className="input-inicio" placeholder="Contrasena" /> 
+                <input type="text" className="input-inicio" placeholder="DNI" /> 
+                <input type="text" className="input-inicio" placeholder="Contraseña" /> 
                 <Link to="/Registradas" className="btn-inicio" >Iniciar sesión</Link>
                 <Link to="/Registrarse" className="btn-crear-cuenta">Crear cuenta</Link>
             </div>

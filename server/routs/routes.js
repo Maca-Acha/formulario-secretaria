@@ -7,6 +7,9 @@ router.route("/api/usuarios")
 .get(userController.readUsers)
 .post(userController.newUser)
 
+router.route("/api/inicio")
+.post(userController.signIn)
+
 router.post(
     "/api/archivos",
     controllerCv.uploadCv,

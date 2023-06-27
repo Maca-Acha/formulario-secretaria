@@ -55,12 +55,13 @@
   border-radius: 30px;
 }
 .btn-inicio{
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: var(--blue);
   color: var(--black);
   padding: .7rem;
   border-radius: 7px;
   border: var(--blue) 3px solid;
-  width: 20vw;
+  width: 21vw;
   font-size: 16px;
   font-weight: 600;
   transition: .4s;
@@ -77,8 +78,8 @@
   color: var(--black);
   padding: .7rem;
   border-radius: 7px;
-  border: #37BBED 3px solid;
-  width: 20vw;
+  border: var(--blue) 3px solid;
+  width: 19.5vw;
   font-size: 16px;
   font-weight: 600 !important;
   transition: .4s;

@@ -8,6 +8,12 @@ const userController = {
             res.json({response})
         })
     },
+    returnUser:(req,res) => {
+        Usuario.findOne({_id: req.params.id})
+        .then((response)=>{
+            res.json({response})
+        })
+    },
     newUser: async(req,res) => {
         const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena} = req.body
         try{
@@ -17,8 +23,8 @@ const userController = {
             }else{
                 const contraHasheada = bcryptjs.hashSync(contrasena, 10)
                 const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada})
-                await newUser.save()
                 const token = jwt.sign({...newUser}, process.env.SECRETO)
+                await newUser.save()
                 res.json({success: true, response: {newUser, token}, error: null})
             }
         }catch(error){

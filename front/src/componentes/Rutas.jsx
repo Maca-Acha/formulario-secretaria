@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import Registrarse from './ContRegistro';
-import Registradas from './Registradas';
-import Inicio from '../paginas/inicio';
+import Usuario from './Usuario';
+import Inicio from '../paginas/Inicio';
 
 function RoutesManager (){
     return(
         <Routes>
             <Route path= "/"  element= {<Inicio />} />
             <Route path= "/Registrarse"  element= {<Registrarse />} />
-            <Route path= "/Registradas"  element= {<Registradas />} />
+            <Route path= "/Usuario/:id"  element= {<Usuario />} />
         </Routes>
     )
 }

@@ -1,6 +1,6 @@
-const Usuario = require("../models/UserModel")
-const bcryptjs = require ('bcryptjs')
-const jwt = require('jsonwebtoken')
+const Usuario = require("../models/UserModel");
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userController = {
     readUsers:(req,res) => {
@@ -28,7 +28,7 @@ const userController = {
                 res.json({success: true, response: {newUser, token}, error: null})
             }
         }catch(error){
-            res.json({success: false, response: null, error: error})
+            res.json({success: false, response: null, error: "Error en el servidor"})
         }
     },
     signIn: async (req, res) => {
@@ -46,9 +46,26 @@ const userController = {
                 return res.json({ success: false, error: "La contraseña es incorrecta", response: null });
             }
         } catch (error) {
-            return res.json({ success: false, response: null, error: error });
+            return res.json({ success: false, response: null, error: "Error en el servidor" });
         }
-    }
+    },
+    editUser: async (req, res) => {
+        try {
+            let newUser = await Usuario.findOneAndUpdate(
+                { _id: req.params.id},
+                { apellido: req.body.apellido, nombre: req.body.nombre, dni: req.body.dni, cuil: req.body.cuil, nacimiento: req.body.nacimiento, foto: req.body.foto, direccion: req.body.direccion, cel: req.body.cel, mail: req.body.mail, cv: req.body.cv, estudios: req.body.estudios, genero: req.body.genero, tarea: req.body.tarea, organizacion: req.body.organizacion, referente: req.body.referente, hijos: req.body.hijos, contrasena: req.body.contrasena },
+                { new: true } 
+            );
+            
+            res.json({
+                success: true,
+                response: newUser
+            });
+        } catch (e) {
+            res.json({ success: false, error: e });
+            console.error(e);
+        }
+    }    
 }
 
 module.exports = userController

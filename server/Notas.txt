@@ -1,0 +1,7 @@
+-- Cosas que faltan --
+* Alertas
+* Ruta editar usuario desde admin
+* Verificar cuenta
+* Api de administradores
+* agregar notas
+* Filtros de busqueda

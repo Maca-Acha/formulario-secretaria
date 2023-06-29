@@ -7,12 +7,9 @@ router.route("/api/usuarios")
 .get(userController.readUsers)
 .post(userController.newUser)
 
-/* router.route("/usuario")
-.get(userController.returnUser)
- */
 router.route("/usuario/:id")
 .get(userController.returnUser)
-
+.put(userController.editUser)
 
 router.route("/api/inicio")
 .post(userController.signIn)

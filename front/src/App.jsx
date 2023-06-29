@@ -4,7 +4,6 @@ import RoutesManager from './componentes/Rutas'
 import { BrowserRouter, Link } from "react-router-dom";
 
 function App() {
-
   return (
     <BrowserRouter>
       <Link to="/" className='encabezado'>

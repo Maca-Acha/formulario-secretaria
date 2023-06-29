@@ -1,3 +1,9 @@
+:root{
+    --white:#ffffff;
+    --black:#333333;
+    --blue:#37BBED;
+    --gray:#f3f3f3;
+}
 .cont-contenedor-cards{
     display: flex;
     justify-content: center;
@@ -15,7 +21,8 @@
     flex-direction: column;
     padding: 1rem;
     border-radius: 10px;
-    box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid #333333eb;
+/*     box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25); */
 }
 .cont-card-foto{
     display: flex;
@@ -29,4 +36,62 @@
 }
 .negrita{
     font-weight: 500;
+}
+
+/* Registradas */
+.cont-agregar{
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+}
+.agregar{
+    width: 2em;
+    height: 2em;
+    color: var(--blue) ;
+    transition: .5s;
+    align-self: center;
+    transition: .5s;
+}
+.agregar:hover {
+    color: var(--black);
+    transition: .5s;
+}
+/* Usuario */
+.contenedor-usuario{
+    display: flex;
+
+}
+.usuario-cont{
+    width: 45%;
+    gap: 1rem;
+    margin: 5vh ;
+}
+.titulo{
+    font-size: 18px;
+}
+.informacion{
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+}
+.texto-info{
+    text-decoration: underline;
+    width: 100%;
+    padding: 0 0.5rem
+}
+
+/*form usuario*/
+.cont-titulo{
+    display: flex;
+    gap: 10px;
+}
+.input-perfil{
+    display: flex;
+    justify-content: space-between;
+}
+.editor{ 
+    box-shadow: none;
+    margin: 0 10px;
+    padding: 0;
+    width: 85%;
 }

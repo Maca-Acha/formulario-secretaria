@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux"
 
 export default function Inicio(){
     const dispatch = useDispatch()
-    const token = useSelector((state) => state.usuarios.token)
+    const token = useSelector((state) => state.token);
+
 
     const navigate = useNavigate()
 
@@ -43,6 +44,7 @@ export default function Inicio(){
                 <input type="password" ref={contrasena} className="input-inicio" placeholder="Contraseña" /> 
                 <button type="submit" className="btn-inicio" >Iniciar sesión</button >
                 <Link to="/Registrarse" className="btn-crear-cuenta">Crear cuenta</Link>
+                <Link to="/Administrador">Soy Administrador</Link>
             </form>
         </div>
     )

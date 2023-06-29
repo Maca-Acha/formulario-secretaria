@@ -18,9 +18,8 @@ const archivosSlice = createSlice({
     name: "archivos",
     initialState,
     reducers:{
-        nuevoArchivo:(state, action) => {
-            state.archivos.push(action.payload) 
-            
+        nuevoArchivo: (state, action) => {
+            state.archivos = [...state.archivos, action.payload];
         }
     },
     extraReducers:(builder) => {
@@ -40,7 +39,6 @@ const archivosSlice = createSlice({
     }
 })
 
-export const {  arcivos, nuevoArchivo } = fetchArchivos.actions;
-
+export const { archivos, nuevoArchivo } = archivosSlice.actions;
 
 export default archivosSlice.reducer

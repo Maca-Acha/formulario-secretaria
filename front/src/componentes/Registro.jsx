@@ -44,7 +44,7 @@ function Registro() {
             hijos:hijos.current.value, 
             contrasena:contrasena.current.value
         }))
-
+        
         const cvFile = cv.current.files[0];
         const fotoFile = foto.current.files[0];
 
@@ -60,13 +60,28 @@ function Registro() {
             .catch(error => {
                 console.error('Error al guardar el archivo:', error);
             });
-            axios.post('http://localhost:4000/api/archivosFoto', formDataFoto)
-            .then(response => {
-                console.log('Archivo guardado correctamente:', response.data);
-            })
-            .catch(error => {
-                console.error('Error al guardar el archivo:', error);
-            });
+        axios.post('http://localhost:4000/api/archivosFoto', formDataFoto)
+        .then(response => {
+            console.log('Archivo guardado correctamente:', response.data);
+        })
+        .catch(error => {
+            console.error('Error al guardar el archivo:', error);
+        });
+
+        apellido.current.value = "" 
+        nombre.current.value = ""
+        dni.current.value = ""
+        cuil.current.value = ""
+        domicilio.current.value = "" 
+        telefono.current.value = "" 
+        mail.current.value = "" 
+        fecha.current.value = "" 
+        estudios.current.value = "" 
+        tareas.current.value = "" 
+        organizacion.current.value = "" 
+        referente.current.value = "" 
+        hijos.current.value = "" 
+        contrasena.current.value = ""
     }
 
     return(

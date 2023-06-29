@@ -3,11 +3,17 @@ import { useEffect } from "react"
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
+import { AiFillPlusCircle } from 'react-icons/ai';
 import Pdf from './pdf'
 
 function Registradas(){
     const dispatch = useDispatch()
     const usuarios = useSelector((state) => state.usuarios.usuarios);
+    const agregar = <AiFillPlusCircle className='agregar' />
+
+    //filtrar por nombre
+    //filtrar por orga
+    //filtrar por recursos
 
     useEffect(() => {
         dispatch(fetchUsuarios());        
@@ -42,6 +48,9 @@ function Registradas(){
                             <div>
                                 <Link to={Pdf} target='_blanck'>Ver CV</Link>
                             </div>
+                            <Link className='cont-agregar' to="/usuario/:id">
+                                {agregar}
+                            </Link>
                         </div>
                 )})}
             </div>

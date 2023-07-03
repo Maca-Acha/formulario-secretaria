@@ -1,20 +1,19 @@
 import {Link, useNavigate} from "react-router-dom"
-import { fetchUsuarios, signIn, signToken } from "../redux/reducers/usuarioSlice"
+import { fetchUsuarios, signIn, signToken, setToken,   } from "../redux/reducers/usuarioSlice"
 import { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 export default function Inicio(){
     const dispatch = useDispatch()
-    const token = useSelector((state) => state.token);
-
-
+    const token = useSelector((state) => state.usuarios.token);
     const navigate = useNavigate()
 
     useEffect(() => {
-        dispatch(fetchUsuarios());       
-    }, [dispatch]);
-
-    localStorage.getItem("token") &&  !token && dispatch(signToken())
+        dispatch(fetchUsuarios());
+        if (localStorage.getItem("token") && !token) {
+            dispatch(signToken());
+        }
+    }, [dispatch, token]);
 
     const dni = useRef()
     const contrasena = useRef()
@@ -26,12 +25,15 @@ export default function Inicio(){
                 dni: dni.current.value,
                 contrasena: contrasena.current.value,
             })
-            )
-            .then((action) => {
-                if (action.payload && action.payload.token && action.payload.id) {
+        )
+        .then((action) => {
+            if (action.payload?.token && action.payload?.id) {
+                dispatch(setToken(action.payload.token));
+                
                 navigate(`/Usuario/${action.payload.id}`, { replace: true });
-                }
-        }).catch((error) => console.log(error));
+            }
+        })        
+        .catch((error) => console.log(error));
         dni.current.value = "";
         contrasena.current.value = "";
     }

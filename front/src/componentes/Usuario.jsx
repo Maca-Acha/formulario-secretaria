@@ -1,8 +1,7 @@
 import '../Registradas.css'
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from 'react';
 import {Link} from "react-router-dom"
-import {useRef, useState} from "react"
 import { traerUsuario, editarUsuario } from "../redux/reducers/usuarioSlice"
 import {Estudios, Generos} from "./Constantes"
 import Pdf from './pdf'
@@ -10,8 +9,8 @@ import {FiEdit} from "react-icons/fi";
 
 export default function Usuario(){
     const dispatch = useDispatch()
-    const usuario = useSelector((state) => state.usuarios.usuario);
-    const id = useSelector((state) => state.usuarios.id);
+    const usuario = useSelector((state) => state.usuario);
+    const id = useSelector((state) => state.id);
 
     const editar = <FiEdit />
     const [editNombre, setEditNombre] = useState(false)
@@ -39,37 +38,40 @@ export default function Usuario(){
     const foto = useRef() */
     const estudios = useRef()
     const tareas = useRef()
-    const organizacion = useRef()
-    const referente = useRef()
+/*     const organizacion = useRef()
+    const referente = useRef() */
     const hijos = useRef()
     const genero= useRef()
     const contrasena = useRef()
 
     useEffect(() => {
-        if (id) {
-            dispatch(traerUsuario(id));
-        }
+        id && dispatch(traerUsuario(id));
     }, [dispatch, id]);
 
     function handleEditarUsuario(e) {
         e.preventDefault()
+        console.log(nombre.current.value)
         dispatch(editarUsuario({
-            apellido:apellido.current.value, 
-            nombre:nombre.current.value,
-            dni:dni.current.value,
-            cuil:cuil.current.value,
-            direccion:domicilio.current.value, 
-            cel:telefono.current.value, 
-            mail:mail.current.value, 
-            nacimiento:fecha.current.value, 
-            estudios:estudios.current.value, 
-            /* genero:generoSeleccionado, */
-            tarea:tareas.current.value, 
-            organizacion:organizacion.current.value, 
-            referente:referente.current.value, 
-            hijos:hijos.current.value, 
-            contrasena:contrasena.current.value
-        }))   
+            id: id, 
+            body: {
+                apellido: apellido.current.value,
+                nombre: nombre.current.value,
+                /* dni: dni.current.value,
+                cuil: cuil.current.value,
+                direccion: domicilio.current.value,
+                cel: telefono.current.value,
+                mail: mail.current.value,
+                nacimiento: fecha.current.value,
+                estudios: estudios.current.value, */
+                /* genero: generoSeleccionado, */
+                /* tarea: tareas.current.value,
+                organizacion: organizacion.current.value,
+                referente: referente.current.value,
+                hijos: hijos.current.value,
+                contrasena: contrasena.current.value */
+            }
+        }));
+            
     }
 
     return(
@@ -88,6 +90,12 @@ export default function Usuario(){
                                         className="input-editor"
                                         type="text"
                                         defaultValue={usuario.nombre}
+                                    />
+                                    <input
+                                        
+                                        className="input-editor"
+                                        type="submit"
+                                        value='enviar'
                                     />
                                     <input
                                         ref={apellido}
@@ -215,7 +223,7 @@ export default function Usuario(){
                                         )})}
                                     </select>
                                 </form>
-                            ):<p className='texto-info'>{usuario.estudios}</p>}
+                            ):<p className='texto-info'>{usuario.genero}</p>}
                             <div className="btn-cursor btn-edit"  onClick={() => {setEditGenero(!editGenero)}}>{editar} </div>
                         </section>
                         <section className='input-perfil'>

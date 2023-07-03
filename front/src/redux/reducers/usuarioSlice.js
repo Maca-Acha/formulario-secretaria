@@ -1,47 +1,50 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit'
-import Axios from "axios"
+import Axios from 'axios'
 
 const initialState = {
     loading: false,
     usuarios: [],
     usuario:{},
-    error: "",
-    token: "",
-    id: ""
+    error: '',
+    token: '',
+    id: ''
 }
 
-export const fetchUsuarios = createAsyncThunk("usuarios/fetchUsuarios", async() => {
-    return await Axios 
-    .get ('http://localhost:4000/api/usuarios')
+export const registerActionToolkit = createAsyncThunk('usuarios/register', async (key) => {
+    return({
+        type: 'usuarios/register',
+        payload: key,
+    });
+});
+
+export const fetchUsuarios = createAsyncThunk('usuarios/fetchUsuarios', async() => {
+    return Axios.get('http://localhost:4000/api/usuarios')
     .then((response) => response.data.response)
-    .catch((error) => console.log(error))
-}) 
-export const traerUsuario = createAsyncThunk("usuarios/traerUsuario", async(id) => {
+    .catch((error) => console.log(error));
+});
+export const traerUsuario = createAsyncThunk('usuarios/traerUsuario', async(id) => {
     return await Axios
         .get(`http://localhost:4000/usuario/${id}`)
         .then((response) => response.data.response)
         .catch((error) => console.log(error));
 });
-export const signIn = createAsyncThunk("usuarios/signIn", async ({ dni, contrasena }) => {
-    console.log(dni)
+export const signIn = createAsyncThunk('usuarios/signIn', async ({ dni, contrasena }) => {
     try {
-        const usuario = await Axios.post("http://localhost:4000/api/inicio", { dni, contrasena });
-        console.log(usuario)
+        const usuario = await Axios.post('http://localhost:4000/api/inicio', { dni, contrasena });
         if (usuario.data.success && !usuario.data.error) {
-        localStorage.setItem('token', usuario.data.response.token);
-        return { token: usuario.data.response.token, id:usuario.data.response.dniExist._id };
+            localStorage.setItem('token', usuario.data.response.token);
+            return { token: usuario.data.response.token, id:usuario.data.response.dniExist._id };
         } else {
-        return { error: usuario.data.error };
+            return { error: usuario.data.error };
         }
     } catch (error) {
         return { error: error.message };
     }
 })
-
-export const signToken = createAsyncThunk("usuarios/signToken", async() =>{
+export const signToken = createAsyncThunk('usuarios/signToken', async() =>{
         try {
-            const token = localStorage.getItem("token")
-            const response = await Axios.get("http://localhost:4000/api/usuarios",{
+            const token = localStorage.getItem('token')
+            const response = await Axios.get('http://localhost:4000/api/usuarios',{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -51,7 +54,7 @@ export const signToken = createAsyncThunk("usuarios/signToken", async() =>{
             return isRejectedWithValue(error)
         }
 })
-export const registrarUsuario = createAsyncThunk("registrarusuario", async (body) => {
+export const registrarUsuario = createAsyncThunk('registrarusuario', async (body) => {
     try{
         const response = await Axios.post('http://localhost:4000/api/usuarios', body);
         return response.data
@@ -59,17 +62,37 @@ export const registrarUsuario = createAsyncThunk("registrarusuario", async (body
         return isRejectedWithValue(error)
     }
 })
-export const editarUsuario = createAsyncThunk("editarUsuario", async ({id, body}) => {
-    const token = localStorage.getItem("token")
-    return (    
-        await Axios.put(`http://localhost:4000/usuario/${id}` , body, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }),
-        await Axios.get(`http://localhost:4000/usuario/${id}`)
-        )
-})
+export const editarUsuario = createAsyncThunk(
+    'editarUsuario',
+    async ({ id, body }) => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+
+        await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
+
+        return {
+            nombre: body.nombre,
+            apellido: body.apellido,
+            dni: body.dni,
+            cuil: body.cuil,
+            direccion: body.direccion,
+            cel: body.cel,
+            mail: body.mail,
+            nacimiento: body.nacimiento,
+            estudios: body.estudios,
+        };
+    }
+);
+
+
+export const setToken = (token) => {
+    return {
+        type: 'usuario/setToken',
+        payload: token
+    };
+};
 
 const usuarioSlice = createSlice({
     name: 'usuarios',
@@ -78,6 +101,9 @@ const usuarioSlice = createSlice({
         nuevoUsuario: (state, action) => {
             state.usuarios = [...state.usuarios, action.payload];
         },
+        register: (state, action) => {
+            state.usuario = action.payload;
+        }
     },extraReducers: (builder) => {
         /* Registrar Usuario */
         builder.addCase(registrarUsuario.pending, (state) => {
@@ -86,7 +112,7 @@ const usuarioSlice = createSlice({
         builder.addCase(registrarUsuario.fulfilled, (state, action) => {
             state.loading = false;
             state.usuarios = action.payload;
-            state.error = "";
+            state.error = '';
         });
         builder.addCase(registrarUsuario.rejected, (state, action) => {
             state.loading = false;
@@ -101,7 +127,7 @@ const usuarioSlice = createSlice({
         builder.addCase(fetchUsuarios.fulfilled, (state, action) => {
             state.loading = false;
             state.usuarios = action.payload;
-            state.error = "";
+            state.error = '';
         });
         builder.addCase(fetchUsuarios.rejected, (state, action) => {
             state.loading = false;
@@ -116,7 +142,7 @@ const usuarioSlice = createSlice({
         builder.addCase(traerUsuario.fulfilled, (state, action) => {
             state.loading = false;
             state.usuario = action.payload;
-            state.error = "";
+            state.error = '';
         });
         builder.addCase(traerUsuario.rejected, (state, action) => {
             state.loading = false;
@@ -132,7 +158,7 @@ const usuarioSlice = createSlice({
             state.loading = false;
             state.token = action.payload.token;
             state.id = action.payload.id;
-            state.error = "";
+            state.error = '';
         });
         builder.addCase(signIn.rejected, (state, action) => {
             state.loading = false;
@@ -147,17 +173,46 @@ const usuarioSlice = createSlice({
         builder.addCase(editarUsuario.fulfilled, (state, action) => {
             state.loading = false;
             state.usuario = action.payload;
-            state.error = "";
+            state.error = '';
         });
         builder.addCase(editarUsuario.rejected, (state, action) => {
             state.loading = false;
-            state.usuarios = [];
+            state.usuario = {};
             state.error = action.error.message;
         });
+        /* REGISTER */
+        builder.addCase(registerActionToolkit.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(registerActionToolkit.fulfilled, (state, action) => {
+            state.loading = false;
+            state.usuario = action.payload;
+            state.error = '';
+        });
+        builder.addCase(registerActionToolkit.rejected, (state, action) => {
+            state.loading = false;
+            state.usuario = {};
+            state.error = action.error.message;
+        });
+        
     },
 });
 
 export const { nuevoUsuario, usuarios } = usuarioSlice.actions;
 
 export default usuarioSlice.reducer
+
+/* export const editarUsuario = createAsyncThunk("editarUsuario", async ({id, body}) => {
+    const token = localStorage.getItem("token")
+    return (    
+        await Axios.put(`http://localhost:4000/usuario/${id}` , body, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }),
+        await Axios.get(`http://localhost:4000/usuario/${id}`)
+        )
+}) */
+
+
 

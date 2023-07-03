@@ -4,6 +4,7 @@ import Registrardas from './Registradas';
 import Usuario from './Usuario';
 import Inicio from '../paginas/Inicio';
 import Administrador from '../paginas/Administrador';
+import AdminUsuario from './adminUsuario';
 
 function RoutesManager (){
     return(
@@ -12,6 +13,7 @@ function RoutesManager (){
             <Route path= "/Registrarse"  element= {<Registrarse />} />
             <Route path= "/Registradas"  element= {<Registrardas />} />
             <Route path= "/Administrador"  element= {<Administrador />} />
+            <Route path= "/adminUsuario"  element= {<AdminUsuario />} />
             <Route path= "/Usuario/:id"  element= {<Usuario />} />
         </Routes>
     )

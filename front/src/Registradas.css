@@ -98,7 +98,24 @@
 
 /* Administrador */
 .cont-admin-servicios{
-
-    display: grid;
-
+    display: flex;
+    margin: 2rem;
+    gap: 2rem;
+}
+.usuario-cont-admin, .contenedor-usuario-admin{
+    width: 100%;
+}
+.card-servicios{
+    border-radius: 10px;
+    border: 1px solid #333333eb;
+    height: fit-content;
+    padding: 1rem;
+}
+.titulo-servicios{
+    text-align: center;
+}
+.servicios{
+    box-shadow:none;
+    padding: 0;
+    margin-bottom: 0;
 }

@@ -48,7 +48,8 @@ function Registradas(){
                             <div>
                                 <Link to={Pdf} target='_blanck'>Ver CV</Link>
                             </div>
-                            <Link className='cont-agregar' to="/AdminUsuario">
+                            <Link className='cont-agregar' to={`/AdminUsuario/${usuario._id}`} >
+                                
                                 {agregar}
                             </Link>
                         </div>

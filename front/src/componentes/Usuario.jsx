@@ -34,12 +34,12 @@ export default function Usuario(){
     const domicilio = useRef()
     const telefono = useRef()
     const mail = useRef()
-/*  const cv = useRef()
+    /* const cv = useRef()
     const foto = useRef() */
     const estudios = useRef()
     const tareas = useRef()
-/*     const organizacion = useRef()
-    const referente = useRef() */
+    const organizacion = useRef()
+    const referente = useRef()
     const hijos = useRef()
     const genero= useRef()
     const contrasena = useRef()
@@ -50,28 +50,27 @@ export default function Usuario(){
 
     function handleEditarUsuario(e) {
         e.preventDefault()
-        console.log(nombre.current.value)
         dispatch(editarUsuario({
             id: id, 
             body: {
-                apellido: apellido.current.value,
-                nombre: nombre.current.value,
-                /* dni: dni.current.value,
-                cuil: cuil.current.value,
-                direccion: domicilio.current.value,
-                cel: telefono.current.value,
-                mail: mail.current.value,
-                nacimiento: fecha.current.value,
-                estudios: estudios.current.value, */
+                apellido: apellido.current?.value,
+                nombre: nombre.current?.value,
+                dni: dni.current?.value,
+                cuil: cuil.current?.value,
+                direccion: domicilio.current?.value,
+                cel: telefono.current?.value,
+                mail: mail.current?.value,
+                nacimiento: fecha.current?.value,
+                estudios: estudios.current?.value,
                 /* genero: generoSeleccionado, */
-                /* tarea: tareas.current.value,
-                organizacion: organizacion.current.value,
-                referente: referente.current.value,
-                hijos: hijos.current.value,
-                contrasena: contrasena.current.value */
+                tarea: tareas.current?.value,
+                organizacion: organizacion.current?.value,
+                referente: referente.current?.value,
+                hijos: hijos.current?.value,
+                contrasena: contrasena.current?.value
             }
-        }));
-            
+        })); 
+        console.log(usuario) 
     }
 
     return(
@@ -146,7 +145,7 @@ export default function Usuario(){
                                         ref={domicilio}
                                         className='input-editor'
                                         type="text"
-                                        defaultValue={usuario.domicilio}
+                                        defaultValue={usuario.direccion}
                                     />
                                 </form>
                             ):<p className='texto-info'>{usuario.direccion} </p>}
@@ -160,7 +159,7 @@ export default function Usuario(){
                                         ref={telefono}
                                         className='input-editor'
                                         type="text"
-                                        defaultValue={usuario.telefono}
+                                        defaultValue={usuario.cel}
                                     />
                                 </form>
                             ):<p className='texto-info'>{usuario.cel}</p>}
@@ -189,7 +188,7 @@ export default function Usuario(){
                                         ref={fecha}
                                         className='input-editor'
                                         type="date"
-                                        defaultValue={usuario.fecha}
+                                        defaultValue={usuario.nacimiento}
                                     />
                                 </form>
                             ):<p className='texto-info'>{usuario.nacimiento} </p>}
@@ -281,4 +280,4 @@ export default function Usuario(){
             }
         </div>
     )
-}
+} 

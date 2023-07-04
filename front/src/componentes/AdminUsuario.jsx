@@ -1,27 +1,27 @@
 import '../Registradas.css'
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import {Link} from "react-router-dom"
+import { useDispatch, useSelector} from "react-redux"
+import { useEffect, useMemo } from "react"
+import {Link, useParams} from "react-router-dom"
 import { traerUsuario} from "../redux/reducers/usuarioSlice"
 import Pdf from './pdf'
 import Servicios from './Servicios'
 
 export default function AdminUsuario(){
     const dispatch = useDispatch()
-    const usuario = useSelector((state) => state.usuarios.usuario);
-    const id = useSelector((state) => state.usuarios.id);
-
+    const params = useParams()
+    const memoizedId = useMemo(() => params.id, [params.id]);
+    const usuario = useSelector((state) => state.usuario); 
     useEffect(() => {
-        if (id) {
-            dispatch(traerUsuario(id));
+        if (memoizedId) {
+            dispatch(traerUsuario(memoizedId));
         }
-    }, [dispatch, id]);
+    }, [dispatch, memoizedId]);
 
     return(
         <div className='cont-admin-servicios'>
-            <div className='contenedor-usuario'>
+            <div className='contenedor-usuario contenedor-usuario-admin'>
                 {usuario &&
-                    <div className='card-usuarios usuario-cont' key={usuario._id}>
+                    <div className='card-usuarios usuario-cont-admin' key={usuario._id}>
                         <div className='cont-card-foto'>
                             <div className='cont-titulo'>
                                 <p className='titulo'> {usuario.nombre} </p>
@@ -61,7 +61,6 @@ export default function AdminUsuario(){
                             <section className='input-perfil'>
                                 <p className='negrita'>Genero: </p>
                                 <p className='texto-info'>{usuario.genero}</p> 
-                                <p className='texto-info'>{usuario.estudios}</p>
                             </section>
                             <section className='input-perfil'>
                                 <p className='negrita'>Terea: </p>
@@ -84,7 +83,7 @@ export default function AdminUsuario(){
                             <Link to={Pdf} target='_blanck'>Ver CV</Link>
                         </div>
                     </div>
-                }
+                } 
             </div>
             <Servicios />
         </div>

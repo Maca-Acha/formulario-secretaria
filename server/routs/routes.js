@@ -14,13 +14,11 @@ router.route("/usuario/:id")
 router.route("/api/inicio")
 .post(userController.signIn)
 
+/* router.get('/api/archivos', controllerCv.returnCvs); */
 router.post(
     "/api/archivos",
     controllerCv.uploadCv,
     controllerCv.uploadFiles)
-
-/* router.get('/api/archivos', controllerCv.returnCvs); */
-
 router.post(
     "/api/archivosFoto",
     controllerFoto.uploadFoto,

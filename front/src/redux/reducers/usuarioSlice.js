@@ -69,20 +69,8 @@ export const editarUsuario = createAsyncThunk(
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-
-        await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
-
-        return {
-            nombre: body.nombre,
-            apellido: body.apellido,
-            dni: body.dni,
-            cuil: body.cuil,
-            direccion: body.direccion,
-            cel: body.cel,
-            mail: body.mail,
-            nacimiento: body.nacimiento,
-            estudios: body.estudios,
-        };
+        const nuevoUser = await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
+        return nuevoUser.data.response
     }
 );
 
@@ -201,18 +189,5 @@ const usuarioSlice = createSlice({
 export const { nuevoUsuario, usuarios } = usuarioSlice.actions;
 
 export default usuarioSlice.reducer
-
-/* export const editarUsuario = createAsyncThunk("editarUsuario", async ({id, body}) => {
-    const token = localStorage.getItem("token")
-    return (    
-        await Axios.put(`http://localhost:4000/usuario/${id}` , body, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }),
-        await Axios.get(`http://localhost:4000/usuario/${id}`)
-        )
-}) */
-
 
 

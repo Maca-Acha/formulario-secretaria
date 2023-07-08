@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+/* import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import rootReducer from '../redux/reducers/usuarioSlice';
@@ -22,7 +22,33 @@ export const store = configureStore({
     }),
 });
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store); */
 
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from '../redux/reducers/rootreducer';
+
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['usuarios', 'usuario', 'token', 'id', 'error', 'servicios'],
+};
+
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+        serializableCheck: {
+            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+    }),
+});
+
+export const persistor = persistStore(store); 
 
 

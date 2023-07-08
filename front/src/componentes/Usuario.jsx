@@ -70,7 +70,18 @@ export default function Usuario(){
                 contrasena: contrasena.current?.value
             }
         })); 
-        console.log(usuario) 
+        editNombre && setEditNombre(!editNombre)
+        editDni && setEditDni(!editDni)
+        editCuil && setEditCuil(!editCuil)
+        editFecha && setEditFecha(!editFecha)
+        editDomicilio && setEditDomicilio(!editDomicilio)
+        editTel && setEditTel(!editTel)
+        editMail && setEditMail(!editMail)
+        editEstudios && setEditEstudios(!editEstudios)
+        editGenero && setEditGenero(!editGenero)
+        editTareas && setEditTareas(!editTareas)
+        editHijos && setEditHijos(!editHijos)
+        editContrasena && setEditContrasena(!editContrasena)
     }
 
     return(

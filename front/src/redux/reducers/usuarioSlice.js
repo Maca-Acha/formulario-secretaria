@@ -16,7 +16,6 @@ export const registerActionToolkit = createAsyncThunk('usuarios/register', async
         payload: key,
     });
 });
-
 export const fetchUsuarios = createAsyncThunk('usuarios/fetchUsuarios', async() => {
     return Axios.get('http://localhost:4000/api/usuarios')
     .then((response) => response.data.response)
@@ -73,7 +72,6 @@ export const editarUsuario = createAsyncThunk(
         return nuevoUser.data.response
     }
 );
-
 
 export const setToken = (token) => {
     return {
@@ -168,6 +166,7 @@ const usuarioSlice = createSlice({
             state.usuario = {};
             state.error = action.error.message;
         });
+
         /* REGISTER */
         builder.addCase(registerActionToolkit.pending, (state) => {
             state.loading = true;

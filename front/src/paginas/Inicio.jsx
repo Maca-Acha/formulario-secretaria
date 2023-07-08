@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 export default function Inicio(){
     const dispatch = useDispatch()
-    const token = useSelector((state) => state.usuarios.token);
+    const token = useSelector((state) => state.token);
     const navigate = useNavigate()
 
     useEffect(() => {

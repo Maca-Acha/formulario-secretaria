@@ -2,7 +2,7 @@ const router = require ('express').Router()
 const userController = require('../controllers/userController')
 const controllerCv = require("../controllers/archivosController")
 const controllerFoto = require("../controllers/fotosController")
-const serviciosController = require('../controllers/serviciosController')
+const serviciosControllers = require('../controllers/serviciosController')
 
 router.route("/api/usuarios")
 .get(userController.readUsers)
@@ -15,17 +15,17 @@ router.route("/usuario/:id")
 router.route("/api/inicio")
 .post(userController.signIn)
 
+router.route("/api/servicios/:usuarioId")
+.get(serviciosControllers.traerServiciosByUsuario)
+.post(serviciosControllers.postServicio)
+
 router.route("/api/servicios")
-.get(serviciosController.traerTodosServicios)
+.get(serviciosControllers.traerTodosServicios)
 
 router.route("/api/servicios/:id")
-.get(serviciosController.traerServicio)
-.delete(serviciosController.borrarServicio)
-.put(serviciosController.editarServicio)
-
-router.route("/api/servicios/:usuarioId")
-.post(serviciosController.postServicio)
-.get(serviciosController.traerServiciosByUsuario);
+.get(serviciosControllers.traerServicio)
+.delete(serviciosControllers.borrarServicio)
+.put(serviciosControllers.editarServicio)
 
 
 /* router.get('/api/archivos', controllerCv.returnCvs); */

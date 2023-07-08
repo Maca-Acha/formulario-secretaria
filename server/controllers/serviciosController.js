@@ -16,20 +16,24 @@ const serviciosControllers = {
                 console.error(e);
         }
     },
-    traerServiciosByUsuario: (req, res) => {
-        Servicios.find({ usuario: req.params.usuarioId })
-            .then((response) => {
-                res.json({ response });
-            })
-            .catch((err) => {
-                console.log(err);
-                res.json({ error: err });
+    traerServiciosByUsuario: async (req, res) => {
+        const usuarioId = req.params.usuarioId;
+        try {
+            const serviciosUsuario = await Servicios.find({ usuario: usuarioId });
+            res.json({
+                success: true,
+                response: serviciosUsuario,
+                error: null
             });
+            } catch (error) {
+            res.json({ success: false, error: error, response: null });
+            console.error(error);
+            }
     },
     traerServicio:(req,res)=>{
         Servicios.findOne({_id: req.params.id})
             .then((response) =>{res.json({response})
-    })  
+    })  //no anda bien
     },
     traerTodosServicios:(req,res)=>{
         Servicios.find()

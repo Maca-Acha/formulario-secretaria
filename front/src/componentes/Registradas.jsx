@@ -8,7 +8,7 @@ import Pdf from './pdf'
 
 function Registradas(){
     const dispatch = useDispatch()
-    const usuarios = useSelector((state) => state.usuarios);
+    const usuarios = useSelector((state) => state.usuario.usuarios);
     const agregar = <AiFillPlusCircle className='agregar' />
 
     //filtrar por nombre

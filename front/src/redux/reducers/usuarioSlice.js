@@ -64,6 +64,7 @@ export const registrarUsuario = createAsyncThunk('registrarusuario', async (body
 export const editarUsuario = createAsyncThunk(
     'editarUsuario',
     async ({ id, body }) => {
+        console.log(id)
         const token = localStorage.getItem('token');
         const headers = {
             Authorization: `Bearer ${token}`,

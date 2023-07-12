@@ -4,6 +4,7 @@ import { cargarServicio, traerServicios, borrarServicio, editarServicio } from "
 import { useParams } from "react-router-dom";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import {FiEdit} from "react-icons/fi";
+import Swal from 'sweetalert2'
 
 export default function Servicios(){
     const borrar = <RiDeleteBin5Fill />
@@ -13,46 +14,71 @@ export default function Servicios(){
     const dispatch = useDispatch()
     const servicios = useSelector((state) => state.servicios.servicios);
     const [editServicio, setEditServicio]= useState(false)
-
+    
     useEffect(() => {
         const fetchData = async () => {
             if (params) {
                 dispatch(traerServicios(params.id));
             }
         };
-    
         fetchData();
     }, [params, dispatch]);
     
-
     const descripcion = useRef()
     const editado = useRef()
     
     function handleNuevoServicio(e) {
-        e.preventDefault()
-        dispatch(cargarServicio({
-            id: params.id,
-            body:{
-                titulo: "descripcion",
-                descripcion: descripcion.current.value
-            }
-        }));
-        descripcion.current.value = ""
+        e.preventDefault();
+        const fechaActual = new Date();
+        const dia = fechaActual.getDate().toString().padStart(2, '0');
+        const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+        const anio = fechaActual.getFullYear().toString();
+    
+        const fechaFormateada = `${dia}/${mes}/${anio}`;
+        dispatch(
+            cargarServicio({
+                id: params.id,
+                body: {
+                    titulo: "Servicio",
+                    descripcion: descripcion.current.value,
+                    fecha: fechaFormateada // Agrega la propiedad 'fecha' al cuerpo de la solicitud
+                }
+            })
+        );
+        descripcion.current.value = "";
     }
+    
     function handleEditarServicio(idServicio){
-        console.log(idServicio)
         dispatch(editarServicio({
             id: idServicio,
             body:{
                 descripcion: editado.current.value
             }
         }));
-        console.log(editado)
     }
-    function handleBorrarServicio(idServicio){
-        dispatch(borrarServicio({
-            idServicio
-        }));
+    function handleBorrarServicio(idServicio) {
+        Swal.fire({
+            title: '¿Seguro de que deseas borrar este servicio?',
+            text: '¡Este cambio no se puede revertir!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#37BBED',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Sí, eliminar servicio'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(
+                borrarServicio({
+                    idServicio: idServicio,
+                    usuario: params.id
+                })
+                ).then(() => {
+                    dispatch(traerServicios(params.id));
+                    Swal.fire('¡Borrado!', 'Este servicio fue eliminado.', 'success');
+                });
+            }
+        });
     }
 
     return(
@@ -61,29 +87,41 @@ export default function Servicios(){
                 <div className='cont-servicios'>
                     <div className='cont-servicio'>
                         <p className='titulo negrita titulo-servicios'>Servicios Adquiridos</p>
-                        {servicios ? 
-                        servicios.map((servicio, index) => 
-                            <div key={index}>
-                                
-                                {editServicio ? (<form className="editor" onSubmit={ ()=> {handleEditarServicio(servicio._id)}}>
-                                    <input
-                                        ref={editado}
-                                        className='input-editor'
-                                        type="text"
-                                        defaultValue={servicio.descripcion}
-                                    />
-                                </form>)
-                                :<p >{servicio.descripcion}</p>}
-                                <div className="btn-cursor btn-edit"  onClick={() => {setEditServicio(!editServicio)}}>{editar} </div>
-                                <div onClick={() => handleBorrarServicio(servicio._id)} >{borrar}</div>
-                            </div>
-                        ):
-                        <p>Cargando</p>}
-
-                        <form className='servicios' onSubmit={handleNuevoServicio}>
-                            <input ref={descripcion} type="text" placeholder="Describir servicio"  />
-                            <input type="submit" className="btn-cursor btn-edit" value="Agregar" /> 
-                        </form>
+                        <div className="margen-servicios">
+                            {servicios[0] ? 
+                            servicios.map((servicio, index) => 
+                                <div key={index} className="cont-serv-linea" >
+                                    <div className="admin-servicio">
+                                        {editServicio ? (
+                                            <form className="editor" onSubmit={() => { handleEditarServicio(servicio._id) }}>
+                                                <input
+                                                ref={editado}
+                                                className='input-editor'
+                                                type="text"
+                                                value={servicio.descripcion}
+                                                onChange={(e) => { editado.current.value = e.target.value }}
+                                                />
+                                            </form>
+                                        ) : (
+                                            <div>
+                                                <p>{servicio.descripcion}</p>
+                                                <p>{servicio.fecha}</p>
+                                            </div>
+                                        )} 
+                                        <div className="iconos-edicion">
+                                            <div className="btn-cursor btn-edit"  onClick={() => {setEditServicio(!editServicio)}}>{editar} </div>
+                                            <div onClick={() => handleBorrarServicio(servicio._id)} >{borrar}</div>
+                                        </div>
+                                    </div>
+                                    <div className="linea"></div>
+                                </div>
+                            ):
+                            <p>Cargando</p>}
+                            <form className='servicios' onSubmit={handleNuevoServicio}>
+                                <input ref={descripcion} type="text" placeholder="Describir servicio"  />
+                                <input type="submit" className=" btn-agregar" value="Agregar" /> 
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

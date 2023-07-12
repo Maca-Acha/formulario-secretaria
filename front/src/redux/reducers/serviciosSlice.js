@@ -32,8 +32,8 @@ export const editarServicio = createAsyncThunk(
 );
 export const borrarServicio = createAsyncThunk(
     'borrarServicio',
-    async ({ idServicio }) => {
-        const nuevoServicio = await Axios.delete(`http://localhost:4000/api/servicios/${idServicio}`);
+    async ({ idServicio, usuario }) => {
+        const nuevoServicio = await Axios.delete(`http://localhost:4000/api/servicios/${idServicio}`, usuario);
         return nuevoServicio.data.response
     }
 );
@@ -95,15 +95,16 @@ const serviciosSlice = createSlice({
         });
         builder.addCase(borrarServicio.fulfilled, (state, action) => {
             state.loading = false;
-            state.servicios = action.payload;
+            const servicioEliminado = action.payload;
+            state.servicios = state.servicios.filter(
+                (servicio) => servicio._id !== servicioEliminado._id
+            );
             state.error = '';
         });
         builder.addCase(borrarServicio.rejected, (state, action) => {
             state.loading = false;
-            state.servicios = {};
             state.error = action.error.message;
         });
-        
     }, 
 });
 

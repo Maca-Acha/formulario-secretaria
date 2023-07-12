@@ -10,7 +10,8 @@ export default function AdminUsuario(){
     const dispatch = useDispatch()
     const params = useParams()
     const memoizedId = useMemo(() => params.id, [params.id]);
-    const usuario = useSelector((state) => state.usuario); 
+    const usuario = useSelector((state) => state.usuario.usuario); 
+
     useEffect(() => {
         if (memoizedId) {
             dispatch(traerUsuario(memoizedId));

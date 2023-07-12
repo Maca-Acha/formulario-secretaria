@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose')
+const {Schema, model, isValidObjectId} = require('mongoose')
 
 const userSchema = new Schema({
     apellido: {type: String},
@@ -18,7 +18,7 @@ const userSchema = new Schema({
     referente: {type: String},
     hijos: {type: String},
     contrasena: {type: String},
-    token:{type:String}
+    token:{type:String},
 })
 
 const UserModel = model('usuarios', userSchema)

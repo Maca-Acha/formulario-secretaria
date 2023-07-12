@@ -1,16 +1,19 @@
 import '../Registradas.css'
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef, useState } from 'react';
-import {Link} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import { traerUsuario, editarUsuario } from "../redux/reducers/usuarioSlice"
+import { traerServicios } from "../redux/reducers/serviciosSlice"
 import {Estudios, Generos} from "./Constantes"
 import Pdf from './pdf'
 import {FiEdit} from "react-icons/fi";
 
 export default function Usuario(){
     const dispatch = useDispatch()
-    const usuario = useSelector((state) => state.usuario);
-    const id = useSelector((state) => state.id);
+    const params = useParams()
+    const usuario = useSelector((state) => state.usuario.usuario);
+    const servicios = useSelector((state) => state.servicios.servicios);
+    const id = useSelector((state) => state.usuario.id);
 
     const editar = <FiEdit />
     const [editNombre, setEditNombre] = useState(false)
@@ -46,7 +49,10 @@ export default function Usuario(){
 
     useEffect(() => {
         id && dispatch(traerUsuario(id));
-    }, [dispatch, id]);
+        if (params) {
+            dispatch(traerServicios(params.id));
+        }
+    }, [dispatch, id, params]);
 
     function handleEditarUsuario(e) {
         e.preventDefault()
@@ -83,11 +89,11 @@ export default function Usuario(){
         editHijos && setEditHijos(!editHijos)
         editContrasena && setEditContrasena(!editContrasena)
     }
-
+    usuario && console.log(usuario) 
     return(
         <div className='contenedor-usuario'>
             {usuario &&
-                <div className='card-usuarios usuario-cont' key={usuario._id}>
+                <div className='card-usuarios usuario-cont' >
                     <div className='cont-card-foto'>
                         <div className='cont-titulo'>
                             <p className='titulo'> {usuario.nombre} </p>
@@ -102,17 +108,12 @@ export default function Usuario(){
                                         defaultValue={usuario.nombre}
                                     />
                                     <input
-                                        
-                                        className="input-editor"
-                                        type="submit"
-                                        value='enviar'
-                                    />
-                                    <input
                                         ref={apellido}
                                         className="input-editor"
                                         type="text"
                                         defaultValue={usuario.apellido}
                                     />
+                                    <input />
                                 </form>
                             )}
                         </div> 
@@ -289,6 +290,23 @@ export default function Usuario(){
                     <Link className="btn-cursor btn-edit"  onClick={() => {setEditContrasena(!editContrasena)}}>Cambiar contraseña </Link>
                 </div>
             }
+            <div className='contenedor-usuario contenedor-usuario-admin serv-usuario'>
+                <div className='card-servicios usuario-cont-admin' >
+                    <div className='cont-servicios'>
+                        <div className='cont-servicio'>
+                            <p className='titulo negrita titulo-servicios'>Servicios Adquiridos</p>
+                            {servicios ? 
+                            servicios.map((servicio, index) => 
+                                <div key={index} className="cont-serv-linea">
+                                    <p >{servicio.descripcion}</p>
+                                    <div className="linea"></div>
+                                </div>
+                            ):
+                            <p>Cargando</p>}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 } 

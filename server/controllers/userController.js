@@ -50,13 +50,31 @@ const userController = {
         }
     },
     editUser: async (req, res) => {
+        console.log(req.params.id)
         try {
-            let newUser = await Usuario.findOneAndUpdate(
-                { _id: req.params.id},
-                { apellido: req.body.apellido, nombre: req.body.nombre, dni: req.body.dni, cuil: req.body.cuil, nacimiento: req.body.nacimiento, foto: req.body.foto, direccion: req.body.direccion, cel: req.body.cel, mail: req.body.mail, cv: req.body.cv, estudios: req.body.estudios, genero: req.body.genero, tarea: req.body.tarea, organizacion: req.body.organizacion, referente: req.body.referente, hijos: req.body.hijos, contrasena: req.body.contrasena },
-                { new: true } 
+            const newUser = await Usuario.findOneAndUpdate(
+                { _id: req.params.id },
+                {
+                apellido: req.body.apellido,
+                nombre: req.body.nombre,
+                dni: req.body.dni,
+                cuil: req.body.cuil,
+                nacimiento: req.body.nacimiento,
+                foto: req.body.foto,
+                direccion: req.body.direccion,
+                cel: req.body.cel,
+                mail: req.body.mail,
+                cv: req.body.cv,
+                estudios: req.body.estudios,
+                genero: req.body.genero,
+                tarea: req.body.tarea,
+                organizacion: req.body.organizacion,
+                referente: req.body.referente,
+                hijos: req.body.hijos,
+                contrasena: req.body.contrasena
+                },
+                { new: true }
             );
-            
             res.json({
                 success: true,
                 response: newUser
@@ -65,7 +83,8 @@ const userController = {
             res.json({ success: false, error: e });
             console.error(e);
         }
-    }    
+    }
+
 }
 
 module.exports = userController

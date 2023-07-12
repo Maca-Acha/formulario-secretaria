@@ -3,9 +3,9 @@ const Servicios = require('../models/ServiciosModel')
 const serviciosControllers = {
     postServicio: async (req, res) => {
         const usuario = req.params.usuarioId;
-        const { titulo, descripcion } = req.body;
+        const { titulo, descripcion, fecha } = req.body;
         try {
-                const servicio = await new Servicios({ usuario, titulo, descripcion }).save();
+                const servicio = await new Servicios({ usuario, titulo, descripcion, fecha }).save();
                 res.json({
                     success: true,
                     response: servicio,
@@ -49,14 +49,16 @@ const serviciosControllers = {
     },
     borrarServicio: async (req,res) =>{
         const id = req.params.id
-        let sevicios
+        const usuarioId = req.body.usuario
+        let servicios
         try{
             await Servicios.findOneAndDelete({_id:id})
-            sevicios = await Servicios.find()
+            servicios = await Servicios.find({usuario: usuarioId})
+            console.log(servicios)
         }catch(error){
         console.log(error)
         }
-        res.json({response: sevicios, success:true})
+        res.json({response: servicios, success:true})
     }
 }
 

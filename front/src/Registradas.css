@@ -9,9 +9,10 @@
     display: flex;
     justify-content: center;
     margin: 4vh 0;
+    flex-direction: column;
 }
 .contenedor-cards{
-    width: 90%;
+    margin: 0 3vw;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
@@ -56,6 +57,22 @@
 .agregar:hover {
     color: var(--black);
     transition: .5s;
+}
+.cont-buscador{
+    padding: 0 3vw; 
+    box-shadow: none; 
+    border-radius: 0;
+
+}
+.buscador{
+    display: flex;
+    gap: 15px
+}
+.input-buscar{
+    width: 25%;
+}
+.text-filtrar{
+    font-weight: 600;
 }
 /* Usuario */
 .contenedor-usuario{

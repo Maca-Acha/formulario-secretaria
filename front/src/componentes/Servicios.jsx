@@ -98,17 +98,17 @@ export default function Servicios(){
                                                 ref={editado}
                                                 className='input-editor'
                                                 type="text"
-                                                value={servicio.descripcion}
+                                                defaultValue={servicio.descripcion}
                                                 onChange={(e) => { editado.current.value = e.target.value }}
                                                 />
                                             </form>
                                         ) : (
                                             <div>
                                                 <p>{servicio.descripcion}</p>
-                                                <p>{servicio.fecha}</p>
                                             </div>
                                         )} 
                                         <div className="iconos-edicion">
+                                            <p>{servicio.fecha}</p>
                                             <div className="btn-cursor btn-edit"  onClick={() => {setEditServicio(!editServicio)}}>{editar} </div>
                                             <div onClick={() => handleBorrarServicio(servicio._id)} >{borrar}</div>
                                         </div>

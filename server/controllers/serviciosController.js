@@ -33,7 +33,7 @@ const serviciosControllers = {
     traerServicio:(req,res)=>{
         Servicios.findOne({_id: req.params.id})
             .then((response) =>{res.json({response})
-    })  //no anda bien
+    }) 
     },
     traerTodosServicios:(req,res)=>{
         Servicios.find()
@@ -54,7 +54,6 @@ const serviciosControllers = {
         try{
             await Servicios.findOneAndDelete({_id:id})
             servicios = await Servicios.find({usuario: usuarioId})
-            console.log(servicios)
         }catch(error){
         console.log(error)
         }

@@ -15,14 +15,14 @@ const userController = {
         })
     },
     newUser: async(req,res) => {
-        const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena} = req.body
+        const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena, rol} = req.body
         try{
             const userExist = await Usuario.findOne({mail})
             if (userExist){
-                res.json({success: false, error: "The username is already registered", response:null})
+                res.json({success: false, error: "El usuario ya esta registrado", response:null})
             }else{
                 const contraHasheada = bcryptjs.hashSync(contrasena, 10)
-                const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada})
+                const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada, rol})
                 const token = jwt.sign({...newUser}, process.env.SECRETO)
                 await newUser.save()
                 res.json({success: true, response: {newUser, token}, error: null})
@@ -50,7 +50,6 @@ const userController = {
         }
     },
     editUser: async (req, res) => {
-        console.log(req.params.id)
         try {
             const newUser = await Usuario.findOneAndUpdate(
                 { _id: req.params.id },
@@ -71,7 +70,8 @@ const userController = {
                 organizacion: req.body.organizacion,
                 referente: req.body.referente,
                 hijos: req.body.hijos,
-                contrasena: req.body.contrasena
+                contrasena: req.body.contrasena,
+                rol: req.body.rol
                 },
                 { new: true }
             );
@@ -83,8 +83,45 @@ const userController = {
             res.json({ success: false, error: e });
             console.error(e);
         }
-    }
-
+    },
+    filtrarUsuarios: async (req, res) => {
+        try {
+            const { filtro } = req.query;
+            const usuariosFiltrados = await Usuario.find({
+                $or: [
+                    { nombre: { $regex: filtro, $options: 'i' } }, 
+                    { apellido: { $regex: filtro, $options: 'i' } }, 
+                    { dni: { $regex: filtro } },
+                    { cuil: { $regex: filtro } },
+                ],
+            });
+            res.json(usuariosFiltrados);
+            } catch (error) {
+            res.status(500).json({ error: 'Error al filtrar usuarios' });
+        }
+    },
+    filtrarPorOrga: async (req, res) => {
+        try {
+            let usuario = await Usuario.find({ organizacion : req.params.organizacion});
+            res.json({ res: usuario });
+        } catch (err) {
+            return res.status(400).json({
+                message: "no se puede encontrar usuarios",
+                res: err.message,
+            });
+        }
+    }, 
+    filtrarPorRef: async (req, res) => {
+        try {
+            let usuario = await Usuario.find({ referente : req.params.referente});
+            res.json({ res: usuario });
+        } catch (err) {
+            return res.status(400).json({
+                message: "no se puede encontrar usuarios",
+                res: err.message,
+            });
+        }
+    }, 
 }
 
 module.exports = userController

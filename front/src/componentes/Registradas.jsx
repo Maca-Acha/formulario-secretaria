@@ -1,29 +1,102 @@
 import '../Registradas.css'
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
-import { AiFillPlusCircle } from 'react-icons/ai';
+import { filtrarUsuarios, setFiltro, setOrganizacionFiltro, usuariosPorOrga, usuariosPorRef, setReferenteFiltro } from "../redux/reducers/filtroSlice";
+import { AiFillPlusCircle } from 'react-icons/ai'
+import {Organizaciones, Referentes} from "./Constantes"
 import Pdf from './pdf'
 
 function Registradas(){
     const dispatch = useDispatch()
-    const usuarios = useSelector((state) => state.usuario.usuarios);
+    const usuarios = useSelector((state) => state.usuario.usuarios)
+    const filtro = useSelector((state) => state.filtro.filtro) || ""
+    const organizacionFiltro = useSelector((state) => state.filtro.organizacionFiltro) || ""
+    const referenteFiltro = useSelector((state) => state.filtro.referenteFiltro) || ""
     const agregar = <AiFillPlusCircle className='agregar' />
 
-    //filtrar por nombre
-    //filtrar por orga
-    //filtrar por recursos
-
     useEffect(() => {
-        dispatch(fetchUsuarios());        
-    }, [dispatch]);
+        dispatch(fetchUsuarios());       
+    }, [dispatch])
+
+    const inputBuscar = useRef()
+    const organizacion = useRef()
+    const referente = useRef()
+    
+    const handleBuscar = () => {
+        const inputValue = inputBuscar.current.value;
+        if (filtro !== inputValue) {
+            dispatch(filtrarUsuarios(inputValue));
+        }
+        dispatch(setFiltro(inputValue));
+    }
+    
+    const handleFiltrarPorOrganizacion = () => {
+        const organizacionValue = organizacion.current.value;
+        if (organizacionFiltro !== organizacionValue) {
+            dispatch(usuariosPorOrga(organizacionValue));
+        }
+        dispatch(setOrganizacionFiltro(organizacionValue));
+    };
+    const handleFiltrarPorReferente = () => {
+        const referenteValue = referente.current.value;
+        if (referenteFiltro !== referenteValue) {
+            dispatch(usuariosPorRef(referenteValue));
+        }
+        dispatch(setReferenteFiltro(referenteValue));
+    };
+
+    const buscarUsuario = (buscar) => {
+        const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';
+        const referenteLower = referenteFiltro ? referenteFiltro.toLowerCase() : '';
+        const buscarLower = buscar ? buscar.toLowerCase().trim() : '';
+        return usuarios.filter((usuario) => {
+            const organizacionUsuarioLower = usuario.organizacion ? usuario.organizacion.toLowerCase() : '';
+            const referenteUsuarioLower = usuario.referente ? usuario.referente.toLowerCase() : '';
+            const nombre = usuario.nombre ? usuario.nombre.toLowerCase().startsWith(buscarLower) : false;
+            const apellido = usuario.apellido ? usuario.apellido.toLowerCase().startsWith(buscarLower) : false;
+            const dni = usuario.dni ? usuario.dni.toLowerCase().startsWith(buscarLower) : false;
+            const cuil = usuario.cuil ? usuario.cuil.toLowerCase().startsWith(buscarLower) : false;
+            return (
+                (organizacionLower === '' || organizacionUsuarioLower === organizacionLower) &&
+                (referenteLower === '' || referenteUsuarioLower === referenteLower) &&
+                (nombre || apellido || dni || cuil)
+            );
+        });
+    };
+    
+    const usuariosFiltrados = buscarUsuario(filtro);
 
     return(
         <div className='cont-contenedor-cards'>
-            {usuarios? 
+            <form className='cont-buscador' >
+                <label className='text-filtrar'>Filtrar</label>
+                <div className='buscador'>
+                    <input
+                        className='input-buscar'
+                        type='text'
+                        placeholder='Buscar'
+                        ref={inputBuscar}
+                        onChange={handleBuscar}
+                    />
+                    <select ref={organizacion} onChange={handleFiltrarPorOrganizacion}>
+                        {Organizaciones.map((orga, index)=>{
+                            return (
+                            <option  value={orga.value} key={index}>{orga.text}</option>
+                        )})}
+                    </select>
+                    <select ref={referente} onChange={handleFiltrarPorReferente}>
+                        {Referentes.map((referente, index)=>{
+                            return (
+                            <option value={referente.value} key={index}>{referente.text}</option>
+                        )})}
+                    </select>
+                </div>
+            </form>
+            {usuarios && usuariosFiltrados? 
             <div className='contenedor-cards'>
-                {usuarios.map((usuario)=>{
+                {usuariosFiltrados.map((usuario)=>{
                     return (
                         <div className='card-usuarios' key={usuario._id}>
                             <div className='cont-card-foto'>

@@ -7,6 +7,7 @@ import Administrador from '../paginas/Administrador';
 import AdminUsuario from './AdminUsuario';
 
 function RoutesManager (){
+    
     return(
         <Routes>
             <Route path= "/"  element= {<Inicio />} />

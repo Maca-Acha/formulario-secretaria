@@ -8,6 +8,13 @@ router.route("/api/usuarios")
 .get(userController.readUsers)
 .post(userController.newUser)
 
+router.route("/api/usuarios/filtrados")
+.get(userController.filtrarUsuarios)
+router.route("/api/usuarios/filtrados/:organizacion")
+.get(userController.filtrarPorOrga)
+router.route("/api/filtrados/:referente")
+.get(userController.filtrarPorRef)
+
 router.route("/usuario/:id")
 .get(userController.returnUser)
 .put(userController.editUser)

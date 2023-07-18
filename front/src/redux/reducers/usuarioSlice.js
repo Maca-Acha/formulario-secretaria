@@ -7,7 +7,8 @@ const initialState = {
     usuario:{},
     error: '',
     token: '',
-    id: ''
+    id: '',
+    rol:''
 }
 
 export const registerActionToolkit = createAsyncThunk('usuarios/register', async (key) => {
@@ -32,10 +33,11 @@ export const signIn = createAsyncThunk('usuarios/signIn', async ({ dni, contrase
         const usuario = await Axios.post('http://localhost:4000/api/inicio', { dni, contrasena });
         if (usuario.data.success && !usuario.data.error) {
             localStorage.setItem('token', usuario.data.response.token);
-            return { token: usuario.data.response.token, id:usuario.data.response.dniExist._id };
+            return { token: usuario.data.response.token, id:usuario.data.response.dniExist._id, rol:usuario.data.response.dniExist.rol };
         } else {
             return { error: usuario.data.error };
         }
+        
     } catch (error) {
         return { error: error.message };
     }
@@ -142,9 +144,11 @@ const usuarioSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(signIn.fulfilled, (state, action) => {
+            
             state.loading = false;
             state.token = action.payload.token;
             state.id = action.payload.id;
+            state.rol = action.payload.rol;
             state.error = '';
         });
         builder.addCase(signIn.rejected, (state, action) => {

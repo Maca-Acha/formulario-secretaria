@@ -97,22 +97,23 @@ function Registro() {
                         Nombre Completo
                         <input  type="text" ref={nombre} name="nombre" placeholder="Ej. Juan Ignacio"/>
                     </label>
-                    
-                        <label className="label input_mediano">
-                            DNI
-                            <input type="text" ref={dni} name="dni" placeholder="Ej. 33333333" />
-                        </label>
-                        <label className="label input_mediano">
-                            CUIL
-                            <input type="text" ref={cuil} name="cuil" placeholder="xx-xxxxxxxx-x"/>
-                        </label>
-                    
                 </section>
-                <div className="contenedor-domicilio">
+                <section className="contenedor-dni">
+                    <label className="label input_mediano">
+                        DNI
+                        <input type="text" ref={dni} name="dni" placeholder="Ej. 33333333" />
+                    </label>
+                    <label className="label input_mediano">
+                        CUIL
+                        <input type="text" ref={cuil} name="cuil" placeholder="xx-xxxxxxxx-x"/>
+                    </label>
                     <label className="label input_mediano" >
                         Fecha de nacimiento
                         <input type="date" ref={fecha} name="nacimiento" />
                     </label>
+                    
+                </section>
+                <div className="contenedor-domicilio">
                     <label className="label width-domocilio">
                         Domicilio
                         <input type="text" ref={domicilio} name="domicilio" placeholder="Calle y altura" />
@@ -139,32 +140,29 @@ function Registro() {
                         <input id="fotoInput" className="cargar" ref={foto} type="file" name="foto" accept="image/*"/>
                     </label>
                 </section>
-                <div>
-
-                    <label className="label">
-                        Nivel de Estudios
-                        <select ref={estudios}>
-                            <option disabled="disabled">Seleccione una opcion</option>
-                            {Estudios.map((estudio, index)=>{
-                                return (
-                                <option value={estudio} key={index}>{estudio}</option>
-                            )})}
-                        </select>
-                    </label>
-                    <label className="label">
-                        Género 
-                        <div className="generos">
-                            {Generos.map((genero, index)=>{
-                                return( 
-                                    <label className="genero" key={index}>
-                                        <input value={genero} type="radio" checked={generoSeleccionado === genero} onChange={() => setGeneroSeleccionado(genero)} />
-                                        {genero}
-                                    </label>
-                                    )
-                                })}
-                        </div>
-                    </label>
-                </div>
+                <label className="label">
+                    Nivel de Estudios
+                    <select ref={estudios}>
+                        <option disabled="disabled">Seleccione una opcion</option>
+                        {Estudios.map((estudio, index)=>{
+                            return (
+                            <option value={estudio} key={index}>{estudio}</option>
+                        )})}
+                    </select>
+                </label>
+                <label className="label">
+                    Género 
+                    <div className="generos">
+                        {Generos.map((genero, index)=>{
+                            return( 
+                                <label className="genero" key={index}>
+                                    <input value={genero} type="radio" checked={generoSeleccionado === genero} onChange={() => setGeneroSeleccionado(genero)} />
+                                    {genero}
+                                </label>
+                                )
+                            })}
+                    </div>
+                </label>
                 <section className="militancia">
                     <label className="label input_mediano">
                         Tarea

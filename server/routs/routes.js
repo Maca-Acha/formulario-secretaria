@@ -1,41 +1,45 @@
 const router = require ('express').Router()
-const userController = require('../controllers/userController')
+const usuariosController = require('../controllers/usuariosController')
+const usuariosLoteControllerModule = require('../controllers/usuariosLoteController');
 const controllerCv = require("../controllers/archivosController")
 const controllerFoto = require("../controllers/fotosController")
 const serviciosControllers = require('../controllers/serviciosController')
 
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+// USUARIOS
+router.post("/api/upload", 
+    upload.any("archivo"), 
+    usuariosLoteControllerModule.leerExcel);
 router.route("/api/usuarios")
-.get(userController.readUsers)
-.post(userController.newUser)
-
+    .get(usuariosController.verUsuarios)
+    .post(usuariosController.nuevoUsuario)
 router.route("/api/usuarios/filtrados")
-.get(userController.filtrarUsuarios)
+    .get(usuariosController.filtrarUsuarios)
 router.route("/api/usuarios/filtrados/:organizacion")
-.get(userController.filtrarPorOrga)
+    .get(usuariosController.filtrarPorOrga)
 router.route("/api/filtrados/:referente")
-.get(userController.filtrarPorRef)
-
+    .get(usuariosController.filtrarPorRef)
 router.route("/usuario/:id")
-.get(userController.returnUser)
-.put(userController.editUser)
-
+    .get(usuariosController.traerUsuarios)
+    .put(usuariosController.editarUsuario)
 router.route("/api/inicio")
-.post(userController.signIn)
-
+    .post(usuariosController.signIn)
 router.route("/api/servicios/:usuarioId")
-.get(serviciosControllers.traerServiciosByUsuario)
-.post(serviciosControllers.postServicio)
+    .get(serviciosControllers.traerServiciosByUsuario)
+    .post(serviciosControllers.postServicio)
 
+// SERVICIOS
 router.route("/api/servicios")
-.get(serviciosControllers.traerTodosServicios)
-
+    .get(serviciosControllers.traerTodosServicios)
 router.route("/api/servicios/:id")
-.get(serviciosControllers.traerServicio)
-.delete(serviciosControllers.borrarServicio)
-.put(serviciosControllers.editarServicio)
+    .get(serviciosControllers.traerServicio)
+    .delete(serviciosControllers.borrarServicio)
+    .put(serviciosControllers.editarServicio)
 
-
-
+// ARCHIVOS
 /* router.get('/api/archivos', controllerCv.returnCvs); */
 router.post(
     "/api/archivos",

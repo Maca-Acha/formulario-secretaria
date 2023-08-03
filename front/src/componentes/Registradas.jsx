@@ -6,7 +6,9 @@ import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
 import { filtrarUsuarios, setFiltro, setOrganizacionFiltro, usuariosPorOrga, usuariosPorRef, setReferenteFiltro } from "../redux/reducers/filtroSlice";
 import { AiFillPlusCircle } from 'react-icons/ai'
 import {Organizaciones, Referentes} from "./Constantes"
+import  leerArchivoCSV  from '../archivos/leerArchivoCSV'
 import Pdf from './pdf'
+import axios from 'axios'
 
 function Registradas(){
     const dispatch = useDispatch()
@@ -24,6 +26,7 @@ function Registradas(){
     const organizacion = useRef()
     const referente = useRef()
     
+    //Filtros
     const handleBuscar = () => {
         const inputValue = inputBuscar.current.value;
         if (filtro !== inputValue) {
@@ -31,7 +34,6 @@ function Registradas(){
         }
         dispatch(setFiltro(inputValue));
     }
-    
     const handleFiltrarPorOrganizacion = () => {
         const organizacionValue = organizacion.current.value;
         if (organizacionFiltro !== organizacionValue) {
@@ -46,7 +48,6 @@ function Registradas(){
         }
         dispatch(setReferenteFiltro(referenteValue));
     };
-
     const buscarUsuario = (buscar) => {
         const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';
         const referenteLower = referenteFiltro ? referenteFiltro.toLowerCase() : '';
@@ -68,6 +69,22 @@ function Registradas(){
     
     const usuariosFiltrados = buscarUsuario(filtro);
 
+    //manejo csv
+    const handleFileChange = async (event) => {
+        try {
+            const archivoSeleccionado = event.target.files[0];
+            const datosDelArchivo = await leerArchivoCSV(archivoSeleccionado);
+            console.log(datosDelArchivo); //llega bien
+
+            // Solicitud HTTP para enviar los datos al servidor
+            const urlAPI = "http://localhost:4000/api/usuarios"; 
+            const respuesta = await axios.post(urlAPI, datosDelArchivo);
+            console.log("Datos enviados correctamente:", respuesta.data);
+        } catch (error) {
+            console.error("Error al leer o enviar el archivo:", error);
+        }
+    };
+    
     return(
         <div className='cont-contenedor-cards'>
             <form className='cont-buscador' >
@@ -92,6 +109,7 @@ function Registradas(){
                             <option value={referente.value} key={index}>{referente.text}</option>
                         )})}
                     </select>
+                    <input type='file' id='inputArchivo' onChange={handleFileChange} />
                 </div>
             </form>
             {usuarios && usuariosFiltrados? 

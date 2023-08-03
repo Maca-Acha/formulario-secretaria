@@ -2,33 +2,61 @@ const Usuario = require("../models/UserModel");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const userController = {
-    readUsers:(req,res) => {
+const usuariosController = {
+    verUsuarios:(req,res) => {
         Usuario.find().then((response)=>{
             res.json({response})
         })
     },
-    returnUser:(req,res) => {
+    traerUsuarios:(req,res) => {
         Usuario.findOne({_id: req.params.id})
         .then((response)=>{
             res.json({response})
         })
     },
-    newUser: async(req,res) => {
-        const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena, rol} = req.body
-        try{
-            const userExist = await Usuario.findOne({mail})
-            if (userExist){
-                res.json({success: false, error: "El usuario ya esta registrado", response:null})
-            }else{
-                const contraHasheada = bcryptjs.hashSync(contrasena, 10)
-                const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada, rol})
-                const token = jwt.sign({...newUser}, process.env.SECRETO)
-                await newUser.save()
-                res.json({success: true, response: {newUser, token}, error: null})
+    nuevoUsuario: async (req, res) => {
+        try {
+            const usuarios = req.body;
+            const resultados = [];
+    
+            for (let i = 0; i < usuarios.length; i++) {
+                const { apellido, nombre, dni, cuil, nacimiento, foto, direccion, cel, mail, cv, estudios, genero, tarea, organizacion, referente, hijos, contrasena, rol } = usuarios[i];
+                const usuarioExiste = await Usuario.findOne({ mail });
+    
+                if (usuarioExiste) {
+                    resultados.push({ success: false, error: `El usuario con mail '${mail}' ya está registrado`, response: null });
+                } else {
+                    const contraHasheada = bcryptjs.hashSync(contrasena, 10);
+                    const nuevoUsuario = new Usuario({
+                        apellido,
+                        nombre,
+                        dni,
+                        cuil,
+                        foto,
+                        direccion,
+                        cel,
+                        mail,
+                        cv,
+                        estudios,
+                        nacimiento,
+                        genero,
+                        tarea,
+                        organizacion,
+                        referente,
+                        hijos,
+                        contrasena: contraHasheada,
+                        rol,
+                    });
+                    const token = jwt.sign({ ...nuevoUsuario }, process.env.SECRETO);
+                    await nuevoUsuario.save();
+                    resultados.push({ success: true, response: { nuevoUsuario, token }, error: null });
+                }
             }
-        }catch(error){
-            res.json({success: false, response: null, error: "Error en el servidor"})
+    
+            res.json(resultados);
+        } catch (error) {
+            console.error("Error al procesar usuarios:", error);
+            res.status(500).json({ success: false, response: null, error: "Error en el servidor" });
         }
     },
     signIn: async (req, res) => {
@@ -49,9 +77,9 @@ const userController = {
             return res.json({ success: false, response: null, error: "Error en el servidor" });
         }
     },
-    editUser: async (req, res) => {
+    editarUsuario: async (req, res) => {
         try {
-            const newUser = await Usuario.findOneAndUpdate(
+            const nuevoUsuario = await Usuario.findOneAndUpdate(
                 { _id: req.params.id },
                 {
                 apellido: req.body.apellido,
@@ -77,12 +105,21 @@ const userController = {
             );
             res.json({
                 success: true,
-                response: newUser
+                response: nuevoUsuario
             });
         } catch (e) {
             res.json({ success: false, error: e });
             console.error(e);
         }
+    },
+    borrarUsuario: async (req,res)=>{
+        const id = req.body
+        try{
+            await Usuario.findOneAndDelete({_id:id})
+        }catch(error){
+            console.log(error)
+        }
+        res.json({success:true})
     },
     filtrarUsuarios: async (req, res) => {
         try {
@@ -124,4 +161,24 @@ const userController = {
     }, 
 }
 
-module.exports = userController
+module.exports = usuariosController
+
+/* newUser: async(req,res) => {
+        console.log("req.body: ",req.body)
+        const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena, rol} = req.body
+        try{
+            console.log("mail: ", mail)
+            const usuarioExiste = await Usuario.findOne({mail})
+            if (usuarioExiste){
+                res.json({success: false, error: "El usuario ya esta registrado", response:null})
+            }else{
+                const contraHasheada = bcryptjs.hashSync(contrasena, 10)
+                const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada, rol})
+                const token = jwt.sign({...newUser}, process.env.SECRETO)
+                await newUser.save()
+                res.json({success: true, response: {newUser, token}, error: null})
+            }
+        }catch(error){
+            res.json({success: false, response: null, error: "Error en el servidor"})
+        }
+    }, */

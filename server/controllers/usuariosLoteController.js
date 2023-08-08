@@ -1,6 +1,3 @@
-/* const Papa = require("papaparse");
-const csv = require("csv-parser");
-const { Readable } = require("stream"); */
 const axios = require('axios');
 
 function leerArchivoCSV(data) {

@@ -74,6 +74,16 @@
 .text-filtrar{
     font-weight: 600;
 }
+.btn-eliminar{
+    background: none;
+    border: none;
+    color: var(--black);
+    cursor: pointer;
+}
+.btn-eliminar:focus{
+    outline: none !important;
+}
+
 /* Usuario */
 .contenedor-usuario{
     display: flex;

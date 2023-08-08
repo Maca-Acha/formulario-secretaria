@@ -75,6 +75,13 @@ export const editarUsuario = createAsyncThunk(
         return nuevoUser.data.response
     }
 );
+export const borrarUsuario = createAsyncThunk(
+    'borrarUsuario',
+    async ({ id }) => {
+        const usuarioBorrado = await Axios.delete(`http://localhost:4000/usuario/${id}`);
+        return usuarioBorrado.data.response
+    }
+);
 
 export const setToken = (token) => {
     return {
@@ -187,6 +194,20 @@ const usuarioSlice = createSlice({
             state.error = action.error.message;
         });
         
+        /* Borrar */ 
+        builder.addCase(borrarUsuario.pending,(state)=>{
+            state.loading = true;
+        })
+        builder.addCase(borrarUsuario.fulfilled, (state, action) => {
+            state.loading = false;
+            state.usuario = action.payload;
+            state.error = '';
+        });
+        builder.addCase(borrarUsuario.rejected, (state, action) => {
+            state.loading = false;
+            state.usuario = {};
+            state.error = action.error.message;
+        });
     },
 });
 

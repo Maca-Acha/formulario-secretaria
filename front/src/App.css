@@ -121,6 +121,7 @@ input, select{
   border: none;
   border-radius: 5px;
   padding: .4rem;
+  cursor: pointer;
 }
 input:focus, select:focus {
   outline: none !important;

@@ -14,15 +14,15 @@ const usuariosController = {
             res.json({response})
         })
     },
-    nuevoUsuario: async (req, res) => {
+    nuevosUsuario: async (req, res) => {
         try {
-            const usuarios = req.body;
+            const usuarios = Array.isArray(req.body) ? req.body : [req.body];
             const resultados = [];
-    
+
             for (let i = 0; i < usuarios.length; i++) {
                 const { apellido, nombre, dni, cuil, nacimiento, foto, direccion, cel, mail, cv, estudios, genero, tarea, organizacion, referente, hijos, contrasena, rol } = usuarios[i];
                 const usuarioExiste = await Usuario.findOne({ mail });
-    
+
                 if (usuarioExiste) {
                     resultados.push({ success: false, error: `El usuario con mail '${mail}' ya está registrado`, response: null });
                 } else {
@@ -52,7 +52,6 @@ const usuariosController = {
                     resultados.push({ success: true, response: { nuevoUsuario, token }, error: null });
                 }
             }
-    
             res.json(resultados);
         } catch (error) {
             console.error("Error al procesar usuarios:", error);
@@ -113,13 +112,13 @@ const usuariosController = {
         }
     },
     borrarUsuario: async (req,res)=>{
-        const id = req.body
+        const id = req.params.id
         try{
             await Usuario.findOneAndDelete({_id:id})
         }catch(error){
             console.log(error)
         }
-        res.json({success:true})
+        res.json({success: true, message: 'Usuario eliminado correctamente'})
     },
     filtrarUsuarios: async (req, res) => {
         try {

@@ -2,9 +2,15 @@ import '../Registradas.css'
 import { useEffect, useRef } from "react"
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchUsuarios } from "../redux/reducers/usuarioSlice"
-import { filtrarUsuarios, setFiltro, setOrganizacionFiltro, usuariosPorOrga, usuariosPorRef, setReferenteFiltro } from "../redux/reducers/filtroSlice";
+import { fetchUsuarios, borrarUsuario } from "../redux/reducers/usuarioSlice"
+import { filtrarUsuarios, 
+        setFiltro, 
+        setOrganizacionFiltro, 
+        usuariosPorOrga, 
+        usuariosPorRef, 
+        setReferenteFiltro } from "../redux/reducers/filtroSlice"
 import { AiFillPlusCircle } from 'react-icons/ai'
+import { RiDeleteBin5Fill } from "react-icons/ri"
 import {Organizaciones, Referentes} from "./Constantes"
 import  leerArchivoCSV  from '../archivos/leerArchivoCSV'
 import Pdf from './pdf'
@@ -17,6 +23,7 @@ function Registradas(){
     const organizacionFiltro = useSelector((state) => state.filtro.organizacionFiltro) || ""
     const referenteFiltro = useSelector((state) => state.filtro.referenteFiltro) || ""
     const agregar = <AiFillPlusCircle className='agregar' />
+    const eliminar = <RiDeleteBin5Fill />
 
     useEffect(() => {
         dispatch(fetchUsuarios());       
@@ -25,6 +32,10 @@ function Registradas(){
     const inputBuscar = useRef()
     const organizacion = useRef()
     const referente = useRef()
+
+    const traerUsuarios = () =>{
+        dispatch(fetchUsuarios())
+    }
     
     //Filtros
     const handleBuscar = () => {
@@ -66,16 +77,22 @@ function Registradas(){
             );
         });
     };
-    
     const usuariosFiltrados = buscarUsuario(filtro);
 
-    //manejo csv
+    //Borrar
+    const handleBorrar = (id)=>{
+        console.log(id)
+        dispatch(borrarUsuario({id}))
+        dispatch(fetchUsuarios())
+    }
+
+    //Subir CSV
     const handleFileChange = async (event) => {
         try {
             const archivoSeleccionado = event.target.files[0];
+            console.log(archivoSeleccionado)
             const datosDelArchivo = await leerArchivoCSV(archivoSeleccionado);
-            console.log(datosDelArchivo); //llega bien
-
+            console.log(datosDelArchivo);
             // Solicitud HTTP para enviar los datos al servidor
             const urlAPI = "http://localhost:4000/api/usuarios"; 
             const respuesta = await axios.post(urlAPI, datosDelArchivo);
@@ -110,6 +127,7 @@ function Registradas(){
                         )})}
                     </select>
                     <input type='file' id='inputArchivo' onChange={handleFileChange} />
+                    <button onClick={() => traerUsuarios()} >Agregar</button>
                 </div>
             </form>
             {usuarios && usuariosFiltrados? 
@@ -117,12 +135,17 @@ function Registradas(){
                 {usuariosFiltrados.map((usuario)=>{
                     return (
                         <div className='card-usuarios' key={usuario._id}>
-                            <div className='cont-card-foto'>
-                                <div>
-                                    <p> {usuario.nombre} </p>
-                                    <p> {usuario.apellido} </p>
+                            <div>
+                                <div className='cont-card-foto'>
+                                    <div>
+                                        <p> {usuario.nombre} </p>
+                                        <p> {usuario.apellido} </p>
+                                    </div>
+                                    <p className='card-foto'>Foto</p>
                                 </div>
-                                <p className='card-foto'>Foto</p>
+                                <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
+                                    {eliminar}
+                                </button>
                             </div>
                             <p><span className='negrita'>DNI: </span>{usuario.dni} </p>
                             <p><span className='negrita'>CUIL: </span>{usuario.cuil} </p>

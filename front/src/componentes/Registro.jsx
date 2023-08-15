@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
-import {Estudios, Generos, Tareas} from "./Constantes"
+import {Estudios, Generos, Tareas, Referentes, Organizaciones, Barrios} from "./Constantes"
 import { registrarUsuario } from "../redux/reducers/usuarioSlice"
 import axios from 'axios';
 
@@ -13,6 +13,7 @@ function Registro() {
     const cuil = useRef()
     const fecha = useRef()
     const domicilio = useRef()
+    const barrio = useRef()
     const telefono = useRef()
     const mail = useRef()
     const cv = useRef()
@@ -91,107 +92,124 @@ function Registro() {
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >
                         Apellido
-                        <input type="text" ref={apellido} name="apellido" placeholder="Ej. Rodriguez" />
+                        <input className="input-form" type="text" ref={apellido} name="apellido" placeholder="Ej. Rodriguez" />
                     </label>
                     <label className="label input_grande">
                         Nombre Completo
-                        <input  type="text" ref={nombre} name="nombre" placeholder="Ej. Juan Ignacio"/>
+                        <input className="input-form" type="text" ref={nombre} name="nombre" placeholder="Ej. Juan Ignacio"/>
                     </label>
                     
-                        <label className="label input_mediano">
-                            DNI
-                            <input type="text" ref={dni} name="dni" placeholder="Ej. 33333333" />
-                        </label>
-                        <label className="label input_mediano">
-                            CUIL
-                            <input type="text" ref={cuil} name="cuil" placeholder="xx-xxxxxxxx-x"/>
-                        </label>
+                    <label className="label input_mediano">
+                        DNI
+                        <input className="input-form" type="text" ref={dni} name="dni" placeholder="Ej. 33333333" />
+                    </label>
+                    <label className="label input_mediano">
+                        CUIL
+                        <input className="input-form" type="text" ref={cuil} name="cuil" placeholder="xx-xxxxxxxx-x"/>
+                    </label>
+                    <label className="label input_mediano" >
+                        Fecha de nacimiento
+                        <input className="input-form" type="date" ref={fecha} name="nacimiento" />
+                    </label>
                     
                 </section>
                 <div className="contenedor-domicilio">
-                    <label className="label input_mediano" >
-                        Fecha de nacimiento
-                        <input type="date" ref={fecha} name="nacimiento" />
-                    </label>
                     <label className="label width-domocilio">
                         Domicilio
-                        <input type="text" ref={domicilio} name="domicilio" placeholder="Calle y altura" />
+                        <input className="input-form" type="text" ref={domicilio} name="domicilio" placeholder="Calle y altura" />
                     </label>
-                    <p>mapa</p>
+                    <label >
+                        Barrio
+                        <select ref={barrio} className="input-form input-barrio">
+                            {Barrios.map((barrio, index)=>{
+                                return (
+                                <option value={barrio.value} key={index}>{barrio.text}</option>
+                            )})}
+                        </select>
+                    </label>
                 </div>
                 <section className="contenedor-celMail">
                     <label className="label input_grande">
                         Telefono celular
-                        <input type="tel" ref={telefono} name="telefono" placeholder="Ej. 115555555"/>
+                        <input className="input-form" type="tel" ref={telefono} name="telefono" placeholder="Ej. 115555555"/>
                     </label>
                     <label className="label input_grande">
                         Mail
-                        <input type="email" ref={mail} name="mail" placeholder="Ej. ejemplo@gamil.com" />
+                        <input className="input-form" type="email" ref={mail} name="mail" placeholder="Ej. ejemplo@gamil.com" />
                     </label>
                 </section>
                 <section className="cargar_archivo">
                     <label className="label">
                         Cargar CV
-                        <input id="cvInput" className="cargar" ref={cv} type="file" name="cv" accept=".pdf" />
+                        <input id="cvInput" className="cargar input-form" ref={cv} type="file" name="cv" accept=".pdf" />
                     </label>
                     <label className="label">
                         Cargar foto
-                        <input id="fotoInput" className="cargar" ref={foto} type="file" name="foto" accept="image/*"/>
+                        <input id="fotoInput" className="cargar input-form" ref={foto} type="file" name="foto" accept="image/*"/>
                     </label>
                 </section>
-                <div>
-
-                    <label className="label">
-                        Nivel de Estudios
-                        <select ref={estudios}>
-                            <option disabled="disabled">Seleccione una opcion</option>
-                            {Estudios.map((estudio, index)=>{
-                                return (
-                                <option value={estudio} key={index}>{estudio}</option>
-                            )})}
-                        </select>
-                    </label>
-                    <label className="label">
-                        Género 
-                        <div className="generos">
-                            {Generos.map((genero, index)=>{
-                                return( 
-                                    <label className="genero" key={index}>
-                                        <input value={genero} type="radio" checked={generoSeleccionado === genero} onChange={() => setGeneroSeleccionado(genero)} />
-                                        {genero}
-                                    </label>
-                                    )
-                                })}
-                        </div>
-                    </label>
-                </div>
+                <label className="label">
+                    Nivel de Estudios
+                    <select ref={estudios} className="input-form">
+                        <option disabled="disabled">Seleccione una opcion</option>
+                        {Estudios.map((estudio, index)=>{
+                            return (
+                            <option value={estudio} key={index}>{estudio}</option>
+                        )})}
+                    </select>
+                </label>
+                <label className="label">
+                    Género 
+                    <div className="generos">
+                        {Generos.map((genero, index)=>{
+                            return( 
+                                <label className="genero" key={index}>
+                                    <input value={genero} type="radio" checked={generoSeleccionado === genero} onChange={() => setGeneroSeleccionado(genero)} />
+                                    {genero}
+                                </label>
+                                )
+                            })}
+                    </div>
+                </label>
                 <section className="militancia">
                     <label className="label input_mediano">
                         Tarea
-                        <select ref={tareas}>
-                        {Tareas.map((tarea, index)=>{
-                            return(
-                                <option value={tarea.text} disabled={tarea.disabled} key={index}>{tarea.text}</option>
-                                )
-                        })}
-                    </select>
+                        <select ref={tareas} className="input-form">
+                            {Tareas.map((tarea, index)=>{
+                                return(
+                                    <option value={tarea.text} disabled={tarea.disabled} key={index}>{tarea.text}</option>
+                                    )
+                            })}
+                        </select>
                     </label>
                     <label className="label input_mediano">
                         Organización
-                        <input type="text" name="orga" ref={organizacion} placeholder="Especificar organización" />
+                        <select ref={organizacion} className="input-form">
+                            {Organizaciones.map((organizacion, index)=>{
+                                return(
+                                    <option value={organizacion.text} disabled={organizacion.disabled} key={index}>{organizacion.text}</option>
+                                    )
+                            })}
+                        </select>
                     </label>
                     <label className="label input_mediano">
                         Referente
-                        <input type="text" name="referente" ref={referente} placeholder="Especificar referente" />
+                        <select ref={referente} className="input-form">
+                            {Referentes.map((referente, index)=>{
+                                return(
+                                    <option value={referente.text} disabled={referente.disabled} key={index}>{referente.text}</option>
+                                    )
+                            })}
+                        </select>
                     </label>
                 </section>
                 <label className="label">
                     Hijos
-                    <input type="text" name="hijos" ref={hijos} placeholder="Cantidad de hijos" />
+                    <input className="input-form" type="text" name="hijos" ref={hijos} placeholder="Cantidad de hijos" />
                 </label>
                 <label className="label">
                     Contraseña
-                    <input type="text" name="contrasena" ref={contrasena} placeholder="Cree una contraseña"/>
+                    <input className="input-form" type="text" name="contrasena" ref={contrasena} placeholder="Cree una contraseña"/>
                 </label>
                 <input className="btn-enviar" type="submit" value="Enviar" />
             </form>

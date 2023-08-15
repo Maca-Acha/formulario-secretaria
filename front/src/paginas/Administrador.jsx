@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef } from "react"
 import { fetchUsuarios, signToken, signIn, setToken } from "../redux/reducers/usuarioSlice"
 import {useNavigate} from "react-router-dom"
+import { toast } from 'react-toastify';
 
 export default function Administrador(){
     const dispatch = useDispatch()
@@ -30,7 +31,16 @@ export default function Administrador(){
         .then((action) => {
             if (action.payload?.token && action.payload?.id) {
                 dispatch(setToken(action.payload.token));
-                navigate(`${rol && rol === "admin" ? "/Registradas": "/Administrador"}`)
+                navigate(`${rol && rol === "admin" ? "/Registradas": "/"}`)
+                if(rol === "admin"){
+                    toast.success('Has iniciado sesión con ' + action.payload.nombre, {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                }else{
+                    toast.error('Lo sentimos, no posee una cuenta de administrador ', {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
+                }
             }
         })        
         .catch((error) => console.log(error));

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit'
 import Axios from 'axios'
+import { toast } from 'react-toastify';
 
 const initialState = {
     loading: false,
@@ -35,6 +36,10 @@ export const signIn = createAsyncThunk('usuarios/signIn', async ({ dni, contrase
             localStorage.setItem('token', usuario.data.response.token);
             return { token: usuario.data.response.token, id:usuario.data.response.dniExist._id, rol:usuario.data.response.dniExist.rol };
         } else {
+            toast.error(usuario.data.error, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            
             return { error: usuario.data.error };
         }
         
@@ -58,8 +63,15 @@ export const signToken = createAsyncThunk('usuarios/signToken', async() =>{
 export const registrarUsuario = createAsyncThunk('registrarusuario', async (body) => {
     try{
         const response = await Axios.post('http://localhost:4000/api/usuarios', body);
+        toast.success('Te haz registrado correctamente', {
+            position: toast.POSITION.TOP_RIGHT
+        });
         return response.data
     }catch(error){
+        console.log(error)
+        toast.error(error, {
+            position: toast.POSITION.TOP_RIGHT
+        });
         return isRejectedWithValue(error)
     }
 })

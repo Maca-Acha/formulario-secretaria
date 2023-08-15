@@ -89,7 +89,7 @@ export default function Usuario(){
         editHijos && setEditHijos(!editHijos)
         editContrasena && setEditContrasena(!editContrasena)
     }
-    usuario && console.log(usuario) 
+    
     return(
         <div className='contenedor-usuario'>
             {usuario &&

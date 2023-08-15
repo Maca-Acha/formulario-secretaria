@@ -15,6 +15,8 @@ import {Organizaciones, Referentes} from "./Constantes"
 import  leerArchivoCSV  from '../archivos/leerArchivoCSV'
 import Pdf from './pdf'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
 
 function Registradas(){
     const dispatch = useDispatch()
@@ -33,9 +35,6 @@ function Registradas(){
     const organizacion = useRef()
     const referente = useRef()
 
-    const traerUsuarios = () =>{
-        dispatch(fetchUsuarios())
-    }
     
     //Filtros
     const handleBuscar = () => {
@@ -81,19 +80,34 @@ function Registradas(){
 
     //Borrar
     const handleBorrar = (id)=>{
-        console.log(id)
-        dispatch(borrarUsuario({id}))
-        dispatch(fetchUsuarios())
+        Swal.fire({
+            title: '¿Seguro de que deseas borrar al usuario/a?',
+            text: '¡Este cambio no se puede revertir!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#37BBED',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Sí, eliminar usuario/a'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(borrarUsuario({id})
+                ).then(() => {
+                    dispatch(fetchUsuarios());
+                    Swal.fire('¡Borrado!', 'Este usuario/a fue eliminado', 'success');
+                });
+            }
+        });
     }
 
     //Subir CSV
     const handleFileChange = async (event) => {
         try {
             const archivoSeleccionado = event.target.files[0];
-            console.log(archivoSeleccionado)
             const datosDelArchivo = await leerArchivoCSV(archivoSeleccionado);
-            console.log(datosDelArchivo);
-            // Solicitud HTTP para enviar los datos al servidor
+            toast.success('Se han agregado los usuarios del archivo Excel, aprete el boton Cagar para actualizar la pagina', {
+                position: toast.POSITION.TOP_RIGHT
+            });
             const urlAPI = "http://localhost:4000/api/usuarios"; 
             const respuesta = await axios.post(urlAPI, datosDelArchivo);
             console.log("Datos enviados correctamente:", respuesta.data);
@@ -101,33 +115,45 @@ function Registradas(){
             console.error("Error al leer o enviar el archivo:", error);
         }
     };
-    
+
+    const traerUsuarios = async () =>{
+        dispatch(fetchUsuarios())
+    }
+
     return(
         <div className='cont-contenedor-cards'>
             <form className='cont-buscador' >
-                <label className='text-filtrar'>Filtrar</label>
-                <div className='buscador'>
-                    <input
-                        className='input-buscar'
-                        type='text'
-                        placeholder='Buscar'
-                        ref={inputBuscar}
-                        onChange={handleBuscar}
-                    />
-                    <select ref={organizacion} onChange={handleFiltrarPorOrganizacion}>
-                        {Organizaciones.map((orga, index)=>{
-                            return (
-                            <option  value={orga.value} key={index}>{orga.text}</option>
-                        )})}
-                    </select>
-                    <select ref={referente} onChange={handleFiltrarPorReferente}>
-                        {Referentes.map((referente, index)=>{
-                            return (
-                            <option value={referente.value} key={index}>{referente.text}</option>
-                        )})}
-                    </select>
-                    <input type='file' id='inputArchivo' onChange={handleFileChange} />
-                    <button onClick={() => traerUsuarios()} >Agregar</button>
+                <div className='usuarios-csv'>
+                    <label className='text-filtrar'>Filtrar</label>
+                    <div className='buscador'>
+                        <input
+                            className='input-buscar'
+                            type='text'
+                            placeholder='Buscar'
+                            ref={inputBuscar}
+                            onChange={handleBuscar}
+                        />
+                        <select ref={organizacion} onChange={handleFiltrarPorOrganizacion}>
+                            {Organizaciones.map((orga, index)=>{
+                                return (
+                                <option  value={orga.value} key={index}>{orga.text}</option>
+                            )})}
+                        </select>
+                        <select ref={referente} onChange={handleFiltrarPorReferente}>
+                            {Referentes.map((referente, index)=>{
+                                return (
+                                <option value={referente.value} key={index}>{referente.text}</option>
+                            )})}
+                        </select>
+                    </div>
+
+                </div>
+                <div className='usuarios-csv'>
+                    <label className='titulo-usuarios-csv'>Cargar usuarios con archivo Excel</label>
+                    <div className='agregar-usuarios-csv'>
+                        <input type='file' id='inputArchivo' onChange={handleFileChange} />
+                        <button className='btn-agregar-csv' onClick={() => traerUsuarios()} >Cargar</button>
+                    </div>
                 </div>
             </form>
             {usuarios && usuariosFiltrados? 

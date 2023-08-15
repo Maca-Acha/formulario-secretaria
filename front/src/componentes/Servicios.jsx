@@ -91,7 +91,9 @@ export default function Servicios(){
                             {servicios[0] ? 
                             servicios.map((servicio, index) => 
                                 <div key={index} className="cont-serv-linea" >
+                                    
                                     <div className="admin-servicio">
+                                    
                                         {editServicio ? (
                                             <form className="editor" onSubmit={() => { handleEditarServicio(servicio._id) }}>
                                                 <input
@@ -112,14 +114,15 @@ export default function Servicios(){
                                             <div className="btn-cursor btn-edit"  onClick={() => {setEditServicio(!editServicio)}}>{editar} </div>
                                             <div onClick={() => handleBorrarServicio(servicio._id)} >{borrar}</div>
                                         </div>
+                                        
                                     </div>
                                     <div className="linea"></div>
                                 </div>
                             ):
-                            <p>Cargando</p>}
+                            <p>No tiene servicios adquiridos</p>}
                             <form className='servicios' onSubmit={handleNuevoServicio}>
-                                <input ref={descripcion} type="text" placeholder="Describir servicio"  />
-                                <input type="submit" className=" btn-agregar" value="Agregar" /> 
+                                <input ref={descripcion} className="input-form" type="text" placeholder="Describir servicio"  />
+                                <input type="submit" className=" btn-agregar " value="Agregar" /> 
                             </form>
                         </div>
                     </div>

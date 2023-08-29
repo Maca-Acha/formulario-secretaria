@@ -16,8 +16,6 @@ exports.uploadCv = uploadCv;
 
 exports.uploadFiles = (req, res) => {
     uploadCv(req, res, async (err) => {
-        console.log(req.file);
-        console.log(err);
         if (err) {
             return res.status(500).json({ error: 'Error al cargar el archivo' });
         }

@@ -15,13 +15,13 @@ export default function AdminUsuario(){
     useEffect(() => {
         if (memoizedId) {
             dispatch(traerUsuario(memoizedId));
+            
         }
     }, [dispatch, memoizedId]);
-
     return(
         <div className='cont-admin-servicios'>
             <div className='contenedor-usuario contenedor-usuario-admin'>
-                {usuario &&
+                {usuario && 
                     <div className='card-usuarios usuario-cont-admin' key={usuario._id}>
                         <div className='cont-card-foto'>
                             <div className='cont-titulo'>

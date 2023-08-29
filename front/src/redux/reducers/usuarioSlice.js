@@ -44,6 +44,9 @@ export const signIn = createAsyncThunk('usuarios/signIn', async ({ dni, contrase
         }
         
     } catch (error) {
+        toast.error(error, {
+            position: toast.POSITION.TOP_RIGHT
+        });
         return { error: error.message };
     }
 })
@@ -68,8 +71,7 @@ export const registrarUsuario = createAsyncThunk('registrarusuario', async (body
         });
         return response.data
     }catch(error){
-        console.log(error)
-        toast.error(error, {
+        toast.error("Lo sentimos! Error al registrarse. Verifique que todos los campos esten completos", {
             position: toast.POSITION.TOP_RIGHT
         });
         return isRejectedWithValue(error)

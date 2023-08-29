@@ -35,7 +35,6 @@ function Registradas(){
     const organizacion = useRef()
     const referente = useRef()
 
-    
     //Filtros
     const handleBuscar = () => {
         const inputValue = inputBuscar.current.value;
@@ -116,6 +115,7 @@ function Registradas(){
         }
     };
 
+    //Traer usuarios
     const traerUsuarios = async () =>{
         dispatch(fetchUsuarios())
     }
@@ -127,19 +127,19 @@ function Registradas(){
                     <label className='text-filtrar'>Filtrar</label>
                     <div className='buscador'>
                         <input
-                            className='input-buscar'
+                            className='input-buscar input-form'
                             type='text'
                             placeholder='Buscar'
                             ref={inputBuscar}
                             onChange={handleBuscar}
                         />
-                        <select ref={organizacion} onChange={handleFiltrarPorOrganizacion}>
+                        <select className='input-form' ref={organizacion} onChange={handleFiltrarPorOrganizacion}>
                             {Organizaciones.map((orga, index)=>{
                                 return (
                                 <option  value={orga.value} key={index}>{orga.text}</option>
                             )})}
                         </select>
-                        <select ref={referente} onChange={handleFiltrarPorReferente}>
+                        <select className='input-form' ref={referente} onChange={handleFiltrarPorReferente}>
                             {Referentes.map((referente, index)=>{
                                 return (
                                 <option value={referente.value} key={index}>{referente.text}</option>
@@ -151,7 +151,7 @@ function Registradas(){
                 <div className='usuarios-csv'>
                     <label className='titulo-usuarios-csv'>Cargar usuarios con archivo Excel</label>
                     <div className='agregar-usuarios-csv'>
-                        <input type='file' id='inputArchivo' onChange={handleFileChange} />
+                        <input type='file' id='inputArchivo' className='input-form' onChange={handleFileChange} />
                         <button className='btn-agregar-csv' onClick={() => traerUsuarios()} >Cargar</button>
                     </div>
                 </div>
@@ -159,9 +159,15 @@ function Registradas(){
             {usuarios && usuariosFiltrados? 
             <div className='contenedor-cards'>
                 {usuariosFiltrados.map((usuario)=>{
-                    return (
-                        <div className='card-usuarios' key={usuario._id}>
+                    if(usuario.rol !== "admin"){
+                        return (
+                            <div className='card-usuarios' key={usuario._id}>
                             <div>
+                                <div className='cont-btn-eliminar'>
+                                    <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
+                                        {eliminar}
+                                    </button>
+                                </div>
                                 <div className='cont-card-foto'>
                                     <div>
                                         <p> {usuario.nombre} </p>
@@ -169,9 +175,6 @@ function Registradas(){
                                     </div>
                                     <p className='card-foto'>Foto</p>
                                 </div>
-                                <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
-                                    {eliminar}
-                                </button>
                             </div>
                             <p><span className='negrita'>DNI: </span>{usuario.dni} </p>
                             <p><span className='negrita'>CUIL: </span>{usuario.cuil} </p>
@@ -193,7 +196,10 @@ function Registradas(){
                                 {agregar}
                             </Link>
                         </div>
-                )})}
+                        
+                        )
+                    }   
+                })}
             </div>
             : <h1>Cargando</h1>}
         </div>

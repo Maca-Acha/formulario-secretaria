@@ -3,6 +3,7 @@
     --black:#333333;
     --blue:#37BBED;
     --gray:#f3f3f3;
+    --red: #d42d0b ;
     --dark-blue:#37bced7d;
 }
 .cont-contenedor-cards{
@@ -79,7 +80,16 @@
     background: none;
     border: none;
     color: var(--black);
+    padding-bottom: .5rem;
     cursor: pointer;
+    transition: .2s;
+}
+.btn-eliminar:hover{
+    color: var(--red);
+    transition: .2s;
+}
+.btn-eliminar>svg{
+    font-size: 1rem;
 }
 .btn-eliminar:focus{
     outline: none !important;
@@ -104,6 +114,10 @@
 .btn-agregar-csv:hover{
     background-color: var(--dark-blue);
     transition: .4s;
+}
+.cont-btn-eliminar{
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* Usuario */

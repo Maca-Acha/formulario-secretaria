@@ -17,6 +17,7 @@
   --black:#333333;
   --blue:#37BBED;
   --gray:#f3f3f3;
+  --red:#e53232;
 }
 *{
   margin: 0;
@@ -61,7 +62,7 @@
   padding: .7rem;
   border-radius: 7px;
   border: var(--blue) 3px solid;
-  width: 21vw;
+  width: 100%;
   font-size: 16px;
   font-weight: 600;
   transition: .4s;
@@ -196,3 +197,96 @@ input:focus, select:focus {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+.input-error{
+  border: solid 2px var(--red);
+  padding: .4rem;
+}
+
+/* Responsive */
+@media (max-width: 1050px) {
+  .fondo-inicio{
+    width:35vw;
+  }
+  .input-inicio {
+    width: 33vw;
+  }
+  .btn-inicio{
+    width: 36vw;
+  }
+  .btn-crear-cuenta {
+    width: 33vw;
+  }
+  .cont-buscador{
+    flex-direction: column !important;
+  }
+  .contenedor-cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (max-width: 943px){
+  .form-registrarse{
+    width: fit-content;
+    box-shadow: none;
+    margin: 0;
+  }
+  .btn-enviar{
+    margin-top: 3vh;
+  }
+}
+@media (max-width: 859px) {
+  .contenedor-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 841px){
+  .contenedor-domicilio, .cargar_archivo{
+    flex-direction: column;
+  }
+  .width-domocilio{
+    width: 100%;
+  }
+}
+@media (max-width: 605px){
+  .fondo-inicio{
+    width:52vw;
+  }
+  .titulo-inicio{
+    font-size: 18px;
+  }
+  .input-inicio {
+    width: inherit;
+  }
+  .input-inicio-txt{
+    font-size: 14px;
+  }
+  .btn-crear-cuenta {
+    width: 50vw;
+    font-size: 14px;
+  }
+  .btn-inicio {
+    width: 56vw;
+    font-size: 14px;
+  }
+  .input_mediano{
+    width: 100%;
+  }
+  .titulo-registro{
+    font-size: 28px;
+    margin-bottom: 1vh;
+  }
+  .contenedor-cards {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  .buscador{
+    flex-direction: column;
+  }
+  .input-buscar{
+    width: 98% !important;
+  }
+}
+@media (max-width: 469px) {
+  .input_grande{
+    width: 100%;
+  }
+}
+

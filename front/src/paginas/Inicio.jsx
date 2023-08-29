@@ -10,7 +10,7 @@ export default function Inicio(){
     const ojoCerrado = <AiFillEyeInvisible/>
     const dispatch = useDispatch()
     const token = useSelector((state) => state.token);
-    const usuario = useSelector((state) => state.usuario.usuario);
+    const usuario = useSelector((state) => state.usuario);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
 
@@ -49,12 +49,13 @@ export default function Inicio(){
     return(
         <div className="cont-btns-inicio">
             <form className="fondo-inicio" onSubmit={handleSignIn}>
-                <h2>Iniciar Sesión</h2>
-                <input type="text" ref={dni} className="input-inicio" placeholder="DNI" /> 
+                <h2 className="titulo-inicio">Iniciar Sesión</h2>
+                <input type="text" ref={dni} className="input-inicio input-inicio-txt" placeholder="DNI" /> 
                 <div className="input-inicio ver-contrasena"> 
                     <input
                         type={showPassword ? 'text' : 'password'} 
                         ref={contrasena}
+                        className="input-inicio-txt"
                         placeholder="Contraseña"
                     />
                     <div className="ojo" onClick={() => setShowPassword(!showPassword)}>

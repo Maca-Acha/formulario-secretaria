@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import {Estudios, Generos, Tareas, Referentes, Organizaciones, Barrios} from "./Constantes"
 import { registrarUsuario } from "../redux/reducers/usuarioSlice"
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 function Registro() {
     const dispatch = useDispatch()
@@ -25,26 +26,33 @@ function Registro() {
     const hijos = useRef()
     const [generoSeleccionado, setGeneroSeleccionado] = useState("");
     const contrasena = useRef()
+    const contrasena2 = useRef()
 
     const handleAddUser = (e) => {
-        e.preventDefault() 
-        dispatch(registrarUsuario({
-            apellido:apellido.current.value, 
-            nombre:nombre.current.value,
-            dni:dni.current.value,
-            cuil:cuil.current.value,
-            direccion:domicilio.current.value, 
-            cel:telefono.current.value, 
-            mail:mail.current.value, 
-            nacimiento:fecha.current.value, 
-            estudios:estudios.current.value, 
-            genero:generoSeleccionado,
-            tarea:tareas.current.value, 
-            organizacion:organizacion.current.value, 
-            referente:referente.current.value, 
-            hijos:hijos.current.value, 
-            contrasena:contrasena.current.value
-        }))
+        e.preventDefault()
+        const contra1 = contrasena.current.value
+        const contra2 = contrasena2.current.value
+        if(contra1 !== contra2 ){
+            Swal.fire('Haz ingresado contraseñas distintas')
+        }else{
+            dispatch(registrarUsuario({
+                apellido:apellido.current.value, 
+                nombre:nombre.current.value,
+                dni:dni.current.value,
+                cuil:cuil.current.value,
+                direccion:domicilio.current.value, 
+                cel:telefono.current.value, 
+                mail:mail.current.value, 
+                nacimiento:fecha.current.value, 
+                estudios:estudios.current.value, 
+                genero:generoSeleccionado,
+                tarea:tareas.current.value, 
+                organizacion:organizacion.current.value, 
+                referente:referente.current.value, 
+                hijos:hijos.current.value, 
+                contrasena:contrasena.current.value
+            }))
+        }
         
         const cvFile = cv.current.files[0];
         const fotoFile = foto.current.files[0];
@@ -87,21 +95,21 @@ function Registro() {
 
     return(
         <main>
-            <form onSubmit={handleAddUser} encType="multipart/form-data">
-                <h1>Registro de personas</h1>
+            <form className="form-registrarse" onSubmit={handleAddUser} encType="multipart/form-data">
+                <h1 className="titulo-registro">Registro de personas</h1>
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >
                         Apellido
-                        <input className="input-form" type="text" ref={apellido} name="apellido" placeholder="Ej. Rodriguez" />
+                        <input className="input-form" type="text" ref={apellido} required={true} name="apellido" placeholder="Ej. Rodriguez" />
                     </label>
                     <label className="label input_grande">
                         Nombre Completo
-                        <input className="input-form" type="text" ref={nombre} name="nombre" placeholder="Ej. Juan Ignacio"/>
+                        <input className="input-form" type="text" ref={nombre} required={true} name="nombre" placeholder="Ej. Juan Ignacio"/>
                     </label>
                     
                     <label className="label input_mediano">
                         DNI
-                        <input className="input-form" type="text" ref={dni} name="dni" placeholder="Ej. 33333333" />
+                        <input className="input-form" type="text" ref={dni} required={true} name="dni" placeholder="Ej. 33333333" />
                     </label>
                     <label className="label input_mediano">
                         CUIL
@@ -131,11 +139,11 @@ function Registro() {
                 <section className="contenedor-celMail">
                     <label className="label input_grande">
                         Telefono celular
-                        <input className="input-form" type="tel" ref={telefono} name="telefono" placeholder="Ej. 115555555"/>
+                        <input className="input-form" type="tel" ref={telefono} required={true} name="telefono" placeholder="Ej. 115555555"/>
                     </label>
                     <label className="label input_grande">
                         Mail
-                        <input className="input-form" type="email" ref={mail} name="mail" placeholder="Ej. ejemplo@gamil.com" />
+                        <input className="input-form" type="email" ref={mail} required={true} name="mail" placeholder="Ej. ejemplo@gamil.com" />
                     </label>
                 </section>
                 <section className="cargar_archivo">
@@ -148,6 +156,7 @@ function Registro() {
                         <input id="fotoInput" className="cargar input-form" ref={foto} type="file" name="foto" accept="image/*"/>
                     </label>
                 </section>
+                
                 <label className="label">
                     Nivel de Estudios
                     <select ref={estudios} className="input-form">
@@ -194,7 +203,7 @@ function Registro() {
                     </label>
                     <label className="label input_mediano">
                         Referente
-                        <select ref={referente} className="input-form">
+                        <select ref={referente} required={true} className="input-form">
                             {Referentes.map((referente, index)=>{
                                 return(
                                     <option value={referente.text} disabled={referente.disabled} key={index}>{referente.text}</option>
@@ -209,13 +218,22 @@ function Registro() {
                 </label>
                 <label className="label">
                     Contraseña
-                    <input className="input-form" type="text" name="contrasena" ref={contrasena} placeholder="Cree una contraseña"/>
+                    <input className="input-form" type="password" required={true} name="contrasena" ref={contrasena} placeholder="Cree una contraseña"/>
+                </label>
+                <label className="label">
+                    Repetir contraseña
+                    <input
+                        className="input-form"                       
+                        type="password"
+                        name="contrasena"
+                        ref={contrasena2}
+                        placeholder="Repita la contraseña"
+                    />
                 </label>
                 <input className="btn-enviar" type="submit" value="Enviar" />
             </form>
         </main>
     )
-
 }
 
 export default Registro

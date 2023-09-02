@@ -33,7 +33,7 @@
 }
 .card-foto{
     background-color: gray;
-    width: 7vw;
+    width: 14vh;
     height: 14vh;
     border-radius: 0.5rem;
 }
@@ -123,7 +123,6 @@
 /* Usuario */
 .contenedor-usuario{
     display: flex;
-
 }
 .usuario-cont{
     width: 100%;
@@ -220,4 +219,17 @@ div:where(.swal2-icon).swal2-warning {
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
     background-color: var(--blue) !important;
     color: var(--black) !important;
+}
+
+/* Responsive */
+@media (max-width:740px) {
+    .contenedor-usuario, .cont-admin-servicios{
+        flex-direction: column;
+    }
+    .usuario-cont-admin, .contenedor-usuario-admin, .usuario-cont {
+        width: auto;
+    }
+    .serv-usuario {
+        margin: 5vh;
+    }
 }

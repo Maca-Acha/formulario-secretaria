@@ -109,6 +109,14 @@
   font-size: 1.1rem;
   align-self: center;
 }
+.ojo>svg>path{
+  transition: .4s;
+}
+.ojo:hover >svg>path{
+  color: #8b8b8b;
+  transition: .4s ;
+}
+
 /* FORMULARIO */
 .contenedor-formulario{
   display: flex;

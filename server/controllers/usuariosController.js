@@ -1,4 +1,5 @@
 const Usuario = require("../models/UserModel");
+/* const {transport} = require("../config/mailer") */
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -20,7 +21,7 @@ const usuariosController = {
             const resultados = [];
 
             for (let i = 0; i < usuarios.length; i++) {
-                const { apellido, nombre, dni, cuil, nacimiento, foto, direccion, cel, mail, cv, estudios, genero, tarea, organizacion, referente, hijos, contrasena, rol } = usuarios[i];
+                const { apellido, nombre, dni, cuil, nacimiento, foto, direccion,barrio, cel, mail, cv, estudios, genero, tarea, organizacion, referente, estado, hijos, contrasena, rol } = usuarios[i];
                 const usuarioExiste = await Usuario.findOne({ mail });
 
                 if (usuarioExiste) {
@@ -34,6 +35,7 @@ const usuariosController = {
                         cuil,
                         foto,
                         direccion,
+                        barrio,
                         cel,
                         mail,
                         cv,
@@ -43,6 +45,7 @@ const usuariosController = {
                         tarea,
                         organizacion,
                         referente,
+                        estado,
                         hijos,
                         contrasena: contraHasheada,
                         rol,
@@ -161,23 +164,3 @@ const usuariosController = {
 }
 
 module.exports = usuariosController
-
-/* newUser: async(req,res) => {
-        console.log("req.body: ",req.body)
-        const {apellido,nombre,dni,cuil,nacimiento,foto,direccion,cel,mail,cv,estudios,genero,tarea,organizacion,referente,hijos, contrasena, rol} = req.body
-        try{
-            console.log("mail: ", mail)
-            const usuarioExiste = await Usuario.findOne({mail})
-            if (usuarioExiste){
-                res.json({success: false, error: "El usuario ya esta registrado", response:null})
-            }else{
-                const contraHasheada = bcryptjs.hashSync(contrasena, 10)
-                const newUser = new Usuario ({apellido,nombre,dni,cuil,foto,direccion,cel,mail,cv,estudios,nacimiento,genero,tarea,organizacion,referente,hijos,contrasena:contraHasheada, rol})
-                const token = jwt.sign({...newUser}, process.env.SECRETO)
-                await newUser.save()
-                res.json({success: true, response: {newUser, token}, error: null})
-            }
-        }catch(error){
-            res.json({success: false, response: null, error: "Error en el servidor"})
-        }
-    }, */

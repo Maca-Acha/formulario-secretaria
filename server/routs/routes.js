@@ -4,6 +4,7 @@ const usuariosLoteControllerModule = require('../controllers/usuariosLoteControl
 const controllerCv = require("../controllers/archivosController")
 const controllerFoto = require("../controllers/fotosController")
 const serviciosControllers = require('../controllers/serviciosController')
+const transporter = require('../config/mailer')
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -31,6 +32,20 @@ router.route("/api/inicio")
 router.route("/api/servicios/:usuarioId")
     .get(serviciosControllers.traerServiciosByUsuario)
     .post(serviciosControllers.postServicio)
+
+router.post("/api/usuarios/login/:email/code", async (req, res) => {
+    const email = req.params.email; 
+    const mail = "achamariamacarena@gmail.com"
+    const result = await transporter.sendMail({
+        from: `Mail institucional ${mail}`,
+        to: email, 
+        subject: "prueba email",
+        text: "Código" 
+    });
+
+    console.log({ result });
+    res.status(200).json({ ok: true, message: "Código enviado con éxito!" });
+});
 
 // SERVICIOS
 router.route("/api/servicios")

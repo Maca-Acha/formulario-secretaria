@@ -3,7 +3,10 @@
     --black:#333333;
     --blue:#37BBED;
     --gray:#f3f3f3;
+    --green:#279D2E;
+    --lightGreen:rgba(39, 157, 47, 0.267);
     --red: #d42d0b ;
+    --lightRed: #d42d0b42 ;
     --dark-blue:#37bced7d;
 }
 .cont-contenedor-cards{
@@ -118,8 +121,38 @@
 .cont-btn-eliminar{
     display: flex;
     justify-content: flex-end;
+    gap: 12px;
 }
-
+.cont-titulo-usuario{
+    margin-bottom: 2.5vh;
+}
+.activo{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--green);
+    background-color: var(--lightGreen);
+    padding: .5rem .9rem ;
+    border-radius: .7rem;
+    align-self: center;
+}
+.inactivo{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--red);
+    background-color: var(--lightRed);
+    padding: .5rem .9rem;
+    border-radius: .7rem;
+    align-self: center;
+}
+.pendiente{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--black);
+    background: var(--gray);
+    padding: .5rem .9rem;
+    border-radius: .7rem;
+    align-self: center;
+}
 /* Usuario */
 .contenedor-usuario{
     display: flex;

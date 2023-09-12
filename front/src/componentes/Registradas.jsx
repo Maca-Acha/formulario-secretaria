@@ -28,7 +28,7 @@ function Registradas(){
     const eliminar = <RiDeleteBin5Fill />
 
     useEffect(() => {
-        dispatch(fetchUsuarios());       
+        dispatch(fetchUsuarios());  
     }, [dispatch])
 
     const inputBuscar = useRef()
@@ -162,18 +162,20 @@ function Registradas(){
                     if(usuario.rol !== "admin"){
                         return (
                             <div className='card-usuarios' key={usuario._id}>
-                            <div>
-                                <div className='cont-btn-eliminar'>
-                                    <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
-                                        {eliminar}
-                                    </button>
-                                </div>
+                            <div className='cont-titulo-usuario'>
                                 <div className='cont-card-foto'>
                                     <div>
                                         <p> {usuario.nombre} </p>
                                         <p> {usuario.apellido} </p>
                                     </div>
-                                    <p className='card-foto'>Foto</p>
+                                    {/* <p className='card-foto'>Foto</p> */}
+                                    <div className='cont-btn-eliminar'>
+                                        <p className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Inactivo" ? "inactivo" : "pendiente")}>{usuario.estado}</p>
+                                        {console.log(usuario)}
+                                        <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
+                                            {eliminar}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <p><span className='negrita'>DNI: </span>{usuario.dni} </p>
@@ -196,7 +198,6 @@ function Registradas(){
                                 {agregar}
                             </Link>
                         </div>
-                        
                         )
                     }   
                 })}

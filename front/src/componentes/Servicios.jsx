@@ -41,7 +41,7 @@ export default function Servicios(){
                 body: {
                     titulo: "Servicio",
                     descripcion: descripcion.current.value,
-                    fecha: fechaFormateada // Agrega la propiedad 'fecha' al cuerpo de la solicitud
+                    fecha: fechaFormateada
                 }
             })
         );

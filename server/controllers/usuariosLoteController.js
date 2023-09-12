@@ -35,7 +35,7 @@ const usuariosLoteController = {
             const respuesta = await axios.post(urlAPI, datosDelArchivo);
             console.log("respuesta: ", respuesta.data);
             res.json({ success: true, message: "Datos enviados correctamente" });
-        
+            
         } catch (error) {
             console.error("Error al leer o enviar el archivo:", error);
             res.status(500).json({ error: "Error al procesar el archivo" });
@@ -43,12 +43,11 @@ const usuariosLoteController = {
     },
 }
 
-
-
 module.exports = usuariosLoteController;
 
 
-/* document.getElementById("inputArchivo").addEventListener("change", async (event) => {
+/* 
+document.getElementById("inputArchivo").addEventListener("change", async (event) => {
     try {
         const archivoSeleccionado = event.target.files[0];
         const datosDelArchivo = await leerArchivoCSV(archivoSeleccionado);
@@ -61,4 +60,5 @@ module.exports = usuariosLoteController;
     } catch (error) {
         console.error("Error al leer o enviar el archivo:", error);
     }
-}); */
+}); 
+*/

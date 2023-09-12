@@ -1,0 +1,15 @@
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'achamariamacarena@gmail.com',
+        pass: 'ijtzucpryqqhtqyd'
+}
+});
+module.exports = transporter
+/* transporter,verify().then(()=>{
+    console.log('Listo para enciar mails')
+}) */

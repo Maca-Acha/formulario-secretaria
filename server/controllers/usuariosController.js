@@ -1,7 +1,7 @@
 const Usuario = require("../models/UserModel");
-/* const {transport} = require("../config/mailer") */
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const transporter = require("../config/mailer"); 
 
 const usuariosController = {
     verUsuarios:(req,res) => {
@@ -22,10 +22,10 @@ const usuariosController = {
 
             for (let i = 0; i < usuarios.length; i++) {
                 const { apellido, nombre, dni, cuil, nacimiento, foto, direccion,barrio, cel, mail, cv, estudios, genero, tarea, organizacion, referente, estado, hijos, contrasena, rol } = usuarios[i];
-                const usuarioExiste = await Usuario.findOne({ mail });
+                const usuarioExiste = await Usuario.findOne({ dni });
 
                 if (usuarioExiste) {
-                    resultados.push({ success: false, error: `El usuario con mail '${mail}' ya está registrado`, response: null });
+                    resultados.push({ success: false, error: `El usuario con DNI '${dni}' ya está registrado`, response: null });
                 } else {
                     const contraHasheada = bcryptjs.hashSync(contrasena, 10);
                     const nuevoUsuario = new Usuario({
@@ -52,6 +52,14 @@ const usuariosController = {
                     });
                     const token = jwt.sign({ ...nuevoUsuario }, process.env.SECRETO);
                     await nuevoUsuario.save();
+                    const email = nuevoUsuario.mail; 
+                    const correo = "achamariamacarena@gmail.com"; 
+                    const result = await transporter.sendMail({
+                        from: `Admin Mail ${correo}`,
+                        to: email,
+                        subject: "Registro exitoso",
+                        text: "¡Gracias por registrarte en nuestra aplicación!"
+                    });
                     resultados.push({ success: true, response: { nuevoUsuario, token }, error: null });
                 }
             }

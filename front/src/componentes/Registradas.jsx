@@ -13,7 +13,7 @@ import { AiFillPlusCircle } from 'react-icons/ai'
 import { RiDeleteBin5Fill } from "react-icons/ri"
 import {Organizaciones, Referentes} from "./Constantes"
 import  leerArchivoCSV  from '../archivos/leerArchivoCSV'
-import Pdf from './pdf'
+/* import Pdf from './pdf' */
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify';
@@ -29,6 +29,7 @@ function Registradas(){
 
     useEffect(() => {
         dispatch(fetchUsuarios());  
+        
     }, [dispatch])
 
     const inputBuscar = useRef()
@@ -156,7 +157,7 @@ function Registradas(){
                     </div>
                 </div>
             </form>
-            {usuarios && usuariosFiltrados? 
+            {usuarios && usuariosFiltrados ? 
             <div className='contenedor-cards'>
                 {usuariosFiltrados.map((usuario)=>{
                     if(usuario.rol !== "admin"){
@@ -170,7 +171,7 @@ function Registradas(){
                                     </div>
                                     {/* <p className='card-foto'>Foto</p> */}
                                     <div className='cont-btn-eliminar'>
-                                        <p className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Inactivo" ? "inactivo" : "pendiente")}>{usuario.estado}</p>
+                                        <p className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Activo Parcial" ? "activo-parcial" : (usuario.estado === "Baja" ? "baja":(usuario.estado === "Inactivo" ? "inactivo" : "pendiente")))}>{usuario.estado}</p>
                                         {console.log(usuario)}
                                         <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
                                             {eliminar}
@@ -184,15 +185,15 @@ function Registradas(){
                             <p><span className='negrita'>Celular: </span>{usuario.cel} </p>
                             <p><span className='negrita'>Mail: </span>{usuario.mail} </p>
                             <p><span className='negrita'>Nacimiento: </span>{usuario.nacimiento} </p>
-                            <p><span className='negrita'>Nivel de Estudios: </span>{usuario.estudios} </p>
+                            <p><span className='negrita nivel-estudio'>Nivel de Estudios: </span>{usuario.estudios} </p>
                             <p><span className='negrita'>Genero: </span>{usuario.genero} </p>
                             <p><span className='negrita'>Terea: </span>{usuario.tarea} </p>
                             <p><span className='negrita'>Organización </span>{usuario.organizacion} </p>
                             <p><span className='negrita'>Referente: </span>{usuario.referente} </p>
                             <p><span className='negrita'>Hijos: </span>{usuario.hijos} </p>
-                            <div>
+                            {/* <div>
                                 <Link to={Pdf} target='_blanck'>Ver CV</Link>
-                            </div>
+                            </div> */}
                             <Link className='cont-agregar' to={`/AdminUsuario/${usuario._id}`} >
                                 
                                 {agregar}

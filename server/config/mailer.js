@@ -10,6 +10,3 @@ const transporter = nodemailer.createTransport({
 }
 });
 module.exports = transporter
-/* transporter,verify().then(()=>{
-    console.log('Listo para enciar mails')
-}) */

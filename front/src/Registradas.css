@@ -153,6 +153,9 @@
     border-radius: .7rem;
     align-self: center;
 }
+.nivel-estudio{
+    width:max-content;
+}
 /* Usuario */
 .contenedor-usuario{
     display: flex;
@@ -185,7 +188,6 @@
 }
 .input-perfil{
     display: flex;
-    justify-content: space-between;
 }
 .editor{ 
     box-shadow: none;

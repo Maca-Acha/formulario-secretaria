@@ -12,11 +12,9 @@ import { filtrarUsuarios,
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { RiDeleteBin5Fill } from "react-icons/ri"
 import {Organizaciones, Referentes} from "./Constantes"
-import  leerArchivoCSV  from '../archivos/leerArchivoCSV'
 /* import Pdf from './pdf' */
-import axios from 'axios'
 import Swal from 'sweetalert2'
-import { toast } from 'react-toastify';
+
 
 function Registradas(){
     const dispatch = useDispatch()
@@ -100,7 +98,7 @@ function Registradas(){
         });
     }
 
-    //Subir CSV
+    /* //Subir CSV
     const handleFileChange = async (event) => {
         try {
             const archivoSeleccionado = event.target.files[0];
@@ -119,7 +117,7 @@ function Registradas(){
     //Traer usuarios
     const traerUsuarios = async () =>{
         dispatch(fetchUsuarios())
-    }
+    } */
 
     return(
         <div className='cont-contenedor-cards'>
@@ -149,13 +147,13 @@ function Registradas(){
                     </div>
 
                 </div>
-                <div className='usuarios-csv'>
+                {/* <div className='usuarios-csv'>
                     <label className='titulo-usuarios-csv'>Cargar usuarios con archivo Excel</label>
                     <div className='agregar-usuarios-csv'>
                         <input type='file' id='inputArchivo' className='input-form' onChange={handleFileChange} />
                         <button className='btn-agregar-csv' onClick={() => traerUsuarios()} >Cargar</button>
                     </div>
-                </div>
+                </div> */}
             </form>
             {usuarios && usuariosFiltrados ? 
             <div className='contenedor-cards'>

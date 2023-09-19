@@ -32,7 +32,7 @@ export default function Administrador(){
         .then((action) => {
             if (action.payload?.token && action.payload?.id) {
                 dispatch(setToken(action.payload.token));
-                navigate(`${rol && rol === "admin" ? "/Registradas": "/"}`)
+                navigate(`${rol && rol === "admin" ? "/perfil-admin": "/"}`)
                 if(rol === "admin"){
                     toast.success('Has iniciado sesión con ' + usuario.nombre, {
                         position: toast.POSITION.TOP_RIGHT

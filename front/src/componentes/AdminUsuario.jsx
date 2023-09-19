@@ -15,9 +15,9 @@ export default function AdminUsuario(){
     useEffect(() => {
         if (memoizedId) {
             dispatch(traerUsuario(memoizedId));
-            
         }
     }, [dispatch, memoizedId]);
+    
     return(
         <div className='cont-admin-servicios'>
             <div className='contenedor-usuario contenedor-usuario-admin'>

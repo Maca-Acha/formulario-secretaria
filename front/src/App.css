@@ -211,17 +211,27 @@ input:focus, select:focus {
 }
 
 /* PAG ADMIN */
+.noesta{
+  display: none;
+}
+.esta{
+  display: block;
+}
 .pag-admin{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .bloque-usuarios-Admin{
+  margin-top: 12vh;
+  align-self: center;
   display: flex;
   gap: 100px;
   height: 80vh;
   align-items: center;
 }
 .agregar-administrador{
+  margin-right: 5vw;
   display: flex;
   justify-content: flex-end;
 }
@@ -238,6 +248,7 @@ input:focus, select:focus {
 }
 .btns-cargar-usuarios{
   display: flex;
+  justify-content: center;
   gap: 10px;
 }
 .btn-individual, .btn-lote, .btn-registrados{
@@ -249,11 +260,15 @@ input:focus, select:focus {
   font-weight: 500;
   font-size: 18px;
   transition: .3s;
+  text-decoration: none;
+  text-align: center;
 }
 .mas-agregar{
-  align-self: center;
   margin-left: .7rem;
   font-size: 20px;
+}
+.mas-agregar>svg{
+  align-self: center;
 }
 .btn-individual:hover, .btn-lote:hover, .btn-registrados:hover{
   background-color: var(--white);
@@ -267,6 +282,12 @@ input:focus, select:focus {
   font-size: 18px;
   border-radius: 5px;
   padding: .5rem 1rem;
+  align-items: center;
+  transition: .3s;
+}
+.btn-agregar-admin:hover{
+  background-color: var(--blue);
+  transition: .3s;
 }
 
 /* Responsive */

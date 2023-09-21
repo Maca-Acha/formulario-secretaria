@@ -1,14 +1,12 @@
 import './App.css'
-import logo from './assets/min_desarrollo_social.png'
 import RoutesManager from './componentes/Rutas'
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import Nav from "./componentes/Nav"
 
 function App() {
   return (
     <BrowserRouter>
-      <Link to="/" className='encabezado'>
-        <img src={logo} className='logo_ministerio' alt='min_desarrollo_social'/>
-      </Link>
+      <Nav/>
       <RoutesManager/>
     </BrowserRouter>
   )

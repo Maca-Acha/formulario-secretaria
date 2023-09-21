@@ -52,7 +52,7 @@ export default function PerfilAdmin(){
                     </div>
                 </div>
                 <div className="agregar-administrador">
-                    <button className="btn-agregar-admin"> Agregar Administrador <span className="mas-agregar">{mas}</span></button>
+                    <Link to="/AgregarAdmin" className="btn-agregar-admin"> Agregar Administrador <span className="mas-agregar">{mas}</span></Link>
                 </div> 
             </div>
         </div>

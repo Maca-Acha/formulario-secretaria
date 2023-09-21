@@ -27,7 +27,6 @@ function Registradas(){
 
     useEffect(() => {
         dispatch(fetchUsuarios());  
-        
     }, [dispatch])
 
     const inputBuscar = useRef()

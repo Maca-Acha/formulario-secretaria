@@ -29,23 +29,31 @@
   width: 100%;
   background-color: var(--blue);
   display: flex;
+  justify-content: space-between;
 }
 .logo_ministerio{
   max-height: 8vh;
   padding: .5rem;
   align-self: center;
 }
+.nombreLog{
+  font-size: 16px;
+  font-weight: 500;
+  align-self: center;
+  padding-right: 3vw;
+}
+
 /* INICIO */
 .cont-btns-inicio{
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2vh;
-  height: 70vh;
   justify-content: center;
-
+  height: 80vh;
 }
 .fondo-inicio{
+  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,6 +123,14 @@
 .ojo:hover >svg>path{
   color: #8b8b8b;
   transition: .4s ;
+}
+.soyAdministrador{
+  color: var(--black);
+  transition: .3s;
+}
+.soyAdministrador:hover{
+  color: var(--blue);
+  transition: .3s;
 }
 
 /* FORMULARIO */
@@ -223,11 +239,10 @@ input:focus, select:focus {
   width: 100%;
 }
 .bloque-usuarios-Admin{
-  margin-top: 12vh;
   align-self: center;
   display: flex;
   gap: 100px;
-  height: 80vh;
+  height: 75vh;
   align-items: center;
 }
 .agregar-administrador{
@@ -284,14 +299,24 @@ input:focus, select:focus {
   padding: .5rem 1rem;
   align-items: center;
   transition: .3s;
+  text-decoration: none;
 }
 .btn-agregar-admin:hover{
   background-color: var(--blue);
   transition: .3s;
 }
 
+/* Registrar Admin */
+.cont-registrar-admin{
+  display: flex;
+  justify-content: center;
+}
+.form-registrarse-admin{
+  width: 50vw;
+}
+
 /* Responsive */
-@media (max-width: 1050px) {
+@media (max-width: 1050px){
   .fondo-inicio{
     width:35vw;
   }
@@ -321,7 +346,7 @@ input:focus, select:focus {
     margin-top: 3vh;
   }
 }
-@media (max-width: 859px) {
+@media (max-width: 859px){
   .contenedor-cards {
     grid-template-columns: repeat(2, 1fr) !important;
   }
@@ -372,7 +397,7 @@ input:focus, select:focus {
     width: 98% !important;
   }
 }
-@media (max-width: 469px) {
+@media (max-width: 469px){
   .input_grande{
     width: 100%;
   }

@@ -10,7 +10,7 @@ export default function Inicio(){
     const ojoCerrado = <AiFillEyeInvisible/>
     const dispatch = useDispatch()
     const token = useSelector((state) => state.token);
-    const usuario = useSelector((state) => state.usuario);
+    const usuario = useSelector((state) => state.usuario.usuario);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
 
@@ -64,7 +64,7 @@ export default function Inicio(){
                 </div>
                 <button type="submit" className="btn-inicio" >Iniciar sesión</button >
                 <Link to="/Registrarse" className="btn-crear-cuenta">Crear cuenta</Link>
-                <Link to="/Administrador">Soy Administrador</Link>
+                <Link to="/Administrador" className="soyAdministrador">Soy Administrador</Link>
             </form>
         </div>
     )

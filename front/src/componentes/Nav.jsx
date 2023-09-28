@@ -1,7 +1,7 @@
 import logo from '../assets/min_desarrollo_social.png'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
-import { signToken} from "../redux/reducers/usuarioSlice"
+import { cerrarSesion, signToken} from "../redux/reducers/usuarioSlice"
 import { useEffect } from 'react'
 
 export default function Nav(){
@@ -13,11 +13,11 @@ export default function Nav(){
         if (localStorage.getItem("token") && !token) {
             dispatch(signToken());
         }
-    }, [dispatch, token, usuario]);
+    }, [dispatch, token]);
 
     return(
         <div className='encabezado'>
-            <Link to="/" >
+            <Link to="/" onClick={() => {dispatch(cerrarSesion())}} >
                 <img src={logo} className='logo_ministerio' alt='min_desarrollo_social'/>
             </Link>
             {usuario &&

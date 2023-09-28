@@ -3,10 +3,12 @@
     --black:#333333;
     --blue:#37BBED;
     --gray:#f3f3f3;
+    --darkGray:#bebebe;
     --green:#279D2E;
     --lightGreen:rgba(39, 157, 47, 0.267);
     --red: #d42d0b ;
     --lightRed: #d42d0b42 ;
+    --yellow: #ffe018 ;
     --dark-blue:#37bced7d;
 }
 .cont-contenedor-cards{
@@ -83,7 +85,7 @@
     background: none;
     border: none;
     color: var(--black);
-    padding-bottom: .5rem;
+
     cursor: pointer;
     transition: .2s;
 }
@@ -126,36 +128,38 @@
 .cont-titulo-usuario{
     margin-bottom: 2.5vh;
 }
-.activo{
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--green);
-    background-color: var(--lightGreen);
-    padding: .5rem .9rem ;
-    border-radius: .7rem;
-    align-self: center;
-}
-.inactivo{
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--red);
-    background-color: var(--lightRed);
-    padding: .5rem .9rem;
-    border-radius: .7rem;
-    align-self: center;
-}
-.pendiente{
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--black);
-    background: var(--gray);
-    padding: .5rem .9rem;
-    border-radius: .7rem;
-    align-self: center;
-}
 .nivel-estudio{
     width:max-content;
 }
+
+/* Estado */
+.txt-estado{
+    align-self: center;
+}
+.activo, .inactivo, .pendiente, .baja{
+    height: 1rem;
+    width: 1rem;
+    border-radius:100% ;
+    font-size: 14px;
+    font-weight: 500;
+}
+.activo{
+    background-color: var(--green);
+    align-self: center;
+}
+.inactivo{
+    background-color: var(--yellow);
+    align-self: center;
+}
+.baja{
+    background-color: var(--red);
+    align-self: center;
+}
+.pendiente{
+    background: var(--darkGray);
+    align-self: center;
+}
+
 /* Usuario */
 .contenedor-usuario{
     display: flex;
@@ -179,6 +183,9 @@
 }
 .serv-usuario{
     margin: 5vh 5vh 0 0;
+}
+.select-estado{
+    background: none;
 }
 
 /*form usuario*/

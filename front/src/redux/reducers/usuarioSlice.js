@@ -63,6 +63,10 @@ export const signToken = createAsyncThunk('usuarios/signToken', async() =>{
             return isRejectedWithValue(error)
         }
 })
+export const cerrarSesion = createAsyncThunk('usuarios/cerrarSesion', async() =>{
+    localStorage.removeItem("token")
+    return {}
+})
 export const registrarUsuario = createAsyncThunk('registrarusuario', async (body) => {
     try{
         const response = await Axios.post('http://localhost:4000/api/usuarios', body);
@@ -80,13 +84,23 @@ export const registrarUsuario = createAsyncThunk('registrarusuario', async (body
 export const editarUsuario = createAsyncThunk(
     'editarUsuario',
     async ({ id, body }) => {
-        console.log(id)
         const token = localStorage.getItem('token');
         const headers = {
             Authorization: `Bearer ${token}`,
         };
         const nuevoUser = await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
         return nuevoUser.data.response
+    }
+);
+export const editarEstado = createAsyncThunk(
+    'editarEstado',
+    async ({ id, body }) => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        };
+        const nuevoEstado = await Axios.put(`http://localhost:4000/usuario/estado/${id}`, body, { headers });
+        return nuevoEstado.data.response
     }
 );
 export const borrarUsuario = createAsyncThunk(
@@ -192,6 +206,21 @@ const usuarioSlice = createSlice({
             state.usuario = {};
             state.error = action.error.message;
         });
+        
+        /* Editar Estado */
+        builder.addCase(editarEstado.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(editarEstado.fulfilled, (state, action) => {
+            state.loading = false;
+            state.usuario = action.payload;
+            state.error = '';
+        });
+        builder.addCase(editarEstado.rejected, (state, action) => {
+            state.loading = false;
+            state.usuario = {};
+            state.error = action.error.message;
+        });
 
         /* REGISTER */
         builder.addCase(registerActionToolkit.pending, (state) => {
@@ -222,6 +251,21 @@ const usuarioSlice = createSlice({
             state.usuario = {};
             state.error = action.error.message;
         });
+
+        /* Cerrar Sesion */
+        builder.addCase(cerrarSesion.pending, (state)=>{
+            state.loading = true;
+        })
+        builder.addCase(cerrarSesion.fulfilled, (state, action)=>{
+            state.loading = false;
+            state.usuario = action.payload;
+            state.error = '';
+        })
+        builder.addCase(cerrarSesion.rejected, (state, action)=>{
+            state.loading = false;
+            state.usuario = {};
+            state.error = action.error.message;
+        })
     },
 });
 

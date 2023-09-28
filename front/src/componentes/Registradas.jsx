@@ -2,7 +2,7 @@ import '../Registradas.css'
 import { useEffect, useRef } from "react"
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchUsuarios, borrarUsuario } from "../redux/reducers/usuarioSlice"
+import { fetchUsuarios, borrarUsuario, editarEstado } from "../redux/reducers/usuarioSlice"
 import { filtrarUsuarios, 
         setFiltro, 
         setOrganizacionFiltro, 
@@ -15,7 +15,6 @@ import {Organizaciones, Referentes} from "./Constantes"
 /* import Pdf from './pdf' */
 import Swal from 'sweetalert2'
 
-
 function Registradas(){
     const dispatch = useDispatch()
     const usuarios = useSelector((state) => state.usuario.usuarios)
@@ -26,12 +25,14 @@ function Registradas(){
     const eliminar = <RiDeleteBin5Fill />
 
     useEffect(() => {
-        dispatch(fetchUsuarios());  
+        dispatch(fetchUsuarios()); 
+        
     }, [dispatch])
 
     const inputBuscar = useRef()
     const organizacion = useRef()
     const referente = useRef()
+    const estado = useRef()
 
     //Filtros
     const handleBuscar = () => {
@@ -66,15 +67,30 @@ function Registradas(){
             const apellido = usuario.apellido ? usuario.apellido.toLowerCase().startsWith(buscarLower) : false;
             const dni = usuario.dni ? usuario.dni.toLowerCase().startsWith(buscarLower) : false;
             const cuil = usuario.cuil ? usuario.cuil.toLowerCase().startsWith(buscarLower) : false;
+            
+            const organizacionFiltrarTodo = organizacionLower === 'todas las organizaciones';
+            const referenteFiltrarTodo = referenteLower === 'todos los referentes';
+    
             return (
-                (organizacionLower === '' || organizacionUsuarioLower === organizacionLower) &&
-                (referenteLower === '' || referenteUsuarioLower === referenteLower) &&
+                (organizacionFiltrarTodo || organizacionUsuarioLower === organizacionLower) &&
+                (referenteFiltrarTodo || referenteUsuarioLower === referenteLower) &&
                 (nombre || apellido || dni || cuil)
             );
         });
     };
     const usuariosFiltrados = buscarUsuario(filtro);
-
+    
+    //Editar estado
+    function handleEditarEstado(e, id) {
+        const nuevoEstado = e.target.value;
+        dispatch(editarEstado({
+            id: id, 
+            body: {
+                estado: nuevoEstado,
+            }
+        }));
+    } 
+    
     //Borrar
     const handleBorrar = (id)=>{
         Swal.fire({
@@ -96,27 +112,6 @@ function Registradas(){
             }
         });
     }
-
-    /* //Subir CSV
-    const handleFileChange = async (event) => {
-        try {
-            const archivoSeleccionado = event.target.files[0];
-            const datosDelArchivo = await leerArchivoCSV(archivoSeleccionado);
-            toast.success('Se han agregado los usuarios del archivo Excel, aprete el boton Cagar para actualizar la pagina', {
-                position: toast.POSITION.TOP_RIGHT
-            });
-            const urlAPI = "http://localhost:4000/api/usuarios"; 
-            const respuesta = await axios.post(urlAPI, datosDelArchivo);
-            console.log("Datos enviados correctamente:", respuesta.data);
-        } catch (error) {
-            console.error("Error al leer o enviar el archivo:", error);
-        }
-    };
-
-    //Traer usuarios
-    const traerUsuarios = async () =>{
-        dispatch(fetchUsuarios())
-    } */
 
     return(
         <div className='cont-contenedor-cards'>
@@ -146,13 +141,6 @@ function Registradas(){
                     </div>
 
                 </div>
-                {/* <div className='usuarios-csv'>
-                    <label className='titulo-usuarios-csv'>Cargar usuarios con archivo Excel</label>
-                    <div className='agregar-usuarios-csv'>
-                        <input type='file' id='inputArchivo' className='input-form' onChange={handleFileChange} />
-                        <button className='btn-agregar-csv' onClick={() => traerUsuarios()} >Cargar</button>
-                    </div>
-                </div> */}
             </form>
             {usuarios && usuariosFiltrados ? 
             <div className='contenedor-cards'>
@@ -166,15 +154,23 @@ function Registradas(){
                                         <p> {usuario.nombre} </p>
                                         <p> {usuario.apellido} </p>
                                     </div>
-                                    {/* <p className='card-foto'>Foto</p> */}
+                                    
                                     <div className='cont-btn-eliminar'>
-                                        <p className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Activo Parcial" ? "activo-parcial" : (usuario.estado === "Baja" ? "baja":(usuario.estado === "Inactivo" ? "inactivo" : "pendiente")))}>{usuario.estado}</p>
-                                        {console.log(usuario)}
+                                        {console.log("usuario:",usuario.nombre,",", "estado:", usuario.estado)}
+                                        <div className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Activo Parcial" ? "activo-parcial" : (usuario.estado === "Baja" ? "baja":(usuario.estado === "Inactivo" ? "inactivo" : "pendiente")))}></div>
+                                        
+                                        <select ref={estado} defaultValue={usuario.estado} className='select-estado' onChange={(e) => handleEditarEstado(e, usuario._id)}>
+                                            <option value="Activo">Activo</option>
+                                            <option value="Inactivo">Inactivo</option>
+                                            <option value="Baja">Baja</option>
+                                            <option value="Pendiente">Pendiente</option>
+                                        </select>
                                         <button className='btn-eliminar' onClick={() => handleBorrar(usuario._id)}>
                                             {eliminar}
                                         </button>
                                     </div>
-                                </div>
+                                    
+                                </div>  
                             </div>
                             <p><span className='negrita'>DNI: </span>{usuario.dni} </p>
                             <p><span className='negrita'>CUIL: </span>{usuario.cuil} </p>

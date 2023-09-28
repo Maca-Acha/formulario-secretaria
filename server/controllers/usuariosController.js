@@ -122,6 +122,14 @@ const usuariosController = {
             console.error(e);
         }
     },
+    editarEstado: async (req, res) => {
+        try{
+            actualizado = await Usuario.findOneAndUpdate({_id:req.params.id}, {estado: req.body.estado,}, {new:true})
+        }catch(error){
+            console.log(error)
+        }
+        res.json({success:actualizado ? true : false})
+    },
     borrarUsuario: async (req,res)=>{
         const id = req.params.id
         try{

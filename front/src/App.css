@@ -316,6 +316,11 @@ input:focus, select:focus {
 }
 
 /* Responsive */
+@media (max-width: 1270px){
+  .contenedor-cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
 @media (max-width: 1050px){
   .fondo-inicio{
     width:35vw;
@@ -331,9 +336,6 @@ input:focus, select:focus {
   }
   .cont-buscador{
     flex-direction: column !important;
-  }
-  .contenedor-cards {
-    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 @media (max-width: 943px){

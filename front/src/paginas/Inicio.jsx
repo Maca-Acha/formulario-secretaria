@@ -10,7 +10,7 @@ export default function Inicio(){
     const ojoCerrado = <AiFillEyeInvisible/>
     const dispatch = useDispatch()
     const token = useSelector((state) => state.token);
-    const usuario = useSelector((state) => state.usuario.usuario);
+    const usuario = useSelector((state) => state.usuario);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
 

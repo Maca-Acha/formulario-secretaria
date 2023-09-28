@@ -23,44 +23,48 @@ const usuariosController = {
             for (let i = 0; i < usuarios.length; i++) {
                 const { apellido, nombre, dni, cuil, nacimiento, foto, direccion,barrio, cel, mail, cv, estudios, genero, tarea, organizacion, referente, estado, hijos, contrasena, rol } = usuarios[i];
                 const usuarioExiste = await Usuario.findOne({ dni });
-
-                if (usuarioExiste) {
-                    resultados.push({ success: false, error: `El usuario con DNI '${dni}' ya está registrado`, response: null });
+                if(contrasena){
+                    if (usuarioExiste) {
+                        resultados.push({ success: false, error: `El usuario con DNI '${dni}' ya está registrado`, response: null });
+                    } else {
+                        console.log(contrasena)
+                        const contraHasheada = bcryptjs.hashSync(contrasena, 10);
+                        const nuevoUsuario = new Usuario({
+                            apellido,
+                            nombre,
+                            dni,
+                            cuil,
+                            foto,
+                            direccion,
+                            barrio,
+                            cel,
+                            mail,
+                            cv,
+                            estudios,
+                            nacimiento,
+                            genero,
+                            tarea,
+                            organizacion,
+                            referente,
+                            estado,
+                            hijos,
+                            contrasena: contraHasheada,
+                            rol,
+                        });
+                        const token = jwt.sign({ ...nuevoUsuario }, process.env.SECRETO);
+                        await nuevoUsuario.save();
+                        const email = nuevoUsuario.mail; 
+                        const correo = "achamariamacarena@gmail.com"; 
+                        const result = await transporter.sendMail({
+                            from: `Admin Mail ${correo}`,
+                            to: email,
+                            subject: "Registro exitoso",
+                            text: "¡Gracias por registrarte en nuestra aplicación!"
+                        });
+                        resultados.push({ success: true, response: { nuevoUsuario, token }, error: null });
+                    }
                 } else {
-                    const contraHasheada = bcryptjs.hashSync(contrasena, 10);
-                    const nuevoUsuario = new Usuario({
-                        apellido,
-                        nombre,
-                        dni,
-                        cuil,
-                        foto,
-                        direccion,
-                        barrio,
-                        cel,
-                        mail,
-                        cv,
-                        estudios,
-                        nacimiento,
-                        genero,
-                        tarea,
-                        organizacion,
-                        referente,
-                        estado,
-                        hijos,
-                        contrasena: contraHasheada,
-                        rol,
-                    });
-                    const token = jwt.sign({ ...nuevoUsuario }, process.env.SECRETO);
-                    await nuevoUsuario.save();
-                    const email = nuevoUsuario.mail; 
-                    const correo = "achamariamacarena@gmail.com"; 
-                    const result = await transporter.sendMail({
-                        from: `Admin Mail ${correo}`,
-                        to: email,
-                        subject: "Registro exitoso",
-                        text: "¡Gracias por registrarte en nuestra aplicación!"
-                    });
-                    resultados.push({ success: true, response: { nuevoUsuario, token }, error: null });
+                    resultados.push({ success: false, error: `La contraseña está ausente en el usuario con DNI '${dni}'`, response: null });
                 }
             }
             res.json(resultados);

@@ -14,6 +14,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri"
 import {Organizaciones, Referentes} from "./Constantes"
 /* import Pdf from './pdf' */
 import Swal from 'sweetalert2'
+import * as XLSX from 'xlsx';
 
 function Registradas(){
     const dispatch = useDispatch()
@@ -80,6 +81,29 @@ function Registradas(){
     };
     const usuariosFiltrados = buscarUsuario(filtro);
     
+    //Exportar
+    const handleExportUsuarios = () => {
+        const data = usuariosFiltrados.map((usuario) => ({
+            apellido: usuario.apellido,
+            nombre: usuario.nombre,
+            dni: usuario.dni,
+            cuil: usuario.cuil,
+            direccion: usuario.direccion,
+            cel: usuario.cel,
+            mail: usuario.mail,
+            estudios: usuario.estudios,
+            nacimiento: usuario.nacimiento,
+            genero: usuario.genero,
+            tarea: usuario.tarea,
+            organizacion: usuario.organizacion,
+            referente: usuario.referente
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
+        XLSX.writeFile(wb, 'usuarios.xlsx');
+    };
+
     //Editar estado
     function handleEditarEstado(e, id) {
         const nuevoEstado = e.target.value;
@@ -113,8 +137,8 @@ function Registradas(){
         });
     }
 
-    return(
-        <div className='cont-contenedor-cards'>
+    return (
+        <div className='cont-contenedor-cards' >
             <form className='cont-buscador' >
                 <div className='usuarios-csv'>
                     <label className='text-filtrar'>Filtrar</label>
@@ -139,7 +163,7 @@ function Registradas(){
                             )})}
                         </select>
                     </div>
-
+                    <button onClick={handleExportUsuarios}>exportar</button>
                 </div>
             </form>
             {usuarios && usuariosFiltrados ? 
@@ -156,9 +180,8 @@ function Registradas(){
                                     </div>
                                     
                                     <div className='cont-btn-eliminar'>
-                                        {console.log("usuario:",usuario.nombre,",", "estado:", usuario.estado)}
-                                        <div className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Activo Parcial" ? "activo-parcial" : (usuario.estado === "Baja" ? "baja":(usuario.estado === "Inactivo" ? "inactivo" : "pendiente")))}></div>
-                                        
+                                        <div className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Activo Parcial" ? "activo-parcial" : (usuario.estado === "Baja" ? "baja":(usuario.estado === "Inactivo" ? "inactivo" : "pendiente")))}>
+                                        </div>
                                         <select ref={estado} defaultValue={usuario.estado} className='select-estado' onChange={(e) => handleEditarEstado(e, usuario._id)}>
                                             <option value="Activo">Activo</option>
                                             <option value="Inactivo">Inactivo</option>

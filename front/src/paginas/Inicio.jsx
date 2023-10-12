@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom"
-import { fetchUsuarios, signIn, signToken, setToken,   } from "../redux/reducers/usuarioSlice"
+import { fetchUsuarios, signIn, signToken, setToken } from "../redux/reducers/usuarioSlice"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from 'react-toastify';
@@ -59,7 +59,7 @@ export default function Inicio(){
                         placeholder="Contraseña"
                     />
                     <div className="ojo" onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? ojoCerrado : ojo} 
+                        {showPassword ? ojo : ojoCerrado} 
                     </div>
                 </div>
                 <button type="submit" className="btn-inicio" >Iniciar sesión</button >

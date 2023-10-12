@@ -41,6 +41,8 @@
   font-weight: 500;
   align-self: center;
   padding-right: 3vw;
+  text-decoration: none;
+  color: var(--black);
 }
 
 /* INICIO */

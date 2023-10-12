@@ -5,18 +5,37 @@ import {Link, useParams} from "react-router-dom"
 import { traerUsuario} from "../redux/reducers/usuarioSlice"
 import Pdf from './pdf'
 import Servicios from './Servicios'
+import { MdDownload } from "react-icons/md";
+import * as XLSX from 'xlsx';
+import { toast } from 'react-toastify';
 
 export default function AdminUsuario(){
     const dispatch = useDispatch()
     const params = useParams()
     const memoizedId = useMemo(() => params.id, [params.id]);
     const usuario = useSelector((state) => state.usuario.usuario); 
+    const servicios = useSelector((state) => state.servicios.servicios); 
+    const descargar = <MdDownload/>
+    const notificacion = () => toast("No tiene servicios adquiridos");
 
     useEffect(() => {
         if (memoizedId) {
             dispatch(traerUsuario(memoizedId));
         }
     }, [dispatch, memoizedId]);
+
+    //Exportar
+    const handleExportUsuarios = () => {
+        const data = servicios.map((servicio)=>({
+            Servicios: servicio.descripcion,
+            Fecha: servicio.fecha
+        }))
+
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
+        XLSX.writeFile(wb, `Servicios-${usuario.nombre}-${usuario.apellido}.xlsx`);
+    };
     
     return(
         <div className='cont-admin-servicios'>
@@ -86,7 +105,10 @@ export default function AdminUsuario(){
                     </div>
                 } 
             </div>
-            <Servicios />
+            <div className='cont-servicios'>
+                <Servicios />
+                <button className='btn-exportar' onClick={servicios.length ? handleExportUsuarios: notificacion}>Exportar usuarios {descargar}</button>
+            </div>
         </div>
     )
 }

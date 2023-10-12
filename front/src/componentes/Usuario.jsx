@@ -8,6 +8,7 @@ import {Estudios, Generos} from "./Constantes"
 import Pdf from './pdf'
 import {FiEdit} from "react-icons/fi";
 
+
 export default function Usuario(){
     const dispatch = useDispatch()
     const params = useParams()

@@ -64,7 +64,7 @@ export const signToken = createAsyncThunk('usuarios/signToken', async() =>{
         }
 })
 export const cerrarSesion = createAsyncThunk('usuarios/cerrarSesion', async() =>{
-    localStorage.removeItem("token")
+    localStorage.removeItem('token')
     return {}
 })
 export const registrarUsuario = createAsyncThunk('registrarusuario', async (body) => {
@@ -179,7 +179,7 @@ const usuarioSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(signIn.fulfilled, (state, action) => {
-            
+            console.log("signin");
             state.loading = false;
             state.token = action.payload.token;
             state.id = action.payload.id;
@@ -253,19 +253,19 @@ const usuarioSlice = createSlice({
         });
 
         /* Cerrar Sesion */
-        builder.addCase(cerrarSesion.pending, (state)=>{
+        builder.addCase(cerrarSesion.pending, (state) => {
             state.loading = true;
-        })
-        builder.addCase(cerrarSesion.fulfilled, (state, action)=>{
+        });
+        builder.addCase(cerrarSesion.fulfilled, (state) => {
             state.loading = false;
-            state.usuario = action.payload;
+            state.token = ''; 
             state.error = '';
-        })
-        builder.addCase(cerrarSesion.rejected, (state, action)=>{
+        });
+        builder.addCase(cerrarSesion.rejected, (state, action) => {
             state.loading = false;
-            state.usuario = {};
+            state.token = ''; 
             state.error = action.error.message;
-        })
+        });
     },
 });
 

@@ -11,10 +11,11 @@ import { filtrarUsuarios,
         setReferenteFiltro } from "../redux/reducers/filtroSlice"
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { RiDeleteBin5Fill } from "react-icons/ri"
+import { MdDownload } from "react-icons/md";
 import {Organizaciones, Referentes} from "./Constantes"
-/* import Pdf from './pdf' */
 import Swal from 'sweetalert2'
 import * as XLSX from 'xlsx';
+/* import Pdf from './pdf' */
 
 function Registradas(){
     const dispatch = useDispatch()
@@ -24,6 +25,7 @@ function Registradas(){
     const referenteFiltro = useSelector((state) => state.filtro.referenteFiltro) || ""
     const agregar = <AiFillPlusCircle className='agregar' />
     const eliminar = <RiDeleteBin5Fill />
+    const descargar = <MdDownload/>
 
     useEffect(() => {
         dispatch(fetchUsuarios()); 
@@ -84,19 +86,20 @@ function Registradas(){
     //Exportar
     const handleExportUsuarios = () => {
         const data = usuariosFiltrados.map((usuario) => ({
-            apellido: usuario.apellido,
-            nombre: usuario.nombre,
-            dni: usuario.dni,
-            cuil: usuario.cuil,
-            direccion: usuario.direccion,
-            cel: usuario.cel,
-            mail: usuario.mail,
-            estudios: usuario.estudios,
-            nacimiento: usuario.nacimiento,
-            genero: usuario.genero,
-            tarea: usuario.tarea,
-            organizacion: usuario.organizacion,
-            referente: usuario.referente
+            Apellido: usuario.apellido,
+            Nombre: usuario.nombre,
+            DNI: usuario.dni,
+            CUIL: usuario.cuil,
+            Nacimiento: usuario.nacimiento,
+            Direccion: usuario.direccion,
+            Telefono: usuario.cel,
+            Mail: usuario.mail,
+            Estudios: usuario.estudios,
+            Genero: usuario.genero,
+            Tarea: usuario.tarea,
+            Organizacion: usuario.organizacion,
+            Referente: usuario.referente,
+            Estado: usuario.estado
         }));
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
@@ -163,7 +166,10 @@ function Registradas(){
                             )})}
                         </select>
                     </div>
-                    <button onClick={handleExportUsuarios}>exportar</button>
+                </div>
+                <div className='usuarios-csv'>
+                    <label className='text-filtrar text-exportar'>Exportar usuarios en vista</label>
+                    <button className='btn-exportar' onClick={handleExportUsuarios}>Exportar usuarios {descargar}</button>
                 </div>
             </form>
             {usuarios && usuariosFiltrados ? 

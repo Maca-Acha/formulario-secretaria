@@ -1,13 +1,14 @@
 import logo from '../assets/min_desarrollo_social.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { cerrarSesion, signToken} from "../redux/reducers/usuarioSlice"
 import { useEffect } from 'react'
 
 export default function Nav(){
     const dispatch = useDispatch()
-    const token = useSelector((state) => state.token);
-    const usuario = useSelector((state) => state.usuario.usuario);
+    const token = useSelector((state) => state.usuario.token);
+    const usuario = useSelector((state) => state.usuario);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (localStorage.getItem("token") && !token) {
@@ -15,13 +16,20 @@ export default function Nav(){
         }
     }, [dispatch, token]);
 
+    const handleCerrarSesion = async() => {
+        dispatch(cerrarSesion());
+        navigate('/');
+    }
+
     return(
         <div className='encabezado'>
-            <Link to="/" onClick={() => {dispatch(cerrarSesion())}} >
+            <Link to='/' onClick={handleCerrarSesion} >
                 <img src={logo} className='logo_ministerio' alt='min_desarrollo_social'/>
             </Link>
-            {usuario &&
-            <h2 className='nombreLog'>{usuario.nombre} {usuario.apellido}</h2> 
+            {token &&
+                <>
+                    <Link to={usuario && usuario.rol === "admin" ? "/perfil-admin":`/Usuario/${usuario._id}`} className='nombreLog'>Inicio</Link> 
+                </>
             }
         </div>
     )

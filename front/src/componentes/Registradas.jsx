@@ -143,7 +143,7 @@ function Registradas(){
     return (
         <div className='cont-contenedor-cards' >
             <form className='cont-buscador' >
-                <div className='usuarios-csv'>
+                <div className='filtros'>
                     <label className='text-filtrar'>Filtrar</label>
                     <div className='buscador'>
                         <input
@@ -167,7 +167,7 @@ function Registradas(){
                         </select>
                     </div>
                 </div>
-                <div className='usuarios-csv'>
+                <div className='filtros'>
                     <label className='text-filtrar text-exportar'>Exportar usuarios en vista</label>
                     <button className='btn-exportar' onClick={handleExportUsuarios}>Exportar usuarios {descargar}</button>
                 </div>

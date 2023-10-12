@@ -99,10 +99,12 @@
 .btn-eliminar:focus{
     outline: none !important;
 }
-.usuarios-csv{
+.usuarios-csv, .filtros{
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+.filtros{
     width: 50%;
 }
 .titulo-usuarios-csv{

@@ -179,7 +179,6 @@ const usuarioSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(signIn.fulfilled, (state, action) => {
-            console.log("signin");
             state.loading = false;
             state.token = action.payload.token;
             state.id = action.payload.id;

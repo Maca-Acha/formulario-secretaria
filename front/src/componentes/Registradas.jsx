@@ -108,14 +108,15 @@ function Registradas(){
     };
 
     //Editar estado
-    function handleEditarEstado(e, id) {
+    async function handleEditarEstado(e, id) {
         const nuevoEstado = e.target.value;
-        dispatch(editarEstado({
+        await dispatch(editarEstado({
             id: id, 
             body: {
                 estado: nuevoEstado,
             }
         }));
+        await dispatch(fetchUsuarios());
     } 
     
     //Borrar
@@ -184,7 +185,6 @@ function Registradas(){
                                         <p> {usuario.nombre} </p>
                                         <p> {usuario.apellido} </p>
                                     </div>
-                                    
                                     <div className='cont-btn-eliminar'>
                                         <div className={usuario.estado === "Activo" ? "activo" : (usuario.estado === "Activo Parcial" ? "activo-parcial" : (usuario.estado === "Baja" ? "baja":(usuario.estado === "Inactivo" ? "inactivo" : "pendiente")))}>
                                         </div>
@@ -198,7 +198,6 @@ function Registradas(){
                                             {eliminar}
                                         </button>
                                     </div>
-                                    
                                 </div>  
                             </div>
                             <p><span className='negrita'>DNI: </span>{usuario.dni} </p>

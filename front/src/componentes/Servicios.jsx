@@ -120,6 +120,7 @@ export default function Servicios(){
                                 </div>
                             ):
                             <p>No tiene servicios adquiridos</p>}
+                            
                             <form className='servicios' onSubmit={handleNuevoServicio}>
                                 <input ref={descripcion} className="input-form" type="text" placeholder="Describir servicio"  />
                                 <input type="submit" className=" btn-agregar " value="Agregar" /> 

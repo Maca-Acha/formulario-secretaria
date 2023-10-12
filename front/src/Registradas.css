@@ -35,6 +35,7 @@
 .cont-card-foto{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 3vh;
 }
 .card-foto{
     background-color: gray;
@@ -173,7 +174,7 @@
     margin: 5vh ;
 }
 .titulo{
-    font-size: 18px;
+    font-size: 20px;
 }
 .informacion{
     display: flex;

@@ -1,9 +1,9 @@
 import '../Registradas.css'
 import { useDispatch, useSelector} from "react-redux"
 import { useEffect, useMemo } from "react"
-import {Link, useParams} from "react-router-dom"
+import {useParams} from "react-router-dom"
 import { traerUsuario} from "../redux/reducers/usuarioSlice"
-import Pdf from './pdf'
+/* import Pdf from './pdf' */
 import Servicios from './Servicios'
 import { MdDownload } from "react-icons/md";
 import * as XLSX from 'xlsx';
@@ -47,7 +47,7 @@ export default function AdminUsuario(){
                                 <p className='titulo'> {usuario.nombre} </p>
                                 <p className='titulo'> {usuario.apellido} </p>
                             </div> 
-                            <p className='card-foto'>Foto</p>
+                            {/* <p className='card-foto'>Foto</p> */}
                         </div>
                         <div className='informacion'>
                             <section className='input-perfil'>
@@ -99,15 +99,15 @@ export default function AdminUsuario(){
                                 <span className='texto-info'>{usuario.hijos}</span>
                             </section>
                         </div>
-                        <div>
+                        {/* <div>
                             <Link to={Pdf} target='_blanck'>Ver CV</Link>
-                        </div>
+                        </div> */}
                     </div>
                 } 
             </div>
             <div className='cont-servicios'>
                 <Servicios />
-                <button className='btn-exportar' onClick={servicios.length ? handleExportUsuarios: notificacion}>Exportar usuarios {descargar}</button>
+                <button className='btn-exportar' onClick={servicios.length ? handleExportUsuarios: notificacion}>Exportar servicios del usuario {descargar}</button>
             </div>
         </div>
     )

@@ -300,3 +300,14 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
         margin: 5vh;
     }
 }
+@media (max-width:452px){
+    input, select{
+        font-size: 14px;
+    }
+    .generos{
+        flex-direction: column;
+    }
+    form{
+        padding: 21px
+    }
+}

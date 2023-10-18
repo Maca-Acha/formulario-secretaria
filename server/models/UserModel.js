@@ -22,7 +22,8 @@ const userSchema = new Schema({
     hijos: {type: String},
     contrasena: {type: String, required:true},
     token:{type:String},
-    rol:{type:String}
+    rol:{type:String},
+    servicios: [{ type: Schema.Types.ObjectId, ref: 'servicios' }]
 })
 
 const UserModel = model('usuarios', userSchema)

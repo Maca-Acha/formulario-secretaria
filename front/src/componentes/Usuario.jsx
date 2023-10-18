@@ -38,8 +38,6 @@ export default function Usuario(){
     const domicilio = useRef()
     const telefono = useRef()
     const mail = useRef()
-    /* const cv = useRef()
-    const foto = useRef() */
     const estudios = useRef()
     const tareas = useRef()
     const organizacion = useRef()
@@ -47,6 +45,8 @@ export default function Usuario(){
     const hijos = useRef()
     const genero= useRef()
     const contrasena = useRef()
+    /* const cv = useRef()
+    const foto = useRef() */
 
     useEffect(() => {
         id && dispatch(traerUsuario(id));

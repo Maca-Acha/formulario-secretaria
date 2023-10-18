@@ -63,6 +63,10 @@ function Registradas(){
         const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';
         const referenteLower = referenteFiltro ? referenteFiltro.toLowerCase() : '';
         const buscarLower = buscar ? buscar.toLowerCase().trim() : '';
+        usuarios && console.log(usuarios)
+        if (!usuarios) {
+            return []; 
+        }
         return usuarios.filter((usuario) => {
             const organizacionUsuarioLower = usuario.organizacion ? usuario.organizacion.toLowerCase() : '';
             const referenteUsuarioLower = usuario.referente ? usuario.referente.toLowerCase() : '';
@@ -85,26 +89,31 @@ function Registradas(){
     
     //Exportar
     const handleExportUsuarios = () => {
-        const data = usuariosFiltrados.map((usuario) => ({
-            Apellido: usuario.apellido,
-            Nombre: usuario.nombre,
-            DNI: usuario.dni,
-            CUIL: usuario.cuil,
-            Nacimiento: usuario.nacimiento,
-            Direccion: usuario.direccion,
-            Telefono: usuario.cel,
-            Mail: usuario.mail,
-            Estudios: usuario.estudios,
-            Genero: usuario.genero,
-            Tarea: usuario.tarea,
-            Organizacion: usuario.organizacion,
-            Referente: usuario.referente,
-            Estado: usuario.estado
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
-        XLSX.writeFile(wb, 'usuarios.xlsx');
+        try{const data = usuariosFiltrados.map((usuario) => ({
+                Apellido: usuario.apellido,
+                Nombre: usuario.nombre,
+                DNI: usuario.dni,
+                CUIL: usuario.cuil,
+                Nacimiento: usuario.nacimiento,
+                Direccion: usuario.direccion,
+                Telefono: usuario.cel,
+                Mail: usuario.mail,
+                Estudios: usuario.estudios,
+                Genero: usuario.genero,
+                Tarea: usuario.tarea,
+                Organizacion: usuario.organizacion,
+                Referente: usuario.referente,
+                Estado: usuario.estado,
+                Servicios: usuario.servicios.map((servicio) => servicio.descripcion).join(', ')
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
+            XLSX.writeFile(wb, 'usuarios.xlsx');}
+        catch (error) {
+            console.error("Error al exportar usuarios:", error);
+            
+        }
     };
 
     //Editar estado

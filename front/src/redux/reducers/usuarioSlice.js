@@ -84,11 +84,13 @@ export const registrarUsuario = createAsyncThunk('registrarusuario', async (body
 export const editarUsuario = createAsyncThunk(
     'editarUsuario',
     async ({ id, body }) => {
+        console.log(body)
         const token = localStorage.getItem('token');
         const headers = {
             Authorization: `Bearer ${token}`,
         };
         const nuevoUser = await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
+        console.log(nuevoUser)
         return nuevoUser.data.response
     }
 );

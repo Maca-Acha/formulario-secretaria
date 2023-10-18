@@ -4,13 +4,18 @@ const jwt = require("jsonwebtoken");
 const transporter = require("../config/mailer"); 
 
 const usuariosController = {
-    verUsuarios:(req,res) => {
-        Usuario.find().then((response)=>{
-            res.json({response})
-        })
+    verUsuarios: async (req, res) => {
+        try {
+            const usuarios = await Usuario.find().populate('servicios');
+            res.json({ response: usuarios });
+        } catch (error) {
+            console.error("Error al obtener usuarios:", error);
+            res.status(500).json({ success: false, response: null, error: "Error en el servidor" });
+        }
     },
     traerUsuarios:(req,res) => {
         Usuario.findOne({_id: req.params.id})
+        .populate('servicios')
         .then((response)=>{
             res.json({response})
         })

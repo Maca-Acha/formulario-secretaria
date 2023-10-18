@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const servicioSchema = mongoose.Schema({
-    fecha:{type:String, required:true}, 
+    fecha:{type:String}, 
     descripcion:{type:String, required:true},  
     usuario:{type: mongoose.Types.ObjectId, ref:"usuarios"}
 })

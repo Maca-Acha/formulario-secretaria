@@ -31,9 +31,7 @@ router.route("/usuario/:id")
     .delete(usuariosController.borrarUsuario)
 router.route("/api/inicio")
     .post(usuariosController.signIn)
-router.route("/api/servicios/:usuarioId")
-    .get(serviciosControllers.traerServiciosByUsuario)
-    .post(serviciosControllers.postServicio)
+
 
 router.post("/api/usuarios/login/:email/code", async (req, res) => {
     const email = req.params.email; 
@@ -50,6 +48,9 @@ router.post("/api/usuarios/login/:email/code", async (req, res) => {
 });
 
 // SERVICIOS
+router.route("/api/servicios/:usuarioId")
+    .get(serviciosControllers.traerServiciosByUsuario)
+    .post(serviciosControllers.postServicio)
 router.route("/api/servicios")
     .get(serviciosControllers.traerTodosServicios)
 router.route("/api/servicios/:id")

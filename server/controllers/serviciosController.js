@@ -31,9 +31,18 @@ const serviciosControllers = {
             }
     },
     traerServicio:(req,res)=>{
-        Servicios.findOne({_id: req.params.id})
+        /* Servicios.findOne({_id: req.params.id})
             .then((response) =>{res.json({response})
-    }) 
+            }) */ 
+        Servicios.findOne({ _id: req.params.id })
+        .populate('usuario') 
+        .then((response) => {
+            res.json({ response });
+        })
+        .catch((error) => {
+            res.json({ success: false, error: error, response: null });
+            console.error(error);
+        });
     },
     traerTodosServicios:(req,res)=>{
         Servicios.find()

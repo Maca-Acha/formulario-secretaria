@@ -45,7 +45,6 @@ export default function Servicios(){
                 }
             })
         );
-        descripcion.current.value = "";
     }
     
     function handleEditarServicio(idServicio){
@@ -91,9 +90,7 @@ export default function Servicios(){
                             {servicios[0] ? 
                             servicios.map((servicio, index) => 
                                 <div key={index} className="cont-serv-linea" >
-                                    
                                     <div className="admin-servicio">
-                                    
                                         {editServicio ? (
                                             <form className="editor" onSubmit={() => { handleEditarServicio(servicio._id) }}>
                                                 <input

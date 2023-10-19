@@ -31,8 +31,6 @@ router.route("/usuario/:id")
     .delete(usuariosController.borrarUsuario)
 router.route("/api/inicio")
     .post(usuariosController.signIn)
-
-
 router.post("/api/usuarios/login/:email/code", async (req, res) => {
     const email = req.params.email; 
     const mail = "achamariamacarena@gmail.com"

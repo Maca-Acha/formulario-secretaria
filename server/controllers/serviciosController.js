@@ -3,17 +3,21 @@ const Servicios = require('../models/ServiciosModel')
 const serviciosControllers = {
     postServicio: async (req, res) => {
         const usuario = req.params.usuarioId;
-        const { titulo, descripcion, fecha } = req.body;
+        const { descripcion, fecha } = req.body;
         try {
-                const servicio = await new Servicios({ usuario, titulo, descripcion, fecha }).save();
-                res.json({
-                    success: true,
-                    response: servicio,
-                    error: null
-                });
-            } catch (e) {
-                res.json({ success: false, error: e, response: null });
-                console.error(e);
+            const servicio = await new Servicios({ 
+                usuario: usuario, 
+                descripcion: descripcion, 
+                fecha: fecha 
+            }).save();
+            res.json({
+                success: true,
+                response: servicio,
+                error: null
+            });
+        } catch (e) {
+            res.json({ success: false, error: e, response: null });
+            console.error(e);
         }
     },
     traerServiciosByUsuario: async (req, res) => {

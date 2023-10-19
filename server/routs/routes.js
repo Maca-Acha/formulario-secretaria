@@ -10,7 +10,7 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.get('/api/emi/:userId', usuariosController.emi)
+router.put('/api/emi/:userId', usuariosController.emi)
 
 // USUARIOS
 router.post("/api/upload", 

@@ -15,7 +15,6 @@ import { MdDownload } from "react-icons/md";
 import {Organizaciones, Referentes} from "./Constantes"
 import Swal from 'sweetalert2'
 import * as XLSX from 'xlsx';
-/* import Pdf from './pdf' */
 
 function Registradas(){
     const dispatch = useDispatch()
@@ -63,7 +62,7 @@ function Registradas(){
         const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';
         const referenteLower = referenteFiltro ? referenteFiltro.toLowerCase() : '';
         const buscarLower = buscar ? buscar.toLowerCase().trim() : '';
-        usuarios && console.log(usuarios)
+
         if (!usuarios) {
             return []; 
         }

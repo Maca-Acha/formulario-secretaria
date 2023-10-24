@@ -18,20 +18,27 @@ const usuariosController = {
     }
   },
 
-  emi: async (req, res) => {
+  postServicio: async (req, res) => {
     try {
-      const { userId } = req.params
-      const { services } = req.body
-
+      const { usuarioId } = req.params
+      const { servicios } = req.body
+      console.log(usuarioId)
+      console.log(servicios)
+  
       const user = await Usuario.findOneAndUpdate(
-        { _id: userId },
-        { servicios: services },
+        { _id: usuarioId },
+        { $push: {servicios: servicios} },
         { new: true }
-      ).populate('servicios')
-      
-      res.json({ response: user })
+      ).populate('servicios');
+  
+      if (!user) {
+        return res.status(404).json({ error: "Usuario no encontrado." });
+      }
+  
+      res.json({ response: user });
     } catch (error) {
-      res.json(error)
+      console.log(error); 
+      res.status(500).json({ error: "Ha ocurrido un error en el servidor." });
     }
   },
 

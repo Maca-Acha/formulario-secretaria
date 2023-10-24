@@ -84,14 +84,21 @@ export const registrarUsuario = createAsyncThunk('registrarusuario', async (body
 export const editarUsuario = createAsyncThunk(
     'editarUsuario',
     async ({ id, body }) => {
-        console.log(body)
         const token = localStorage.getItem('token');
         const headers = {
             Authorization: `Bearer ${token}`,
         };
         const nuevoUser = await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
-        console.log(nuevoUser)
         return nuevoUser.data.response
+    }
+);
+export const agregarServicioUsuario = createAsyncThunk(
+    'agregarServicioUsuario', 
+    async ({ usuarioId, servicioId }) => {
+        console.log(usuarioId, servicioId)
+        return Axios.put(`http://localhost:4000/api/servicios/${usuarioId}`, {
+            servicios: [servicioId]
+        }).then((response) => response.data.response);
     }
 );
 export const editarEstado = createAsyncThunk(
@@ -112,7 +119,6 @@ export const borrarUsuario = createAsyncThunk(
         return usuarioBorrado.data.response
     }
 );
-
 export const setToken = (token) => {
     return {
         type: 'usuario/setToken',
@@ -203,6 +209,21 @@ const usuarioSlice = createSlice({
             state.error = '';
         });
         builder.addCase(editarUsuario.rejected, (state, action) => {
+            state.loading = false;
+            state.usuario = {};
+            state.error = action.error.message;
+        });
+
+        /* Agregar Servicio al Usuario */
+        builder.addCase(agregarServicioUsuario.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(agregarServicioUsuario.fulfilled, (state, action) => {
+            state.loading = false;
+            state.usuario = action.payload;
+            state.error = '';
+        });
+        builder.addCase(agregarServicioUsuario.rejected, (state, action) => {
             state.loading = false;
             state.usuario = {};
             state.error = action.error.message;

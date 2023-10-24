@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef, useState } from 'react';
 import { cargarServicio, traerServicios, borrarServicio, editarServicio } from "../redux/reducers/serviciosSlice"
+import {agregarServicioUsuario} from "../redux/reducers/usuarioSlice"
 import { useParams } from "react-router-dom";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import {FiEdit} from "react-icons/fi";
@@ -27,7 +28,7 @@ export default function Servicios(){
     const descripcion = useRef()
     const editado = useRef()
     
-    function handleNuevoServicio(e) {
+    function  handleNuevoServicio (e) {
         e.preventDefault();
         const fechaActual = new Date();
         const dia = fechaActual.getDate().toString().padStart(2, '0');
@@ -35,18 +36,24 @@ export default function Servicios(){
         const anio = fechaActual.getFullYear().toString();
     
         const fechaFormateada = `${dia}/${mes}/${anio}`;
-        dispatch(
-            cargarServicio({
-                id: params.id,
-                body: {
-                    titulo: "Servicio",
-                    descripcion: descripcion.current.value,
-                    fecha: fechaFormateada
-                }
-            })
-        );
+        dispatch(cargarServicio({
+            id: params.id,
+            body: {
+                titulo: "Servicio",
+                descripcion: descripcion.current.value,
+                fecha: fechaFormateada
+            }
+        })).then((servicioCreado) => {
+            if (servicioCreado.payload && servicioCreado.payload.response._id) {
+                dispatch(agregarServicioUsuario({
+                    usuarioId: params.id,
+                    servicioId: servicioCreado.payload.response._id
+                }));
+            } else {
+                console.error("No se pudo obtener el _id del servicio creado.");
+            }
+        });
     }
-    
     function handleEditarServicio(idServicio){
         dispatch(editarServicio({
             id: idServicio,

@@ -22,8 +22,6 @@ const usuariosController = {
     try {
       const { usuarioId } = req.params
       const { servicios } = req.body
-      console.log(usuarioId)
-      console.log(servicios)
   
       const user = await Usuario.findOneAndUpdate(
         { _id: usuarioId },

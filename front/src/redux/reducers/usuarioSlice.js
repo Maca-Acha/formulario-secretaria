@@ -95,7 +95,6 @@ export const editarUsuario = createAsyncThunk(
 export const agregarServicioUsuario = createAsyncThunk(
     'agregarServicioUsuario', 
     async ({ usuarioId, servicioId }) => {
-        console.log(usuarioId, servicioId)
         return Axios.put(`http://localhost:4000/api/servicios/${usuarioId}`, {
             servicios: [servicioId]
         }).then((response) => response.data.response);

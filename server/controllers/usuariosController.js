@@ -17,7 +17,6 @@ const usuariosController = {
       })
     }
   },
-
   postServicio: async (req, res) => {
     try {
       const { usuarioId } = req.params
@@ -28,18 +27,18 @@ const usuariosController = {
         { $push: {servicios: servicios} },
         { new: true }
       ).populate('servicios');
-  
+
       if (!user) {
         return res.status(404).json({ error: "Usuario no encontrado." });
       }
-  
+      
       res.json({ response: user });
+
     } catch (error) {
       console.log(error); 
       res.status(500).json({ error: "Ha ocurrido un error en el servidor." });
     }
   },
-
   traerUsuarios: (req, res) => {
     Usuario.findOne({ _id: req.params.id })
       .populate('servicios')

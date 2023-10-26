@@ -182,7 +182,7 @@ function Registro() {
                 </label>
                 <section className="militancia">
                     <label className="label input_mediano">
-                        Tarea
+                        Actividad
                         <select ref={tareas} className="input-form">
                             {Tareas.map((tarea, index)=>{
                                 return(

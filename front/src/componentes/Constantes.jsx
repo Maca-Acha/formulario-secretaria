@@ -13,10 +13,18 @@ export const Generos = [
 
 export const Tareas = [
     {disabled:"disabled", text: "Especificar tarea"},
-    {disabled:"", text: "Tarea-1"},
-    {disabled:"", text: "Tarea-2"},
-    {disabled:"", text: "Tarea-3"},
-    {disabled:"", text: "Tarea-4"},
+    {disabled:"", text: "Albañil"},
+    {disabled:"", text: "Alimetos"},
+    {disabled:"", text: "Cartonero"},
+    {disabled:"", text: "Construcción"},
+    {disabled:"", text: "Construcción, Comercialización"},
+    {disabled:"", text: "Comercialización"},
+    {disabled:"", text: "Cuidados"},
+    {disabled:"", text: "Proyectos Socio-Productivos"},
+    {disabled:"", text: "Reciclado"},
+    {disabled:"", text: "Rural"},
+    {disabled:"", text: "Tareas de Cuidados y servicios Socio Comunitarios"},
+    {disabled:"", text: "Textil"},
     {disabled:"", text: "Otro"}]
 
 export const Barrios = [

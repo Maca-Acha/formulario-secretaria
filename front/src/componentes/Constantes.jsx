@@ -3,13 +3,15 @@ export const Estudios = [
     "Secundario",
     "Terciario",
     "Universitario",
-    "Otro"]
-    
+    "Otro"
+]
+
 export const Generos = [
     "Femenino",
     "Masculino",
     "No-binario",
-    "Otro"]
+    "Otro"
+]
 
 export const Tareas = [
     {disabled:"disabled", text: "Especificar tarea"},
@@ -25,7 +27,8 @@ export const Tareas = [
     {disabled:"", text: "Rural"},
     {disabled:"", text: "Tareas de Cuidados y servicios Socio Comunitarios"},
     {disabled:"", text: "Textil"},
-    {disabled:"", text: "Otro"}]
+    {disabled:"", text: "Otro"}
+]
 
 export const Barrios = [
     {disabled:"disabled", text: "Especificar barrio"},
@@ -33,7 +36,8 @@ export const Barrios = [
     {disabled:"", text: "barrio-2"},
     {disabled:"", text: "barrio-3"},
     {disabled:"", text: "barrio-4"},
-    {disabled:"", text: "Otro"}]
+    {disabled:"", text: "Otro"}
+]
 
 export const Organizaciones = [
     {disabled:"disabled", text: "Todas las organizaciones"},
@@ -81,6 +85,7 @@ export const Organizaciones = [
     {value:"variasIniciativasTerritoriales", text: "Varias iniciativas territoriales"},
     {value:"25deMayo", text: "25 de Mayo"},
 ]
+
 export const Referentes = [
     {disabled:"disabled", text: "Todos los referentes"},
     {value:"Alberto Chiffel", text: "Alberto Chiffel", orga:"laMilitante"},

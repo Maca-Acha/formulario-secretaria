@@ -99,7 +99,7 @@ function Registradas(){
                 Mail: usuario.mail,
                 Estudios: usuario.estudios,
                 Genero: usuario.genero,
-                Tarea: usuario.tarea,
+                Actividad: usuario.tarea,
                 Organizacion: usuario.organizacion,
                 Referente: usuario.referente,
                 Estado: usuario.estado,
@@ -216,10 +216,10 @@ function Registradas(){
                             <p><span className='negrita'>Nacimiento: </span>{usuario.nacimiento} </p>
                             <p><span className='negrita nivel-estudio'>Nivel de Estudios: </span>{usuario.estudios} </p>
                             <p><span className='negrita'>Genero: </span>{usuario.genero} </p>
-                            <p><span className='negrita'>Terea: </span>{usuario.tarea} </p>
+                            <p><span className='negrita'>Actividad: </span>{usuario.tarea} </p>
                             <p><span className='negrita'>Organización </span>{usuario.organizacion} </p>
                             <p><span className='negrita'>Referente: </span>{usuario.referente} </p>
-                            <p><span className='negrita'>Hijos: </span>{usuario.hijos} </p>
+                            <p><span className='negrita'>Hijes: </span>{usuario.hijos} </p>
                             {/* <div>
                                 <Link to={Pdf} target='_blanck'>Ver CV</Link>
                             </div> */}

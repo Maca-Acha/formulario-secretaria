@@ -83,7 +83,7 @@ export default function AdminUsuario(){
                                 <p className='texto-info'>{usuario.genero}</p> 
                             </section>
                             <section className='input-perfil'>
-                                <p className='negrita'>Terea: </p>
+                                <p className='negrita'>Actividad: </p>
                                 <p className='texto-info'>{usuario.tarea}</p>
                             </section>
                             <p>

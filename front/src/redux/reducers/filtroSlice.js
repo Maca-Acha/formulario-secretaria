@@ -10,17 +10,17 @@ const initialState = {
 };
 
 export const filtrarUsuarios = createAsyncThunk('usuarios/filtrarUsuarios', async (filtro) => {
-    return Axios.get(`http://localhost:4000/api/usuarios/filtrados?filtro=${encodeURIComponent(filtro)}`)
+    return Axios.get(`http://200.58.96.142:4000/api/usuarios/filtrados?filtro=${encodeURIComponent(filtro)}`)
         .then((response) => response.data)
         .catch((error) => console.log(error));
 });
 export const usuariosPorOrga = createAsyncThunk('usuarios/UsuariosPorOrga', async (organizacion) => {
-    return Axios.get(`http://localhost:4000/api/usuarios/filtrados/${organizacion}`)
+    return Axios.get(`http://200.58.96.142:4000/api/usuarios/filtrados/${organizacion}`)
         .then((response) => response.data.res)
         .catch((error) => console.log(error));
 });
 export const usuariosPorRef = createAsyncThunk('usuarios/UsuariosPorRef', async (referente) => {
-    return Axios.get(`http://localhost:4000/api/filtrados/${referente}`)
+    return Axios.get(`http://200.58.96.142:4000/api/filtrados/${referente}`)
         .then((response) => response.data.res)
         .catch((error) => console.log(error));
 });

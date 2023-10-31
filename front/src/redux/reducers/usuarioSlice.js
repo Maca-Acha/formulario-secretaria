@@ -19,19 +19,19 @@ export const registerActionToolkit = createAsyncThunk('usuarios/register', async
     });
 });
 export const fetchUsuarios = createAsyncThunk('usuarios/fetchUsuarios', async() => {
-    return Axios.get('http://localhost:4000/api/usuarios')
+    return Axios.get('http://200.58.96.142:4000/api/usuarios')
     .then((response) => response.data.response)
     .catch((error) => console.log(error));
 });
 export const traerUsuario = createAsyncThunk('usuarios/traerUsuario', async(id) => {
     return await Axios
-        .get(`http://localhost:4000/usuario/${id}`)
+        .get(`http://200.58.96.142:4000/usuario/${id}`)
         .then((response) => response.data.response)
         .catch((error) => console.log(error));
 });
 export const signIn = createAsyncThunk('usuarios/signIn', async ({ dni, contrasena }) => {
     try {
-        const usuario = await Axios.post('http://localhost:4000/api/inicio', { dni, contrasena });
+        const usuario = await Axios.post('http://200.58.96.142:4000/api/inicio', { dni, contrasena });
         if (usuario.data.success && !usuario.data.error) {
             localStorage.setItem('token', usuario.data.response.token);
             return { token: usuario.data.response.token, id:usuario.data.response.dniExist._id, rol:usuario.data.response.dniExist.rol };
@@ -53,7 +53,7 @@ export const signIn = createAsyncThunk('usuarios/signIn', async ({ dni, contrase
 export const signToken = createAsyncThunk('usuarios/signToken', async() =>{
         try {
             const token = localStorage.getItem('token')
-            const response = await Axios.get('http://localhost:4000/api/usuarios',{
+            const response = await Axios.get('http://200.58.96.142:4000/api/usuarios',{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -69,7 +69,7 @@ export const cerrarSesion = createAsyncThunk('usuarios/cerrarSesion', async() =>
 })
 export const registrarUsuario = createAsyncThunk('registrarusuario', async (body) => {
     try{
-        const response = await Axios.post('http://localhost:4000/api/usuarios', body);
+        const response = await Axios.post('http://200.58.96.142:4000/api/usuarios', body);
         toast.success('Te haz registrado correctamente', {
             position: toast.POSITION.TOP_RIGHT
         });
@@ -88,14 +88,14 @@ export const editarUsuario = createAsyncThunk(
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-        const nuevoUser = await Axios.put(`http://localhost:4000/usuario/${id}`, body, { headers });
+        const nuevoUser = await Axios.put(`http://200.58.96.142:4000/usuario/${id}`, body, { headers });
         return nuevoUser.data.response
     }
 );
 export const agregarServicioUsuario = createAsyncThunk(
     'agregarServicioUsuario', 
     async ({ usuarioId, servicioId }) => {
-        return Axios.put(`http://localhost:4000/api/servicios/${usuarioId}`, {
+        return Axios.put(`http://200.58.96.142:4000/api/servicios/${usuarioId}`, {
             servicios: [servicioId]
         }).then((response) => response.data.response);
     }
@@ -107,14 +107,14 @@ export const editarEstado = createAsyncThunk(
         const headers = {
             Authorization: `Bearer ${token}`,
         };
-        const nuevoEstado = await Axios.put(`http://localhost:4000/usuario/estado/${id}`, body, { headers });
+        const nuevoEstado = await Axios.put(`http://200.58.96.142:4000/usuario/estado/${id}`, body, { headers });
         return nuevoEstado.data.response
     }
 );
 export const borrarUsuario = createAsyncThunk(
     'borrarUsuario',
     async ({ id }) => {
-        const usuarioBorrado = await Axios.delete(`http://localhost:4000/usuario/${id}`);
+        const usuarioBorrado = await Axios.delete(`http://200.58.96.142:4000/usuario/${id}`);
         return usuarioBorrado.data.response
     }
 );

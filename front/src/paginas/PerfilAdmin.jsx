@@ -18,7 +18,7 @@ export default function PerfilAdmin(){
             toast.success('Se han agregado los usuarios del archivo Excel, aprete el boton Cagar para actualizar la pagina', {
                 position: toast.POSITION.TOP_RIGHT
             });
-            const urlAPI = "http://localhost:4000/api/usuarios"; 
+            const urlAPI = "http://200.58.96.142/:4000/api/usuarios"; 
             const respuesta = await axios.post(urlAPI, datosDelArchivo);
             console.log("Datos enviados correctamente:", respuesta.data);
         } catch (error) {

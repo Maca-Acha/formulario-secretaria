@@ -10,7 +10,7 @@ const initialState = {
 
 export const cargarServicio = createAsyncThunk('cargarServicios', async ({id, body}) => {
     try{
-        const response = await Axios.post(`http://localhost:4000/api/servicios/${id}`, body);
+        const response = await Axios.post(`http://200.58.96.142:4000/api/servicios/${id}`, body);
         return response.data
     }catch(error){
         return isRejectedWithValue(error)
@@ -18,7 +18,7 @@ export const cargarServicio = createAsyncThunk('cargarServicios', async ({id, bo
 })
 export const traerServicios = createAsyncThunk('servicios/traerSegunUsuario', async(idUsuario) => {
     return await Axios
-        .get(`http://localhost:4000/api/servicios/${idUsuario}`)
+        .get(`http://200.58.96.142:4000/api/servicios/${idUsuario}`)
         .then((response) => response.data.response)
         .catch((error) => console.log(error));
         
@@ -26,14 +26,14 @@ export const traerServicios = createAsyncThunk('servicios/traerSegunUsuario', as
 export const editarServicio = createAsyncThunk(
     'editarServicio',
     async ({ id, body }) => {
-        const nuevoServicio = await Axios.put(`http://localhost:4000/api/servicios/${id}`, body);
+        const nuevoServicio = await Axios.put(`http://200.58.96.142:4000/api/servicios/${id}`, body);
         return console.log(nuevoServicio.data.response)
     }
 );
 export const borrarServicio = createAsyncThunk(
     'borrarServicio',
     async ({ idServicio, usuario }) => {
-        const nuevoServicio = await Axios.delete(`http://localhost:4000/api/servicios/${idServicio}`, usuario);
+        const nuevoServicio = await Axios.delete(`http://200.58.96.142:4000/api/servicios/${idServicio}`, usuario);
         return nuevoServicio.data.response
     }
 );

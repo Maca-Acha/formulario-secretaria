@@ -24,7 +24,7 @@ exports.uploadFiles = (req, res) => {
             if (!file) {
                 return res.status(400).json({ error: 'No se seleccionó ningún archivo' });
             }
-            const apiUrl = 'http://localhost:4000/api/archivos';
+            const apiUrl = 'http://200.58.96.142:4000/api/archivos';
             const formData = new FormData();
             formData.append('cv', file.buffer, file.originalname);
 

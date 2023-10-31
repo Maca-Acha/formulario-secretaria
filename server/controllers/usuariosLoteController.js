@@ -31,7 +31,7 @@ const usuariosLoteController = {
             const archivo = req.files[0]; 
             const datosDelArchivo = await leerArchivoCSV(archivo.buffer);
 
-            const urlAPI = "http://localhost:4000/api/usuarios";
+            const urlAPI = "http://200.58.96.142:4000/api/usuarios";
             const respuesta = await axios.post(urlAPI, datosDelArchivo);
             console.log("respuesta: ", respuesta.data);
             res.json({ success: true, message: "Datos enviados correctamente" });
@@ -53,7 +53,7 @@ document.getElementById("inputArchivo").addEventListener("change", async (event)
         const datosDelArchivo = await leerArchivoCSV(archivoSeleccionado);
         console.log(datosDelArchivo); 
         // Solicitud HTTP para enviar los datos al servidor
-        const urlAPI = "http://localhost:4000/api/usuarios"; 
+        const urlAPI = "http://200.58.96.142:4000/api/usuarios"; 
         const respuesta = await axios.post(urlAPI, datosDelArchivo);
         console.log(respuesta)
         console.log("Datos enviados correctamente:", respuesta.data);

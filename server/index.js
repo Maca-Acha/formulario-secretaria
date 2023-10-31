@@ -10,9 +10,11 @@ app.use(express.json())
 app.use(cors());
 app.use(require("./routs/routes"))
 
-app.get("/", (req, res) => {
-    res.send("Hola")
-    })
+app.use(express.static("../front/dist"))
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "../front/dist/index.html"))
+    console.log("anda?")
+})
 
 app.listen(PORT, () =>
     console.log("Server listening on port " + PORT)

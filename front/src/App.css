@@ -363,6 +363,13 @@ input:focus, select:focus {
     width: 100%;
   }
 }
+@media (max-width: 780px){
+  .bloque-usuarios-Admin{
+    flex-direction: column;
+    gap: 40px;
+    height: 62vh;
+  }
+}
 @media (max-width: 605px){
   .fondo-inicio{
     width:52vw;

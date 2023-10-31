@@ -118,7 +118,7 @@ export default function Usuario(){
                                 </form>
                             )}
                         </div> 
-                        <p className='card-foto'>Foto</p>
+                        {/* <p className='card-foto'>Foto</p> */}
                     </div>
                     <div className='informacion'>
                         <section className='input-perfil'>

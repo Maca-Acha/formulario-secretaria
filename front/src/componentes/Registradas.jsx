@@ -1,5 +1,5 @@
 import '../Registradas.css'
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUsuarios, borrarUsuario, editarEstado } from "../redux/reducers/usuarioSlice"
@@ -25,6 +25,12 @@ function Registradas(){
     const agregar = <AiFillPlusCircle className='agregar' />
     const eliminar = <RiDeleteBin5Fill />
     const descargar = <MdDownload/>
+
+    //PRUEBA FILTRO ESTADO
+    const [estadoFiltro, setEstadoFiltro] = useState("");
+    const handleFiltrarPorEstado = (e) => {
+        setEstadoFiltro(e.target.value); // Actualiza el estado de filtro por estado
+    };
 
     useEffect(() => {
         dispatch(fetchUsuarios()); 
@@ -62,11 +68,13 @@ function Registradas(){
         const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';
         const referenteLower = referenteFiltro ? referenteFiltro.toLowerCase() : '';
         const buscarLower = buscar ? buscar.toLowerCase().trim() : '';
+        const estadoFiltroLower = estadoFiltro.toLowerCase();
 
         if (!usuarios) {
             return []; 
         }
         return usuarios.filter((usuario) => {
+            const estadoUsuarioLower = usuario.estado ? usuario.estado.toLowerCase() : "";
             const organizacionUsuarioLower = usuario.organizacion ? usuario.organizacion.toLowerCase() : '';
             const referenteUsuarioLower = usuario.referente ? usuario.referente.toLowerCase() : '';
             const nombre = usuario.nombre ? usuario.nombre.toLowerCase().startsWith(buscarLower) : false;
@@ -80,7 +88,8 @@ function Registradas(){
             return (
                 (organizacionFiltrarTodo || organizacionUsuarioLower === organizacionLower) &&
                 (referenteFiltrarTodo || referenteUsuarioLower === referenteLower) &&
-                (nombre || apellido || dni || cuil)
+                (nombre || apellido || dni || cuil)&&
+                (estadoFiltro === "" || estadoUsuarioLower === estadoFiltroLower)          
             );
         });
     };
@@ -114,7 +123,6 @@ function Registradas(){
             
         }
     };
-
     //Editar estado
     async function handleEditarEstado(e, id) {
         const nuevoEstado = e.target.value;
@@ -125,8 +133,7 @@ function Registradas(){
             }
         }));
         await dispatch(fetchUsuarios());
-    } 
-    
+    }    
     //Borrar
     const handleBorrar = (id)=>{
         Swal.fire({
@@ -173,6 +180,18 @@ function Registradas(){
                                 return (
                                 <option value={referente.value} key={index}>{referente.text}</option>
                             )})}
+                        </select>
+                        <select
+                            className="input-form"
+                            ref={estado}
+                            value={estadoFiltro}
+                            onChange={handleFiltrarPorEstado}
+                            >
+                            <option value="">Todos los estados</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Baja">Baja</option>
+                            <option value="Pendiente">Pendiente</option>
                         </select>
                     </div>
                 </div>

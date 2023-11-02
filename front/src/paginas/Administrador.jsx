@@ -9,7 +9,6 @@ export default function Administrador(){
     const navigate = useNavigate()
     const token = useSelector((state) => state.usuario.token);
     const rol = useSelector((state) => state.usuario.rol);
-    const usuario = useSelector((state) => state.usuario);
 
     useEffect(() => {
         dispatch(fetchUsuarios());
@@ -34,7 +33,7 @@ export default function Administrador(){
                 dispatch(setToken(action.payload.token));
                 navigate(`${rol && rol === "admin" ? "/perfil-admin": "/"}`)
                 if(rol === "admin"){
-                    toast.success('Has iniciado sesión con ' + usuario.nombre, {
+                    toast.success('Has iniciado sesión correctamente ', {
                         position: toast.POSITION.TOP_RIGHT
                     });
                 }else{

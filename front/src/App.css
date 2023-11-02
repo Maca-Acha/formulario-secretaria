@@ -336,9 +336,6 @@ input:focus, select:focus {
   .btn-crear-cuenta {
     width: 33vw;
   }
-  .cont-buscador{
-    flex-direction: column !important;
-  }
 }
 @media (max-width: 943px){
   .form-registrarse{
@@ -367,6 +364,11 @@ input:focus, select:focus {
   .bloque-usuarios-Admin{
     flex-direction: column;
     gap: 40px;
+    height: 69vh;
+    margin-top: 10vh;
+  }
+  .cargar-usuarios-admin, .direccionAregistradas {
+    padding: 2rem;
   }
 }
 @media (max-width: 605px){
@@ -400,9 +402,6 @@ input:focus, select:focus {
   .contenedor-cards {
     grid-template-columns: repeat(1, 1fr) !important;
   }
-  .buscador{
-    flex-direction: column;
-  }
   .input-buscar{
     width: 98% !important;
   }
@@ -410,6 +409,14 @@ input:focus, select:focus {
 @media (max-width: 469px){
   .input_grande{
     width: 100%;
+  }
+}
+@media (max-width: 360px){
+  .fondo-inicio, .btn-crear-cuenta {
+    width: 62vw;
+  }
+  .btn-inicio{
+    width: 69vw;
   }
 }
 

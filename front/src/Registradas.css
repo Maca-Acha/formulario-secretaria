@@ -74,10 +74,7 @@
 }
 .buscador, .agregar-usuarios-csv{
     display: flex;
-    gap: 15px
-}
-.input-buscar{
-    width: 25%;
+    gap: 15px;
 }
 .text-filtrar{
     font-weight: 600;
@@ -185,12 +182,19 @@
     width: 100%;
     padding: 0 0.5rem
 }
+.txt-nivelEstudios{
+    width: 100%;
+}
 .serv-usuario{
     margin: 5vh 5vh 0 0;
 }
 .select-estado{
     background: none;
 }
+.btn-edit{
+    align-self: center;
+}
+
 /* Exportar */
 .text-exportar{
     align-self: flex-end;
@@ -289,6 +293,22 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 }
 
 /* Responsive */
+@media (max-width: 1050px){
+    .cont-buscador{
+        flex-direction: column;
+    }
+    .filtros{
+        width: 100%;
+    }
+    .text-exportar, .btn-exportar {
+        align-self: flex-start;
+    }
+}
+@media(max-width: 785px){
+    .buscador{
+        flex-direction: column;
+    }
+}
 @media (max-width:740px) {
     .contenedor-usuario, .cont-admin-servicios{
         flex-direction: column;

@@ -208,7 +208,7 @@ export default function Usuario(){
                             <div className="btn-cursor btn-edit"  onClick={() => {setEditFecha(!editFecha)}}>{editar} </div>
                         </section>
                         <section className='input-perfil'>
-                            <p className='negrita '>Nivel de Estudios: </p>
+                            <p className='negrita txt-nivelEstudios'>Nivel de Estudios: </p>
                             {editEstudios ? (
                                 <form className="editor" onSubmit={handleEditarUsuario}>
                                     <select ref={estudios}>
@@ -219,7 +219,7 @@ export default function Usuario(){
                                         )})}
                                     </select>
                                 </form>
-                            ):<p className='texto-info'>{usuario.estudios}</p>}
+                            ):<p className='texto-info '>{usuario.estudios}</p>}
                             <div className="btn-cursor btn-edit"  onClick={() => {setEditEstudios(!editEstudios)}}>{editar} </div>
                         </section>
                         <section className='input-perfil'>
@@ -239,7 +239,7 @@ export default function Usuario(){
                             <div className="btn-cursor btn-edit"  onClick={() => {setEditGenero(!editGenero)}}>{editar} </div>
                         </section>
                         <section className='input-perfil'>
-                            <p className='negrita'>Terea: </p>
+                            <p className='negrita'>Actividad: </p>
                             {editTareas ? (
                                 <form className="editor" onSubmit={handleEditarUsuario}>
                                     <input

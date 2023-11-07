@@ -70,9 +70,15 @@ export const cerrarSesion = createAsyncThunk('usuarios/cerrarSesion', async() =>
 export const registrarUsuario = createAsyncThunk('registrarusuario', async (body) => {
     try{
         const response = await Axios.post('http://200.58.96.142:4000/api/usuarios', body);
-        toast.success('Te haz registrado correctamente', {
-            position: toast.POSITION.TOP_RIGHT
-        });
+        if(response.data.response.nuevoUsuario.rol === "admin"){
+            toast.success('Haz registrado a un administrador', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }else{
+            toast.success('Te haz registrado correctamente', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
         return response.data
     }catch(error){
         toast.error("Lo sentimos! Error al registrarse. Verifique que todos los campos esten completos", {

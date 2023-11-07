@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef, useState } from 'react';
 import { cargarServicio, traerServicios, borrarServicio, editarServicio } from "../redux/reducers/serviciosSlice"
-import {agregarServicioUsuario} from "../redux/reducers/usuarioSlice"
+import { agregarServicioUsuario } from "../redux/reducers/usuarioSlice" 
 import { useParams } from "react-router-dom";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import {FiEdit} from "react-icons/fi";
@@ -24,23 +24,21 @@ export default function Servicios(){
         };
         fetchData();
     }, [params, dispatch]);
-    
-    const descripcion = useRef()
+
     const editado = useRef()
     
-    function  handleNuevoServicio (e) {
-        e.preventDefault();
+    function  handleNuevoServicio ( serv) {
         const fechaActual = new Date();
         const dia = fechaActual.getDate().toString().padStart(2, '0');
         const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
-        const anio = fechaActual.getFullYear().toString();
-    
-        const fechaFormateada = `${dia}/${mes}/${anio}`;
+        const anio = fechaActual.getFullYear().toString(); 
+        const fechaFormateada = `${dia}/${mes}/${anio}`; 
+
         dispatch(cargarServicio({
             id: params.id,
             body: {
                 titulo: "Servicio",
-                descripcion: descripcion.current.value,
+                descripcion: serv,
                 fecha: fechaFormateada
             }
         })).then((servicioCreado) => {
@@ -52,7 +50,7 @@ export default function Servicios(){
             } else {
                 console.error("No se pudo obtener el _id del servicio creado.");
             }
-        });
+        }); 
     }
     function handleEditarServicio(idServicio){
         dispatch(editarServicio({
@@ -124,10 +122,14 @@ export default function Servicios(){
                                 </div>
                             ):
                             <p>No tiene servicios adquiridos</p>}
-                            
-                            <form className='servicios' onSubmit={handleNuevoServicio}>
-                                <input ref={descripcion} className="input-form" type="text" placeholder="Describir servicio"  />
-                                <input type="submit" className=" btn-agregar " value="Agregar" /> 
+                            <form className='servicios' >
+                            <div className="cont-btn-serv">
+                                <button className="btn-serv" value={"serv1"} onClick={() => handleNuevoServicio("serv1")} type="button">serv-1</button>
+                                <button className="btn-serv" value={"serv2"} onClick={() => handleNuevoServicio("serv2")} type="button">serv-2</button>
+                                <button className="btn-serv" value={"serv3"} onClick={() => handleNuevoServicio("serv3")} type="button">serv-3</button>
+                            </div>
+                                {/* <input ref={descripcion} className="input-form" type="text" placeholder="Describir servicio"  />
+                                <input type="submit" className=" btn-agregar " value="Agregar" />  */}
                             </form>
                         </div>
                     </div>

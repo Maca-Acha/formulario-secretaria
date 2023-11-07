@@ -26,12 +26,6 @@ function Registradas(){
     const eliminar = <RiDeleteBin5Fill />
     const descargar = <MdDownload/>
 
-    //PRUEBA FILTRO ESTADO
-    const [estadoFiltro, setEstadoFiltro] = useState("");
-    const handleFiltrarPorEstado = (e) => {
-        setEstadoFiltro(e.target.value); // Actualiza el estado de filtro por estado
-    };
-
     useEffect(() => {
         dispatch(fetchUsuarios()); 
         
@@ -63,6 +57,10 @@ function Registradas(){
             dispatch(usuariosPorRef(referenteValue));
         }
         dispatch(setReferenteFiltro(referenteValue));
+    };
+    const [estadoFiltro, setEstadoFiltro] = useState("");
+    const handleFiltrarPorEstado = (e) => {
+        setEstadoFiltro(e.target.value);
     };
     const buscarUsuario = (buscar) => {
         const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';

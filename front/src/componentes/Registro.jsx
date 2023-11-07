@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { useDispatch } from "react-redux"
-import {Estudios, Generos, Tareas, Referentes, Organizaciones, Barrios} from "./Constantes"
+import {Estudios, Generos, Actividad, Referentes, Organizaciones, Barrios} from "./Constantes"
 import { registrarUsuario } from "../redux/reducers/usuarioSlice"
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -184,7 +184,7 @@ function Registro() {
                     <label className="label input_mediano">
                         Actividad
                         <select ref={tareas} className="input-form">
-                            {Tareas.map((tarea, index)=>{
+                            {Actividad.map((tarea, index)=>{
                                 return(
                                     <option value={tarea.text} disabled={tarea.disabled} key={index}>{tarea.text}</option>
                                     )

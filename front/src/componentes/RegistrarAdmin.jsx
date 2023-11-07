@@ -43,6 +43,7 @@ function RegistrarAdmin() {
         mail.current.value = "" 
         fecha.current.value = "" 
         contrasena.current.value = ""
+        contrasena2.current.value = ""
     }
 
     return(

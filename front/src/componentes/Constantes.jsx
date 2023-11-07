@@ -13,8 +13,8 @@ export const Generos = [
     "Otro"
 ]
 
-export const Tareas = [
-    {disabled:"disabled", text: "Especificar tarea"},
+export const Actividad = [
+    {disabled:"disabled", text: "Especificar actividad"},
     {disabled:"", text: "Albañil"},
     {disabled:"", text: "Alimetos"},
     {disabled:"", text: "Cartonero"},

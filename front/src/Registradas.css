@@ -194,6 +194,24 @@
 .btn-edit{
     align-self: center;
 }
+.cont-btn-serv{
+    display: flex;
+    gap: 10px;
+}
+.btn-serv{
+    cursor: pointer;
+    color: var(--black);
+    font-weight: 500;
+    padding: .5rem 1rem;
+    border-radius: .4rem;
+    background-color: var(--blue);
+    border: solid 3px var(--blue);
+    transition: .3s;
+}
+.btn-serv:hover{
+    background-color: var(--white);
+    transition: .3s;
+}
 
 /* Exportar */
 .text-exportar{

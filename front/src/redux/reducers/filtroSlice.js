@@ -6,6 +6,7 @@ const initialState = {
     filtro: "",
     organizacionFiltro: "",
     referenteFiltro: "",
+    servicioFiltro: null,
     error: ""
 };
 
@@ -24,61 +25,43 @@ export const usuariosPorRef = createAsyncThunk('usuarios/UsuariosPorRef', async 
         .then((response) => response.data.res)
         .catch((error) => console.log(error));
 });
+export const usuariosPorServ = createAsyncThunk("usuarios/usuariosPorServ", async (servicio) => {
+        return Axios.get(`http://localhost:4000/api/filtrados/servicio/${servicio}`)
+        .then((response) => response.data.res)
+        .catch((error) => console.log(error));
+    }
+);
+export const filtroUsuarios = createAsyncThunk("usuarios/filtroUsuarios", async (filtros, thunkAPI) => {
+    try {
+        const response = await Axios.get("http://localhost:4000/api/filtrados", {params: filtros})
+            .catch(error => console.error(error));
+        return response.data;
+    } catch (err) {
+        return thunkAPI.rejectWithValue(err.response.data);
+    }
+});
 
-
-    
 const filtroSlice = createSlice({
     name: "filtro",
     initialState,
     reducers: {
+        //unificar y filtrar desde aca
         setFiltro: (state, action) => {
+            console.log("setFiltro: ", action.payload)
             state.filtro = action.payload;
-        },
-        setOrganizacionFiltro: (state, action) => {
-            state.organizacionFiltro = action.payload; 
-        },
-        setReferenteFiltro: (state, action) => {
-            state.referenteFiltro = action.payload; 
-        },
+        },             
     },extraReducers: (builder) => {
-        /* Filtrar Usuario */
-        builder.addCase(filtrarUsuarios.pending, (state) => {
+        /* Filtrar todo */
+        builder.addCase(filtroUsuarios.pending, (state) => {
             state.loading = true;
         })
-        builder.addCase(filtrarUsuarios.fulfilled, (state, action) => {
+        builder.addCase(filtroUsuarios.fulfilled, (state, action) => {
+            console.log("action filtrarUsuarios: ", action.payload)
             state.loading = false;
-            state.usuarios = action.payload;
+            state.filtro = action.payload;
             state.error = '';
         });
-        builder.addCase(filtrarUsuarios.rejected, (state, action) => {
-            state.loading = false;
-            state.usuarios = [];
-            state.error = action.error.message;
-        });
-        /* Usuarios por Organizacion */
-        builder.addCase(usuariosPorOrga.pending, (state) => {
-            state.loading = true;
-        })
-        builder.addCase(usuariosPorOrga.fulfilled, (state, action) => {
-            state.loading = false;
-            state.usuarios = action.payload;
-            state.error = '';
-        });
-        builder.addCase(usuariosPorOrga.rejected, (state, action) => {
-            state.loading = false;
-            state.usuarios = [];
-            state.error = action.error.message;
-        });
-        /* Usuarios por Referente */
-        builder.addCase(usuariosPorRef.pending, (state) => {
-            state.loading = true;
-        })
-        builder.addCase(usuariosPorRef.fulfilled, (state, action) => {
-            state.loading = false;
-            state.usuarios = action.payload;
-            state.error = '';
-        });
-        builder.addCase(usuariosPorRef.rejected, (state, action) => {
+        builder.addCase(filtroUsuarios.rejected, (state, action) => {
             state.loading = false;
             state.usuarios = [];
             state.error = action.error.message;
@@ -86,6 +69,5 @@ const filtroSlice = createSlice({
     }
 });
 
-export const { setFiltro, setOrganizacionFiltro, setReferenteFiltro } = filtroSlice.actions;
-
+export const { setFiltro } = filtroSlice.actions;
 export default filtroSlice.reducer;

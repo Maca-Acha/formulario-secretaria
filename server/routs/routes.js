@@ -10,7 +10,6 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.put('/api/servicios/:usuarioId', usuariosController.postServicio)
 
 // USUARIOS
 router.post("/api/upload", 
@@ -19,12 +18,6 @@ router.post("/api/upload",
 router.route("/api/usuarios")
     .get(usuariosController.verUsuarios)
     .post(usuariosController.nuevosUsuario)
-router.route("/api/usuarios/filtrados")
-    .get(usuariosController.filtrarUsuarios)
-router.route("/api/usuarios/filtrados/:organizacion")
-    .get(usuariosController.filtrarPorOrga)
-router.route("/api/filtrados/:referente")
-    .get(usuariosController.filtrarPorRef)
 router.route("/usuario/estado/:id")
     .put(usuariosController.editarEstado)
 router.route("/usuario/:id")
@@ -47,7 +40,19 @@ router.post("/api/usuarios/login/:email/code", async (req, res) => {
     res.status(200).json({ ok: true, message: "Código enviado con éxito!" });
 });
 
+// FILTROS
+/* router.get("/api/filtrados/servicio/:servicio", usuariosController.filtrarPorServ)
+router.route("/api/usuarios/filtrados")
+    .get(usuariosController.filtrarUsuarios)
+router.route("/api/usuarios/filtrados/:organizacion")
+    .get(usuariosController.filtrarPorOrga)
+router.route("/api/filtrados/:referente")
+    .get(usuariosController.filtrarPorRef) */
+router.route("/api/filtrados")
+    .get(usuariosController.filtro)
+
 // SERVICIOS
+router.put('/api/servicios/:usuarioId', usuariosController.postServicio)
 router.route("/api/servicios/:usuarioId")
     .get(serviciosControllers.traerServiciosByUsuario)
     .post(serviciosControllers.postServicio)

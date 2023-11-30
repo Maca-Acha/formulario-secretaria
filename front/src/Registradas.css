@@ -48,10 +48,33 @@
 }
 
 /* Registradas */
+.cont-filtros-buscar{
+    padding: 30px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 33px;
+    border: 1px solid var(--darkGray);
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin:0 0 5vh 0;
+}
 .cont-agregar{
     display: flex;
     justify-content: flex-end;
     align-content: center;
+}
+.btnBuscar{
+    width: 100%;
+    background-color: var(--blue);
+    border: solid 2px var(--blue) ;
+    transition: .3s;
+}
+.btnBuscar:hover{
+    background-color: var(--white);
+    transition: .3s;
+}
+.cont-exportar{
+    margin-bottom: 3vh;
 }
 .agregar{
     width: 2em;
@@ -70,7 +93,7 @@
     box-shadow: none; 
     border-radius: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
 }
 .buscador, .agregar-usuarios-csv{
     display: flex;

@@ -1,101 +1,65 @@
-import '../Registradas.css'
-import { useEffect, useRef, useState } from "react"
-import {Link} from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchUsuarios, borrarUsuario, editarEstado } from "../redux/reducers/usuarioSlice"
-import { filtrarUsuarios, 
-        setFiltro, 
-        setOrganizacionFiltro, 
-        usuariosPorOrga, 
-        usuariosPorRef, 
-        setReferenteFiltro } from "../redux/reducers/filtroSlice"
-import { AiFillPlusCircle } from 'react-icons/ai'
-import { RiDeleteBin5Fill } from "react-icons/ri"
-import { MdDownload } from "react-icons/md";
-import {Organizaciones, Referentes} from "./Constantes"
-import Swal from 'sweetalert2'
-import * as XLSX from 'xlsx';
 
-function Registradas(){
-    const dispatch = useDispatch()
-    const usuarios = useSelector((state) => state.usuario.usuarios)
-    const filtro = useSelector((state) => state.filtro.filtro) || ""
-    const organizacionFiltro = useSelector((state) => state.filtro.organizacionFiltro) || ""
-    const referenteFiltro = useSelector((state) => state.filtro.referenteFiltro) || ""
-    const agregar = <AiFillPlusCircle className='agregar' />
-    const eliminar = <RiDeleteBin5Fill />
-    const descargar = <MdDownload/>
+import '../Registradas.css';
+import * as XLSX from 'xlsx';
+import Swal from 'sweetalert2';
+import { useDispatch, useSelector} from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchUsuarios, borrarUsuario, editarEstado } from "../redux/reducers/usuarioSlice";
+import { filtroUsuarios } from "../redux/reducers/filtroSlice";
+import { AiFillPlusCircle } from 'react-icons/ai';
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { MdDownload } from "react-icons/md";
+import { Organizaciones, Referentes } from "./Constantes";
+
+function Registradas() {
+    const dispatch = useDispatch();
+    const usuarios = useSelector((state) => state.usuario.usuarios) || [];
+
+    const filtro = useSelector((state) => state.filtro.filtro) || '';
+    const agregar = <AiFillPlusCircle className='agregar' />;
+    const eliminar = <RiDeleteBin5Fill />;
+    const descargar = <MdDownload />;
 
     useEffect(() => {
-        dispatch(fetchUsuarios()); 
-        
-    }, [dispatch])
+        const fetchData = async () => {
+            dispatch(fetchUsuarios());
+        };
+        fetchData();
+    }, [dispatch]);
 
-    const inputBuscar = useRef()
-    const organizacion = useRef()
-    const referente = useRef()
-    const estado = useRef()
+    const organizacion = useRef();
+    const referente = useRef();
+    const estado = useRef();
+    const servicio = useRef();
 
-    //Filtros
-    const handleBuscar = () => {
-        const inputValue = inputBuscar.current.value;
-        if (filtro !== inputValue) {
-            dispatch(filtrarUsuarios(inputValue));
-        }
-        dispatch(setFiltro(inputValue));
-    }
-    const handleFiltrarPorOrganizacion = () => {
-        const organizacionValue = organizacion.current.value;
-        if (organizacionFiltro !== organizacionValue) {
-            dispatch(usuariosPorOrga(organizacionValue));
-        }
-        dispatch(setOrganizacionFiltro(organizacionValue));
-    };
-    const handleFiltrarPorReferente = () => {
-        const referenteValue = referente.current.value;
-        if (referenteFiltro !== referenteValue) {
-            dispatch(usuariosPorRef(referenteValue));
-        }
-        dispatch(setReferenteFiltro(referenteValue));
-    };
-    const [estadoFiltro, setEstadoFiltro] = useState("");
-    const handleFiltrarPorEstado = (e) => {
-        setEstadoFiltro(e.target.value);
-    };
-    const buscarUsuario = (buscar) => {
-        const organizacionLower = organizacionFiltro ? organizacionFiltro.toLowerCase() : '';
-        const referenteLower = referenteFiltro ? referenteFiltro.toLowerCase() : '';
-        const buscarLower = buscar ? buscar.toLowerCase().trim() : '';
-        const estadoFiltroLower = estadoFiltro.toLowerCase();
+    //Filtro
+    const [usuariosFiltrados, setusuariosFiltrados] = useState([]);
 
-        if (!usuarios) {
-            return []; 
+    useEffect(() => {
+        if (filtro && filtro.length === 0) {
+            setusuariosFiltrados(usuarios);
+        } else {
+            setusuariosFiltrados(filtro);
         }
-        return usuarios.filter((usuario) => {
-            const estadoUsuarioLower = usuario.estado ? usuario.estado.toLowerCase() : "";
-            const organizacionUsuarioLower = usuario.organizacion ? usuario.organizacion.toLowerCase() : '';
-            const referenteUsuarioLower = usuario.referente ? usuario.referente.toLowerCase() : '';
-            const nombre = usuario.nombre ? usuario.nombre.toLowerCase().startsWith(buscarLower) : false;
-            const apellido = usuario.apellido ? usuario.apellido.toLowerCase().startsWith(buscarLower) : false;
-            const dni = usuario.dni ? usuario.dni.toLowerCase().startsWith(buscarLower) : false;
-            const cuil = usuario.cuil ? usuario.cuil.toLowerCase().startsWith(buscarLower) : false;
-            
-            const organizacionFiltrarTodo = organizacionLower === 'todas las organizaciones';
-            const referenteFiltrarTodo = referenteLower === 'todos los referentes';
+    }, [filtro, usuarios]);
     
-            return (
-                (organizacionFiltrarTodo || organizacionUsuarioLower === organizacionLower) &&
-                (referenteFiltrarTodo || referenteUsuarioLower === referenteLower) &&
-                (nombre || apellido || dni || cuil)&&
-                (estadoFiltro === "" || estadoUsuarioLower === estadoFiltroLower)          
-            );
-        });
+
+    const [filtros, setFiltros] = useState({
+        buscador: "",
+        referente: "",
+        organizacion: "",
+        servicio: "",
+        estado: ""
+    });
+
+    const filtrarUsuarios = () => {
+        dispatch(filtroUsuarios(filtros));
     };
-    const usuariosFiltrados = buscarUsuario(filtro);
     
     //Exportar
     const handleExportUsuarios = () => {
-        try{const data = usuariosFiltrados.map((usuario) => ({
+        try{const data = usuarios.map((usuario) => ({
                 Apellido: usuario.apellido,
                 Nombre: usuario.nombre,
                 DNI: usuario.dni,
@@ -119,7 +83,7 @@ function Registradas(){
         catch (error) {
             console.error("Error al exportar usuarios:", error);
             
-        }
+        }        
     };
     //Editar estado
     async function handleEditarEstado(e, id) {
@@ -156,24 +120,24 @@ function Registradas(){
 
     return (
         <div className='cont-contenedor-cards' >
-            <form className='cont-buscador' >
-                <div className='filtros'>
-                    <label className='text-filtrar'>Filtrar</label>
+            <div className='cont-buscador' >
+                <form className='cont-filtros-buscar' onSubmit={(e) =>{ e.preventDefault(), filtrarUsuarios()}}>
+                    <label className='text-filtrar'>Filtro</label>
                     <div className='buscador'>
                         <input
                             className='input-buscar input-form'
                             type='text'
                             placeholder='Buscar'
-                            ref={inputBuscar}
-                            onChange={handleBuscar}
+                            value={filtros.buscador}
+                            onChange={(e) => setFiltros({ ...filtros, buscador: e.target.value })}
                         />
-                        <select className='input-form' ref={organizacion} onChange={handleFiltrarPorOrganizacion}>
+                        <select className='input-form' ref={organizacion} onChange={(e) => setFiltros({ ...filtros, organizacion: e.target.value })}>
                             {Organizaciones.map((orga, index)=>{
                                 return (
                                 <option  value={orga.value} key={index}>{orga.text}</option>
                             )})}
                         </select>
-                        <select className='input-form' ref={referente} onChange={handleFiltrarPorReferente}>
+                        <select className='input-form' ref={referente} onChange={(e) => setFiltros({ ...filtros, referente: e.target.value })}>
                             {Referentes.map((referente, index)=>{
                                 return (
                                 <option value={referente.value} key={index}>{referente.text}</option>
@@ -182,8 +146,7 @@ function Registradas(){
                         <select
                             className="input-form"
                             ref={estado}
-                            value={estadoFiltro}
-                            onChange={handleFiltrarPorEstado}
+                            onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
                             >
                             <option value="">Todos los estados</option>
                             <option value="Activo">Activo</option>
@@ -191,14 +154,26 @@ function Registradas(){
                             <option value="Baja">Baja</option>
                             <option value="Pendiente">Pendiente</option>
                         </select>
+                        <select className="input-form" ref={servicio} onChange={(e) => setFiltros({ ...filtros, servicio: e.target.value })}>
+                            <option value="">Todos los servicios</option>
+                            {usuarios.map((usuario) => (
+                                usuario.servicios.map((servicio) => (
+                                <option key={servicio._id} value={servicio._id}>
+                                    {servicio.descripcion}
+                                </option>
+                                ))
+                            ))}
+                        </select>
+
+                        <input type='submit' className='btnBuscar' value='Buscar' />
                     </div>
-                </div>
-                <div className='filtros'>
+                </form>
+                <div className='filtros cont-exportar'>
                     <label className='text-filtrar text-exportar'>Exportar usuarios en vista</label>
                     <button className='btn-exportar' onClick={handleExportUsuarios}>Exportar usuarios {descargar}</button>
                 </div>
-            </form>
-            {usuarios && usuariosFiltrados ? 
+            </div>
+            {usuarios && usuariosFiltrados? 
             <div className='contenedor-cards'>
                 {usuariosFiltrados.map((usuario)=>{
                     if(usuario.rol !== "admin"){

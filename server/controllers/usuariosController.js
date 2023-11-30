@@ -6,6 +6,7 @@ const transporter = require('../config/mailer')
 const usuariosController = {
   verUsuarios: async (req, res) => {
     try {
+      console.log("soy llamada")
       const usuarios = await Usuario.find().populate('servicios')
       res.json({ response: usuarios })
     } catch (error) {
@@ -232,7 +233,45 @@ const usuariosController = {
     }
     res.json({ success: true, message: 'Usuario eliminado correctamente' })
   },
-  filtrarUsuarios: async (req, res) => {
+  filtro: async(req,res)=>{
+    try {
+      const { buscador, referente, organizacion, servicio, estado } = req.query
+
+      const filtroObjeto = {
+        $or: [
+          { nombre: { $regex: buscador || "", $options: 'i' } },
+          { apellido: { $regex: buscador || "", $options: 'i' } },
+          { dni: { $regex: buscador || "" } },
+          { cuil: { $regex: buscador || "" } },
+        ],
+      };
+      if (servicio) {
+        filtroObjeto.servicios = { $all: [servicio] };
+      }
+      if (referente) {
+        filtroObjeto.referente = referente;
+      }
+      if (organizacion) {
+        filtroObjeto.organizacion = organizacion;
+      }
+      if (estado) {
+        filtroObjeto.estado = estado;
+      }
+      const usuariosPorBusqueda = await Usuario.find(filtroObjeto);
+      res.json(usuariosPorBusqueda);
+    }catch(err){
+      return res.status(400).json({
+        message: 'no se puede encontrar usuarios',
+        res: err.message,
+      })
+    }
+  }}
+
+module.exports = usuariosController
+
+
+
+  /* filtrarUsuarios: async (req, res) => {
     try {
       const { filtro } = req.query
       const usuariosFiltrados = await Usuario.find({
@@ -272,6 +311,16 @@ const usuariosController = {
       })
     }
   },
-}
-
-module.exports = usuariosController
+  filtrarPorServ: async (req, res) => {
+    try {
+        let usuario = await Usuario.find({ servicios: { $in: [req.params.servicio] } })
+        res.status(200).json({ res: usuario })
+    } catch (err) {
+        return res.status(400).json({
+            message: 'no se puede encontrar usuarios',
+            res: err.message,
+        })
+    }
+  },
+ */
+  

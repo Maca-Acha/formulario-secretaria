@@ -318,6 +318,11 @@ input:focus, select:focus {
 }
 
 /* Responsive */
+@media(max-width: 1410px){
+  .buscador{
+    flex-wrap: wrap;
+  }
+}
 @media (max-width: 1270px){
   .contenedor-cards {
     grid-template-columns: repeat(3, 1fr) !important;

@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000
 
 app.use(express.json())
 app.use(cors());
-app.use(require("./routs/routes"))
+app.use(require("./routs/routes"));
 
 app.use(express.static("../front/dist"))
 app.get("*", (req, res) => {

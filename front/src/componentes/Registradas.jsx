@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { useDispatch, useSelector} from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchUsuarios, borrarUsuario, editarEstado } from "../redux/reducers/usuarioSlice";
+import { fetchUsuarios, borrarUsuario, editarEstado, enviarMensajeUsuarios } from "../redux/reducers/usuarioSlice";
 import { filtroUsuarios } from "../redux/reducers/filtroSlice";
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -32,6 +32,7 @@ function Registradas() {
     const referente = useRef();
     const estado = useRef();
     const servicio = useRef();
+    const txtMensaje = useRef()
 
     //Filtro
     const [usuariosFiltrados, setusuariosFiltrados] = useState([]);
@@ -59,7 +60,7 @@ function Registradas() {
     
     //Exportar
     const handleExportUsuarios = () => {
-        try{const data = usuarios.map((usuario) => ({
+        try{const data = usuariosFiltrados.map((usuario) => ({
                 Apellido: usuario.apellido,
                 Nombre: usuario.nombre,
                 DNI: usuario.dni,
@@ -85,6 +86,20 @@ function Registradas() {
             
         }        
     };
+    //Enviar Mensaje
+    const enviarMensaje = () =>{
+        try{
+            const email = usuariosFiltrados && usuariosFiltrados.map((usuario) => ({
+                email: usuario.mail
+            }));
+            const mensaje = txtMensaje.current.value
+            dispatch(enviarMensajeUsuarios({
+                mensaje: mensaje, 
+                email: email}))
+        }catch(error){
+            console.error("Error al enviar mensaje:", error)
+        }
+    }
     //Editar estado
     async function handleEditarEstado(e, id) {
         const nuevoEstado = e.target.value;
@@ -171,6 +186,11 @@ function Registradas() {
                 <div className='filtros cont-exportar'>
                     <label className='text-filtrar text-exportar'>Exportar usuarios en vista</label>
                     <button className='btn-exportar' onClick={handleExportUsuarios}>Exportar usuarios {descargar}</button>
+                </div>
+                <div>
+                    <label>Mensaje a usuarios en vista</label>
+                    <input type='text' ref={txtMensaje} placeholder='Enviar mensaje...'/>
+                    <button className='btn-exportar' onClick={enviarMensaje}>Enviar Notificación {descargar}</button>
                 </div>
             </div>
             {usuarios && usuariosFiltrados? 

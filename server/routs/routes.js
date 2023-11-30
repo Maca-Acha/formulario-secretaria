@@ -40,14 +40,11 @@ router.post("/api/usuarios/login/:email/code", async (req, res) => {
     res.status(200).json({ ok: true, message: "Código enviado con éxito!" });
 });
 
+// MENSAJE
+router.route("/mensaje/usuarios")
+    .post(usuariosController.enviarMensaje)
+
 // FILTROS
-/* router.get("/api/filtrados/servicio/:servicio", usuariosController.filtrarPorServ)
-router.route("/api/usuarios/filtrados")
-    .get(usuariosController.filtrarUsuarios)
-router.route("/api/usuarios/filtrados/:organizacion")
-    .get(usuariosController.filtrarPorOrga)
-router.route("/api/filtrados/:referente")
-    .get(usuariosController.filtrarPorRef) */
 router.route("/api/filtrados")
     .get(usuariosController.filtro)
 

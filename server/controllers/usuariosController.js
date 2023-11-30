@@ -140,6 +140,26 @@ const usuariosController = {
         .json({ success: false, response: null, error: 'Error en el servidor' })
     }
   },
+  enviarMensaje: async (req, res) => {
+    const {mensaje, email} = req.body
+    console.log("Mensaje:", mensaje)
+    console.log("Email:", email)
+    const destinatarios = email.map(user => user.email);
+
+    try{
+      const correo = 'achamariamacarena@gmail.com'
+      const result = await transporter.sendMail({
+        from: `Administración Ministerio ${correo}`,
+        to: destinatarios,
+        subject: 'Notificación',
+        text: mensaje,
+      })
+      res.status(200).json({ success: true, response: result, error: null });
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ success: false, response: null, error: 'Error en el servidor' });
+    }
+  },
   signIn: async (req, res) => {
     const { dni, contrasena } = req.body
     try {

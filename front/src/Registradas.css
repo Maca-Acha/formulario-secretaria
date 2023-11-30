@@ -66,7 +66,7 @@
 .btnBuscar{
     width: 100%;
     background-color: var(--blue);
-    border: solid 2px var(--blue) ;
+    border: solid 3px var(--blue) ;
     transition: .3s;
 }
 .btnBuscar:hover{

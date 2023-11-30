@@ -12,6 +12,11 @@ const initialState = {
     rol:''
 }
 
+
+const exitoNotificacion = (message) => {
+    toast.success(message);
+};
+
 export const registerActionToolkit = createAsyncThunk('usuarios/register', async (key) => {
     return({
         type: 'usuarios/register',
@@ -87,9 +92,7 @@ export const registrarUsuario = createAsyncThunk('registrarusuario', async (body
         return isRejectedWithValue(error)
     }
 })
-export const editarUsuario = createAsyncThunk(
-    'editarUsuario',
-    async ({ id, body }) => {
+export const editarUsuario = createAsyncThunk('editarUsuario', async ({ id, body }) => {
         const token = localStorage.getItem('token');
         const headers = {
             Authorization: `Bearer ${token}`,
@@ -98,17 +101,14 @@ export const editarUsuario = createAsyncThunk(
         return nuevoUser.data.response
     }
 );
-export const agregarServicioUsuario = createAsyncThunk(
-    'agregarServicioUsuario', 
+export const agregarServicioUsuario = createAsyncThunk('agregarServicioUsuario', 
     async ({ usuarioId, servicioId }) => {
         return Axios.put(`http://200.58.96.142:4000/api/servicios/${usuarioId}`, {
             servicios: [servicioId]
         }).then((response) => response.data.response);
     }
 );
-export const editarEstado = createAsyncThunk(
-    'editarEstado',
-    async ({ id, body }) => {
+export const editarEstado = createAsyncThunk('editarEstado',async ({ id, body }) => {
         const token = localStorage.getItem('token');
         const headers = {
             Authorization: `Bearer ${token}`,
@@ -117,13 +117,24 @@ export const editarEstado = createAsyncThunk(
         return nuevoEstado.data.response
     }
 );
-export const borrarUsuario = createAsyncThunk(
-    'borrarUsuario',
-    async ({ id }) => {
+export const borrarUsuario = createAsyncThunk('borrarUsuario', async ({ id }) => {
         const usuarioBorrado = await Axios.delete(`http://200.58.96.142:4000/usuario/${id}`);
         return usuarioBorrado.data.response
     }
 );
+export const enviarMensajeUsuarios = createAsyncThunk('enviarMensajeUsuarios', async ({mensaje, email})=>{
+    try {
+        const notificacion = await Axios.post('http://localhost:4000/mensaje/usuarios', { mensaje, email });
+        if (notificacion.data.success) {
+            return notificacion.data.response;
+        } else {
+            throw new Error(notificacion.data.error);
+        }
+    } catch (error) {
+        console.error("Error al enviar mensaje:", error);
+        throw error;
+    }
+})
 export const setToken = (token) => {
     return {
         type: 'usuario/setToken',
@@ -291,6 +302,19 @@ const usuarioSlice = createSlice({
         builder.addCase(cerrarSesion.rejected, (state, action) => {
             state.loading = false;
             state.token = ''; 
+            state.error = action.error.message;
+        });
+
+        /* Enviar Mensaje */
+        builder.addCase(enviarMensajeUsuarios.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(enviarMensajeUsuarios.fulfilled, (state) => {
+            state.loading = false;
+            exitoNotificacion('Mensaje enviado con éxito');
+        });
+        builder.addCase(enviarMensajeUsuarios.rejected, (state, action) => {
+            state.loading = false;
             state.error = action.error.message;
         });
     },

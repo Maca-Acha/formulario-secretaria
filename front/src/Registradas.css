@@ -48,25 +48,36 @@
 }
 
 /* Registradas */
+Form{
+    margin: 0;
+    box-shadow: none;
+}
 .cont-filtros-buscar{
-    padding: 30px;
+    padding: 20px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 33px;
+    border-radius: 20px;
     border: 1px solid var(--darkGray);
     display: flex;
     flex-direction: column;
     gap: 2vh;
     margin:0 0 5vh 0;
+    justify-content: space-between;
 }
 .cont-agregar{
     display: flex;
     justify-content: flex-end;
     align-content: center;
 }
-.btnBuscar{
+.cont-btn-buscar{
     width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.btnBuscar{
+    width: 12vw;
     background-color: var(--blue);
     border: solid 3px var(--blue) ;
+    padding: .2rem 0;
     transition: .3s;
 }
 .btnBuscar:hover{
@@ -75,6 +86,27 @@
 }
 .cont-exportar{
     margin-bottom: 3vh;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+}
+.exportar{
+    display: flex;
+    flex-direction: column;
+}
+.btn-primary{
+    height: fit-content;
+    align-self: flex-end;
+    background-color: var(--blue);
+    --bs-btn-border-color: var(--blue);
+    color: var(--black);
+    font-weight: 500;
+    --bs-btn-hover-border-color:var(--dark-blue) !important;
+    --bs-btn-hover-bg:var(--dark-blue);
+    --bs-btn-hover-color:var(--black);
+}
+.btn-enviar-noti{
+    margin-left: 10px;
 }
 .agregar{
     width: 2em;
@@ -101,6 +133,7 @@
 }
 .text-filtrar{
     font-weight: 600;
+    font-size: 16px;
 }
 .btn-eliminar{
     background: none;
@@ -154,6 +187,9 @@
 }
 .nivel-estudio{
     width:max-content;
+}
+p{
+    margin-bottom: 0.1rem;
 }
 
 /* Estado */
@@ -241,13 +277,23 @@
     align-self: flex-end;
 }
 .btn-exportar{
-    padding: 0.3rem 2rem;
+    background-color: var(--white);
+    color:var(--black);
+    border: 2px solid var(--blue);
+    border-radius: .4rem;
+    font-weight: 500;
+    padding: 0.4rem 2rem;
     display: flex;
     justify-content: center;
     gap: 5px;
     font-size: 14px;
     width: fit-content;
     align-self: flex-end;
+    transition: .3s;
+}
+.btn-exportar:hover{
+    background-color: var(--dark-blue);
+    transition: .3s;
 }
 .btn-exportar>svg{
     align-self: center;

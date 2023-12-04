@@ -32,7 +32,7 @@
   justify-content: space-between;
 }
 .logo_ministerio{
-  max-height: 8vh;
+  max-height: 10vh;
   padding: .5rem;
   align-self: center;
 }
@@ -46,6 +46,9 @@
 }
 
 /* INICIO */
+.titulo-inicio{
+  font-size: 1.6rem;
+}
 .cont-btns-inicio{
   display: flex;
   flex-direction: column;

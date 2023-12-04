@@ -1,4 +1,5 @@
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import RoutesManager from './componentes/Rutas'
 import { BrowserRouter } from "react-router-dom";
 import Nav from "./componentes/Nav"

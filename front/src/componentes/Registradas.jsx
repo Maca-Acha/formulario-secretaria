@@ -3,7 +3,7 @@ import '../Registradas.css';
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector} from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchUsuarios, borrarUsuario, editarEstado, enviarMensajeUsuarios } from "../redux/reducers/usuarioSlice";
 import { filtroUsuarios } from "../redux/reducers/filtroSlice";
@@ -11,10 +11,15 @@ import { AiFillPlusCircle } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdDownload } from "react-icons/md";
 import { Organizaciones, Referentes } from "./Constantes";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 function Registradas() {
     const dispatch = useDispatch();
+    
     const usuarios = useSelector((state) => state.usuario.usuarios) || [];
+    const usuariosMemo = useMemo(() => usuarios, [usuarios]);
 
     const filtro = useSelector((state) => state.filtro.filtro) || '';
     const agregar = <AiFillPlusCircle className='agregar' />;
@@ -26,7 +31,7 @@ function Registradas() {
             dispatch(fetchUsuarios());
         };
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, usuariosMemo]);
 
     const organizacion = useRef();
     const referente = useRef();
@@ -43,7 +48,7 @@ function Registradas() {
         } else {
             setusuariosFiltrados(filtro);
         }
-    }, [filtro, usuarios]);
+    }, [filtro, usuarios, usuariosMemo]);
     
 
     const [filtros, setFiltros] = useState({
@@ -86,6 +91,7 @@ function Registradas() {
             
         }        
     };
+    
     //Enviar Mensaje
     const enviarMensaje = () =>{
         try{
@@ -132,12 +138,16 @@ function Registradas() {
             }
         });
     }
+    //Modals
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div className='cont-contenedor-cards' >
             <div className='cont-buscador' >
                 <form className='cont-filtros-buscar' onSubmit={(e) =>{ e.preventDefault(), filtrarUsuarios()}}>
-                    <label className='text-filtrar'>Filtro</label>
+                    {/* <label className='text-filtrar'>Filtro</label> */}
                     <div className='buscador'>
                         <input
                             className='input-buscar input-form'
@@ -179,21 +189,36 @@ function Registradas() {
                                 ))
                             ))}
                         </select>
-
-                        <input type='submit' className='btnBuscar' value='Buscar' />
+                        <div className='cont-btn-buscar'>
+                            <input type='submit' className='btnBuscar' value='Buscar' />
+                        </div>
                     </div>
                 </form>
-                <div className='filtros cont-exportar'>
-                    <label className='text-filtrar text-exportar'>Exportar usuarios en vista</label>
-                    <button className='btn-exportar' onClick={handleExportUsuarios}>Exportar usuarios {descargar}</button>
-                </div>
-                <div>
-                    <label>Mensaje a usuarios en vista</label>
-                    <input type='text' ref={txtMensaje} placeholder='Enviar mensaje...'/>
-                    <button className='btn-exportar' onClick={enviarMensaje}>Enviar Notificación {descargar}</button>
+                <div className='cont-exportar'>
+                    <Button variant="primary" onClick={handleShow}>
+                        Enviar notificación
+                    </Button>
+                    <Modal show={show} onHide={handleClose}>
+                        <Form >
+                            <Form.Control as="textarea" rows={3} ref={txtMensaje} placeholder='Mensaje de notificación...' />
+                            <div>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Cancelar
+                                </Button>
+                                <Button variant="primary" className='btn-enviar-noti' onClick={() => { enviarMensaje(); handleClose(); }}>
+                                    Enviar
+                                </Button>
+                            </div>
+                        </Form>
+                    </Modal>
+                    <div className='exportar'>
+                        <label className='text-filtrar text-exportar'>Exportar usuarios en vista</label>
+                        <button className='btn-exportar' onClick={handleExportUsuarios}>Exportar usuarios {descargar}</button>
+                    </div>
+                    
                 </div>
             </div>
-            {usuarios && usuariosFiltrados? 
+            {usuariosFiltrados? 
             <div className='contenedor-cards'>
                 {usuariosFiltrados.map((usuario)=>{
                     if(usuario.rol !== "admin"){

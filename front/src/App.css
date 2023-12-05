@@ -49,6 +49,9 @@
 .titulo-inicio{
   font-size: 1.6rem;
 }
+.subtitulo-inicio{
+  font-size: 1rem;
+}
 .cont-btns-inicio{
   display: flex;
   flex-direction: column;
@@ -151,6 +154,11 @@ form{
   flex-direction: column;
   gap: 2vh;
   margin: 5vh 0;
+}
+.form-registrarse{
+  box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  margin-bottom: 5vh;
 }
 .label{
   display: flex;
@@ -263,8 +271,12 @@ input:focus, select:focus {
   box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
+.titulo-registro{
+  font-size: 1.8rem;
+}
 .titulos-card-admin{
   text-align: center;
+  font-size: 1.6rem;
 }
 .btns-cargar-usuarios{
   display: flex;
@@ -315,9 +327,11 @@ input:focus, select:focus {
 .cont-registrar-admin{
   display: flex;
   justify-content: center;
+  margin-top: 5vh;
 }
 .form-registrarse-admin{
   width: 50vw;
+  
 }
 
 /* Responsive */

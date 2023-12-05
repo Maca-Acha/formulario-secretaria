@@ -14,7 +14,7 @@ export const Generos = [
 ]
 
 export const Actividad = [
-    {disabled:"disabled", text: "Especificar actividad"},
+    {disabled:"disabled", text: "Todas las actividades"},
     {disabled:"", text: "Albañil"},
     {disabled:"", text: "Alimetos"},
     {disabled:"", text: "Cartonero"},
@@ -22,6 +22,7 @@ export const Actividad = [
     {disabled:"", text: "Construcción, Comercialización"},
     {disabled:"", text: "Comercialización"},
     {disabled:"", text: "Cuidados"},
+    {disabled:"", text: "Gastronomia"},
     {disabled:"", text: "Proyectos Socio-Productivos"},
     {disabled:"", text: "Reciclado"},
     {disabled:"", text: "Rural"},

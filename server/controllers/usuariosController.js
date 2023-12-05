@@ -142,10 +142,7 @@ const usuariosController = {
   },
   enviarMensaje: async (req, res) => {
     const {mensaje, email} = req.body
-    console.log("Mensaje:", mensaje)
-    console.log("Email:", email)
     const destinatarios = email.map(user => user.email);
-
     try{
       const correo = 'achamariamacarena@gmail.com'
       const result = await transporter.sendMail({
@@ -255,7 +252,7 @@ const usuariosController = {
   },
   filtro: async(req,res)=>{
     try {
-      const { buscador, referente, organizacion, servicio, estado } = req.query
+      const { buscador, actividad, referente, organizacion, servicio, estado } = req.query
 
       const filtroObjeto = {
         $or: [
@@ -273,6 +270,9 @@ const usuariosController = {
       }
       if (organizacion) {
         filtroObjeto.organizacion = organizacion;
+      }
+      if (actividad) {
+        filtroObjeto.tarea = actividad;
       }
       if (estado) {
         filtroObjeto.estado = estado;

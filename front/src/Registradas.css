@@ -52,41 +52,15 @@ Form{
     margin: 0;
     box-shadow: none;
 }
-.cont-filtros-buscar{
-    padding: 20px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    border: 1px solid var(--darkGray);
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;
-    margin:0 0 5vh 0;
-    justify-content: space-between;
-}
 .cont-agregar{
     display: flex;
     justify-content: flex-end;
     align-content: center;
 }
-.cont-btn-buscar{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-.btnBuscar{
-    width: 12vw;
-    background-color: var(--blue);
-    border: solid 3px var(--blue) ;
-    padding: .2rem 0;
-    transition: .3s;
-}
-.btnBuscar:hover{
-    background-color: var(--white);
-    transition: .3s;
-}
 .cont-exportar{
     margin-bottom: 3vh;
     display: flex;
+    flex-direction: column-reverse;
     gap: 20px;
     justify-content: flex-end;
 }
@@ -104,6 +78,7 @@ Form{
     --bs-btn-hover-border-color:var(--dark-blue) !important;
     --bs-btn-hover-bg:var(--dark-blue);
     --bs-btn-hover-color:var(--black);
+    width: 100%;
 }
 .btn-enviar-noti{
     margin-left: 10px;
@@ -119,21 +94,6 @@ Form{
 .agregar:hover {
     color: var(--black);
     transition: .5s;
-}
-.cont-buscador{
-    padding: 0 3vw; 
-    box-shadow: none; 
-    border-radius: 0;
-    display: flex;
-    flex-direction: column-reverse;
-}
-.buscador, .agregar-usuarios-csv{
-    display: flex;
-    gap: 15px;
-}
-.text-filtrar{
-    font-weight: 600;
-    font-size: 16px;
 }
 .btn-eliminar{
     background: none;
@@ -157,9 +117,6 @@ Form{
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-.filtros{
-    width: 100%;
 }
 .titulo-usuarios-csv{
     font-weight: 600;
@@ -190,6 +147,68 @@ Form{
 }
 p{
     margin-bottom: 0.1rem;
+}
+/* Filtros */
+.cont-filtros-buscar{
+    padding: 20px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border: 1px solid var(--darkGray);
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin:0 0 5vh 0;
+    justify-content: space-between;
+    width: fit-content;
+}
+.filtros{
+    width: 100%;
+}
+.cont-buscador{
+    padding: 0 3vw; 
+    box-shadow: none; 
+    border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.buscador, .agregar-usuarios-csv{
+    display: flex;
+    gap: 15px;
+}
+.text-filtrar{
+    font-weight: 600;
+    font-size: 16px;
+    align-self: center;
+}
+.cont-selects{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.cont-filtros-select{
+    display: flex;
+    gap:15px
+}
+.input-select-buscador{
+    width: 100%;
+}
+.cont-btn-buscar{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    height: fit-content;
+    align-self: flex-end;
+}
+.btnBuscar{
+    width: 12vw;
+    background-color: var(--blue);
+    border: solid 3px var(--blue) ;
+    padding: .2rem 0;
+    transition: .3s;
+}
+.btnBuscar:hover{
+    background-color: var(--white);
+    transition: .3s;
 }
 
 /* Estado */
@@ -274,7 +293,7 @@ p{
 
 /* Exportar */
 .text-exportar{
-    align-self: flex-end;
+    align-self: center;
 }
 .btn-exportar{
     background-color: var(--white);
@@ -298,6 +317,7 @@ p{
 .btn-exportar>svg{
     align-self: center;
 }
+
 /*form usuario*/
 .cont-titulo{
     display: flex;
@@ -383,16 +403,27 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 @media (max-width: 1200px) {
     .cont-buscador{
         flex-direction: column;
+        gap: 10px;
     }
-}
-@media (max-width: 1050px){
-    .text-exportar, .btn-exportar {
+    .text-exportar {
         align-self: flex-start;
     }
+    .btn-exportar {
+        align-self: flex-start;
+    }
+    .cont-exportar{
+        width: fit-content;
+    }
 }
-@media(max-width: 970px){
-    .buscador{
-        flex-direction: column;
+@media (max-width: 1030px){
+    .cont-filtros-select{
+        flex-wrap: wrap;
+    }
+    .input-form{
+        width: 100%;
+    }
+    .btnBuscar{
+        width: 100%;
     }
 }
 @media (max-width:740px) {

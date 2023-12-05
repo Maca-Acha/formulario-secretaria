@@ -51,8 +51,8 @@ export default function Administrador(){
     return(
         <div className="cont-btns-inicio">
             <form className="fondo-inicio" >
-                <h2>Iniciar Sesión</h2>
-                <h5>como administrador</h5>
+                <h2 className="titulo-inicio">Iniciar Sesión</h2>
+                <h5 className="subtitulo-inicio">como administrador</h5>
                 <input ref={dni} type="text" className="input-inicio" placeholder="DNI" />
                 <input ref={contrasena} type="password" className="input-inicio" placeholder="Contraseña" />
                 <button className="btn-inicio"  onClick={handleSignIn}>Iniciar sesión</button> 

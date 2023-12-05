@@ -56,7 +56,6 @@ const filtroSlice = createSlice({
             state.loading = true;
         })
         builder.addCase(filtroUsuarios.fulfilled, (state, action) => {
-            console.log("action filtrarUsuarios: ", action.payload)
             state.loading = false;
             state.filtro = action.payload;
             state.error = '';

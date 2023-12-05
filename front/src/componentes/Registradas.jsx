@@ -10,7 +10,7 @@ import { filtroUsuarios } from "../redux/reducers/filtroSlice";
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdDownload } from "react-icons/md";
-import { Organizaciones, Referentes } from "./Constantes";
+import { Organizaciones, Referentes, Actividad } from "./Constantes";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -35,6 +35,7 @@ function Registradas() {
 
     const organizacion = useRef();
     const referente = useRef();
+    const actividad = useRef();
     const estado = useRef();
     const servicio = useRef();
     const txtMensaje = useRef()
@@ -48,8 +49,7 @@ function Registradas() {
         } else {
             setusuariosFiltrados(filtro);
         }
-    }, [filtro, usuarios, usuariosMemo]);
-    
+    }, [filtro, usuarios]);
 
     const [filtros, setFiltros] = useState({
         buscador: "",
@@ -106,17 +106,14 @@ function Registradas() {
             console.error("Error al enviar mensaje:", error)
         }
     }
+
     //Editar estado
     async function handleEditarEstado(e, id) {
         const nuevoEstado = e.target.value;
-        await dispatch(editarEstado({
-            id: id, 
-            body: {
-                estado: nuevoEstado,
-            }
-        }));
-        await dispatch(fetchUsuarios());
-    }    
+        await dispatch(editarEstado({ id, body: { estado: nuevoEstado } }));
+        dispatch(filtroUsuarios(filtros));
+    }
+
     //Borrar
     const handleBorrar = (id)=>{
         Swal.fire({
@@ -138,6 +135,7 @@ function Registradas() {
             }
         });
     }
+
     //Modals
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -149,46 +147,58 @@ function Registradas() {
                 <form className='cont-filtros-buscar' onSubmit={(e) =>{ e.preventDefault(), filtrarUsuarios()}}>
                     {/* <label className='text-filtrar'>Filtro</label> */}
                     <div className='buscador'>
-                        <input
-                            className='input-buscar input-form'
-                            type='text'
-                            placeholder='Buscar'
-                            value={filtros.buscador}
-                            onChange={(e) => setFiltros({ ...filtros, buscador: e.target.value })}
-                        />
-                        <select className='input-form' ref={organizacion} onChange={(e) => setFiltros({ ...filtros, organizacion: e.target.value })}>
-                            {Organizaciones.map((orga, index)=>{
-                                return (
-                                <option  value={orga.value} key={index}>{orga.text}</option>
-                            )})}
-                        </select>
-                        <select className='input-form' ref={referente} onChange={(e) => setFiltros({ ...filtros, referente: e.target.value })}>
-                            {Referentes.map((referente, index)=>{
-                                return (
-                                <option value={referente.value} key={index}>{referente.text}</option>
-                            )})}
-                        </select>
-                        <select
-                            className="input-form"
-                            ref={estado}
-                            onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
-                            >
-                            <option value="">Todos los estados</option>
-                            <option value="Activo">Activo</option>
-                            <option value="Inactivo">Inactivo</option>
-                            <option value="Baja">Baja</option>
-                            <option value="Pendiente">Pendiente</option>
-                        </select>
-                        <select className="input-form" ref={servicio} onChange={(e) => setFiltros({ ...filtros, servicio: e.target.value })}>
-                            <option value="">Todos los servicios</option>
-                            {usuarios.map((usuario) => (
-                                usuario.servicios.map((servicio) => (
-                                <option key={servicio._id} value={servicio._id}>
-                                    {servicio.descripcion}
-                                </option>
-                                ))
-                            ))}
-                        </select>
+                        <div className='cont-selects'>
+                            <div className='cont-filtros-select'>
+                                <input
+                                    className='input-buscar input-form'
+                                    type='text'
+                                    placeholder='Buscar'
+                                    value={filtros.buscador}
+                                    onChange={(e) => setFiltros({ ...filtros, buscador: e.target.value })}
+                                />
+                                <select className='input-form' ref={actividad} onChange={(e) => setFiltros({ ...filtros, actividad: e.target.value })}>
+                                    {Actividad.map((actividad, index)=>{
+                                        return (
+                                        <option value={actividad.value} key={index}>{actividad.text}</option>
+                                    )})}
+                                </select>
+                                <select className='input-form' ref={organizacion} onChange={(e) => setFiltros({ ...filtros, organizacion: e.target.value })}>
+                                    {Organizaciones.map((orga, index)=>{
+                                        return (
+                                        <option  value={orga.value} key={index}>{orga.text}</option>
+                                    )})}
+                                </select>
+                            </div>
+                            <div className='cont-filtros-select'>
+                                <select className='input-form input-select-buscador' ref={referente} onChange={(e) => setFiltros({ ...filtros, referente: e.target.value })}>
+                                    {Referentes.map((referente, index)=>{
+                                        return (
+                                        <option value={referente.value} key={index}>{referente.text}</option>
+                                    )})}
+                                </select>
+                                <select
+                                    className="input-form input-select-buscador"
+                                    ref={estado}
+                                    onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
+                                    >
+                                    <option value="">Todos los estados</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                    <option value="Baja">Baja</option>
+                                    <option value="Pendiente">Pendiente</option>
+                                </select>
+                                <select className="input-form input-select-buscador" ref={servicio} onChange={(e) => setFiltros({ ...filtros, servicio: e.target.value })}>
+                                    <option value="">Todos los servicios</option>
+                                    {usuarios.map((usuario) => (
+                                        usuario.servicios.map((servicio) => (
+                                        <option key={servicio._id} value={servicio._id}>
+                                            {servicio.descripcion}
+                                        </option>
+                                        ))
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
                         <div className='cont-btn-buscar'>
                             <input type='submit' className='btnBuscar' value='Buscar' />
                         </div>

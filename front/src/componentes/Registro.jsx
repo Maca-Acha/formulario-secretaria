@@ -96,7 +96,7 @@ function Registro() {
     return(
         <main>
             <form className="form-registrarse" onSubmit={handleAddUser} encType="multipart/form-data">
-                <h1 className="titulo-registro">Registro de personas</h1>
+                <h2 className="titulo-registro">Registro de personas</h2>
                 <section className="contenedor-nombre">
                     <label className="label input_grande" >
                         Apellido

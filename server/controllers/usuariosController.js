@@ -1,4 +1,5 @@
 const Usuario = require('../models/UserModel')
+const Servicio = require('../models/ServiciosModel')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const transporter = require('../config/mailer')
@@ -250,10 +251,10 @@ const usuariosController = {
     }
     res.json({ success: true, message: 'Usuario eliminado correctamente' })
   },
-  filtro: async(req,res)=>{
+  filtro: async(req,res) =>{
     try {
-      const { buscador, actividad, referente, organizacion, servicio, estado } = req.query
-
+      const { buscador, actividad, referente, organizacion, servicio, estado } = req.query;
+  
       const filtroObjeto = {
         $or: [
           { nombre: { $regex: buscador || "", $options: 'i' } },
@@ -263,84 +264,39 @@ const usuariosController = {
         ],
       };
       if (servicio) {
-        filtroObjeto.servicios = { $all: [servicio] };
-      }
+        const serviciosEncontrados = await Servicio.find({ descripcion: servicio });
+        if (serviciosEncontrados.length > 0) {
+          const idsServicios = serviciosEncontrados.map(servicio => servicio._id);
+          filtroObjeto.servicios = { $in: idsServicios };
+        }
+      }    
       if (referente) {
         filtroObjeto.referente = referente;
       }
+      
       if (organizacion) {
         filtroObjeto.organizacion = organizacion;
       }
+  
       if (actividad) {
-        filtroObjeto.tarea = actividad;
+        filtroObjeto.actividad = actividad;
+        console.log("filtroObjeto: ", filtroObjeto.actividad)
       }
+  
       if (estado) {
         filtroObjeto.estado = estado;
       }
+  
       const usuariosPorBusqueda = await Usuario.find(filtroObjeto);
+      console.log("usuariosPorBusqueda: ", usuariosPorBusqueda)
       res.json(usuariosPorBusqueda);
-    }catch(err){
+    } catch (err) {
       return res.status(400).json({
-        message: 'no se puede encontrar usuarios',
+        message: 'No se pueden encontrar usuarios',
         res: err.message,
-      })
+      });
     }
-  }}
+  }
+}
 
 module.exports = usuariosController
-
-
-
-  /* filtrarUsuarios: async (req, res) => {
-    try {
-      const { filtro } = req.query
-      const usuariosFiltrados = await Usuario.find({
-        $or: [
-          { nombre: { $regex: filtro, $options: 'i' } },
-          { apellido: { $regex: filtro, $options: 'i' } },
-          { dni: { $regex: filtro } },
-          { cuil: { $regex: filtro } },
-        ],
-      })
-      res.json(usuariosFiltrados)
-    } catch (error) {
-      res.status(500).json({ error: 'Error al filtrar usuarios' })
-    }
-  },
-  filtrarPorOrga: async (req, res) => {
-    try {
-      let usuario = await Usuario.find({
-        organizacion: req.params.organizacion,
-      })
-      res.json({ res: usuario })
-    } catch (err) {
-      return res.status(400).json({
-        message: 'no se puede encontrar usuarios',
-        res: err.message,
-      })
-    }
-  },
-  filtrarPorRef: async (req, res) => {
-    try {
-      let usuario = await Usuario.find({ referente: req.params.referente })
-      res.json({ res: usuario })
-    } catch (err) {
-      return res.status(400).json({
-        message: 'no se puede encontrar usuarios',
-        res: err.message,
-      })
-    }
-  },
-  filtrarPorServ: async (req, res) => {
-    try {
-        let usuario = await Usuario.find({ servicios: { $in: [req.params.servicio] } })
-        res.status(200).json({ res: usuario })
-    } catch (err) {
-        return res.status(400).json({
-            message: 'no se puede encontrar usuarios',
-            res: err.message,
-        })
-    }
-  },
- */
-  

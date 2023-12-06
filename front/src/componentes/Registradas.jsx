@@ -1,4 +1,3 @@
-
 import '../Registradas.css';
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
@@ -10,7 +9,7 @@ import { filtroUsuarios } from "../redux/reducers/filtroSlice";
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdDownload } from "react-icons/md";
-import { Organizaciones, Referentes, Actividad } from "./Constantes";
+import { Organizaciones, Referentes, Actividad, Servicios } from "./Constantes";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -145,7 +144,6 @@ function Registradas() {
         <div className='cont-contenedor-cards' >
             <div className='cont-buscador' >
                 <form className='cont-filtros-buscar' onSubmit={(e) =>{ e.preventDefault(), filtrarUsuarios()}}>
-                    {/* <label className='text-filtrar'>Filtro</label> */}
                     <div className='buscador'>
                         <div className='cont-selects'>
                             <div className='cont-filtros-select'>
@@ -189,13 +187,12 @@ function Registradas() {
                                 </select>
                                 <select className="input-form input-select-buscador" ref={servicio} onChange={(e) => setFiltros({ ...filtros, servicio: e.target.value })}>
                                     <option value="">Todos los servicios</option>
-                                    {usuarios.map((usuario) => (
-                                        usuario.servicios.map((servicio) => (
-                                        <option key={servicio._id} value={servicio._id}>
+                                    {Servicios.map((servicio) => (
+                                        <option key={servicio._id} value={servicio.descripcion}>
                                             {servicio.descripcion}
                                         </option>
                                         ))
-                                    ))}
+                                    }
                                 </select>
                             </div>
                         </div>

@@ -137,3 +137,9 @@ export const Referentes = [
     {value:"Virginia Rodriguez", text: "Virginia Rodriguez", orga:"agrupacionLaPeronista"},
     {value:"Valeria Lopez", text: "Valeria Lopez", orga:"mujeresDelOeste"},
 ]
+export const Servicios = [
+    {value:"serv1", descripcion: "serv1"},
+    {value:"serv2", descripcion: "serv2"},
+    {value:"serv3", descripcion: "serv3"},
+
+]

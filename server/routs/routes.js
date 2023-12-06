@@ -47,6 +47,8 @@ router.route("/mensaje/usuarios")
 // FILTROS
 router.route("/api/filtrados")
     .get(usuariosController.filtro)
+/* router.route('/api/maca')
+    .get(usuariosController.maca) */
 
 // SERVICIOS
 router.put('/api/servicios/:usuarioId', usuariosController.postServicio)

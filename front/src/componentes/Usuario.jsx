@@ -26,7 +26,7 @@ export default function Usuario(){
     const [editMail, setEditMail] = useState(false)
     const [editEstudios, setEditEstudios] = useState(false)
     const [editGenero, setEditGenero] = useState(false)
-    const [editTareas, setEditTareas] = useState(false)
+    const [editActividad, setEditActividad] = useState(false)
     const [editHijos, setEditHijos] = useState(false)
     const [editContrasena, setEditContrasena] = useState(false)
     
@@ -39,14 +39,12 @@ export default function Usuario(){
     const telefono = useRef()
     const mail = useRef()
     const estudios = useRef()
-    const tareas = useRef()
+    const actividad = useRef()
     const organizacion = useRef()
     const referente = useRef()
     const hijos = useRef()
     const genero= useRef()
     const contrasena = useRef()
-    /* const cv = useRef()
-    const foto = useRef() */
 
     useEffect(() => {
         id && dispatch(traerUsuario(id));
@@ -70,7 +68,7 @@ export default function Usuario(){
                 nacimiento: fecha.current?.value,
                 estudios: estudios.current?.value,
                 /* genero: generoSeleccionado, */
-                tarea: tareas.current?.value,
+                actividad: actividad.current?.value,
                 organizacion: organizacion.current?.value,
                 referente: referente.current?.value,
                 hijos: hijos.current?.value,
@@ -86,7 +84,7 @@ export default function Usuario(){
         editMail && setEditMail(!editMail)
         editEstudios && setEditEstudios(!editEstudios)
         editGenero && setEditGenero(!editGenero)
-        editTareas && setEditTareas(!editTareas)
+        editActividad && setEditActividad(!editActividad)
         editHijos && setEditHijos(!editHijos)
         editContrasena && setEditContrasena(!editContrasena)
     }
@@ -118,7 +116,6 @@ export default function Usuario(){
                                 </form>
                             )}
                         </div> 
-                        {/* <p className='card-foto'>Foto</p> */}
                     </div>
                     <div className='informacion'>
                         <section className='input-perfil'>
@@ -240,17 +237,17 @@ export default function Usuario(){
                         </section>
                         <section className='input-perfil'>
                             <p className='negrita'>Actividad: </p>
-                            {editTareas ? (
+                            {editActividad ? (
                                 <form className="editor" onSubmit={handleEditarUsuario}>
                                     <input
-                                        ref={tareas}
+                                        ref={actividad}
                                         className='input-editor'
                                         type="text"
-                                        defaultValue={usuario.tarea}
+                                        defaultValue={usuario.actividad}
                                     />
                                 </form>
-                            ):<p className='texto-info'>{usuario.tarea}</p>}
-                            <div className="btn-cursor btn-edit"  onClick={() => {setEditTareas(!editTareas)}}>{editar} </div>
+                            ):<p className='texto-info'>{usuario.actividad}</p>}
+                            <div className="btn-cursor btn-edit"  onClick={() => {setEditActividad(!editActividad)}}>{editar} </div>
                         </section>
                         <p>
                             <span className='negrita'>Organización </span>

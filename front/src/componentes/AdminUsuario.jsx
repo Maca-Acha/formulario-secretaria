@@ -1,11 +1,11 @@
 import '../Registradas.css'
 import { useDispatch, useSelector} from "react-redux"
-import { useEffect, useMemo } from "react"
-import {useParams} from "react-router-dom"
-import { traerUsuario} from "../redux/reducers/usuarioSlice"
-/* import Pdf from './pdf' */
+import { useEffect, useMemo, useRef, useState } from "react"
+import { useParams } from "react-router-dom"
+import { traerUsuario, editarUsuario } from "../redux/reducers/usuarioSlice"
 import Servicios from './Servicios'
 import { MdDownload } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 import * as XLSX from 'xlsx';
 import { toast } from 'react-toastify';
 
@@ -15,7 +15,9 @@ export default function AdminUsuario(){
     const memoizedId = useMemo(() => params.id, [params.id]);
     const usuario = useSelector((state) => state.usuario.usuario); 
     const servicios = useSelector((state) => state.servicios.servicios); 
+    
     const descargar = <MdDownload/>
+    const editar = <FiEdit />
     const notificacion = () => toast("No tiene servicios adquiridos");
 
     useEffect(() => {
@@ -36,6 +38,47 @@ export default function AdminUsuario(){
         XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
         XLSX.writeFile(wb, `Servicios-${usuario.nombre}-${usuario.apellido}.xlsx`);
     };
+
+    //Editar Usuario
+    const [editDni, setEditDni] = useState(false)
+    const [editCuil, setEditCuil] = useState(false)
+    const [editFecha, setEditFecha] = useState(false)
+    const [editDomicilio, setEditDomicilio] = useState(false)
+    const [editTel, setEditTel] = useState(false)
+    const [editMail, setEditMail] = useState(false)
+    const [editActividad, setEditActividad] = useState(false)
+    
+    const dni = useRef()
+    const cuil = useRef()
+    const fecha = useRef()
+    const domicilio = useRef()
+    const telefono = useRef()
+    const mail = useRef()
+    const actividad = useRef()
+
+
+    function handleEditarUsuario(e) {
+        e.preventDefault()
+        dispatch(editarUsuario({
+            id: memoizedId, 
+            body: {
+                dni: dni.current?.value,
+                cuil: cuil.current?.value,
+                direccion: domicilio.current?.value,
+                cel: telefono.current?.value,
+                mail: mail.current?.value,
+                nacimiento: fecha.current?.value,
+                actividad: actividad.current?.value,
+            }
+        })); 
+        editDni && setEditDni(!editDni)
+        editCuil && setEditCuil(!editCuil)
+        editFecha && setEditFecha(!editFecha)
+        editDomicilio && setEditDomicilio(!editDomicilio)
+        editTel && setEditTel(!editTel)
+        editMail && setEditMail(!editMail)
+        editActividad && setEditActividad(!editActividad)
+    }
     
     return(
         <div className='cont-admin-servicios'>
@@ -47,32 +90,88 @@ export default function AdminUsuario(){
                                 <p className='titulo'> {usuario.nombre} </p>
                                 <p className='titulo'> {usuario.apellido} </p>
                             </div> 
-                            {/* <p className='card-foto'>Foto</p> */}
                         </div>
                         <div className='informacion'>
                             <section className='input-perfil'>
                                 <p className='negrita'>DNI: </p>
-                                <p className='texto-info'>{usuario.dni}</p>
+                                {editDni ? (
+                                    <form className='editor' onSubmit={handleEditarUsuario}>
+                                        <input ref={dni} defaultValue={usuario.dni}/>
+                                    </form>
+                                    ):<p className='texto-info'>{usuario.dni}</p>
+                                }
+                                <div className="btn-cursor btn-edit"  onClick={() => {setEditDni(!editDni)}}>{editar} </div>
                             </section>
                             <section className='input-perfil'>
                                 <p className='negrita'>CUIL: </p>
-                                <p className='texto-info'>{usuario.cuil} </p>
+                                {editCuil ? (
+                                    <form className="editor" onSubmit={handleEditarUsuario}>
+                                        <input
+                                            ref={cuil}
+                                            className='input-editor'
+                                            type="text"
+                                            defaultValue={usuario.cuil}
+                                        />
+                                    </form>
+                                    ): <p className='texto-info'>{usuario.cuil} </p>
+                                }<div className="btn-cursor btn-edit"  onClick={() => {setEditCuil(!editCuil)}}>{editar} </div>
                             </section>
                             <section className='input-perfil'>
                                 <p className='negrita'>Dirección: </p>
-                                <p className='texto-info'>{usuario.direccion} </p>
+                                {editDomicilio ? (
+                                    <form className="editor" onSubmit={handleEditarUsuario}>
+                                        <input
+                                            ref={domicilio}
+                                            className='input-editor'
+                                            type="text"
+                                            defaultValue={usuario.direccion}
+                                        />
+                                    </form>
+                                ):<p className='texto-info'>{usuario.direccion} </p>
+                                }<div className="btn-cursor btn-edit"  onClick={() => {setEditDomicilio(!editDomicilio)}}>{editar} </div>
                             </section >
                             <section className='input-perfil'>
                                 <p className='negrita'>Celular: </p>
-                                <p className='texto-info'>{usuario.cel}</p>
+                                {editTel ? (
+                                    <form className="editor" onSubmit={handleEditarUsuario}>
+                                        <input
+                                            ref={telefono}
+                                            className='input-editor'
+                                            type="text"
+                                            defaultValue={usuario.cel}
+                                        />
+                                    </form>
+                                ):<p className='texto-info'>{usuario.cel}</p>
+                                }<div className="btn-cursor btn-edit"  onClick={() => {setEditTel(!editTel)}}>{editar} </div>
                             </section >
                             <section className='input-perfil'>
                                 <p className='negrita'>Mail: </p>
-                                <p className='texto-info'>{usuario.mail}</p>
+                                {editMail ? (
+                                    <form className="editor" onSubmit={handleEditarUsuario}>
+                                        <input
+                                            ref={mail}
+                                            className='input-editor'
+                                            type="text"
+                                            defaultValue={usuario.mail}
+                                        />
+                                    </form>
+                                ):<p className='texto-info'>{usuario.mail}</p> 
+                                }
+                                <div className="btn-cursor btn-edit"  onClick={() => {setEditMail(!editMail)}}>{editar} </div>
                             </section>
                             <section className='input-perfil'>
                                 <p className='negrita'>Nacimiento: </p>
-                                <p className='texto-info'>{usuario.nacimiento} </p>
+                                {editFecha ? (
+                                    <form className="editor" onSubmit={handleEditarUsuario}>
+                                        <input
+                                            ref={fecha}
+                                            className='input-editor'
+                                            type="date"
+                                            defaultValue={usuario.nacimiento}
+                                        />
+                                    </form>
+                                ):<p className='texto-info'>{usuario.nacimiento} </p>}
+                                <div className="btn-cursor btn-edit"  onClick={() => {setEditFecha(!editFecha)}}>{editar} </div>
                             </section>
                             <section className='input-perfil'>
                                 <p className='negrita '>Nivel de Estudios: </p>
@@ -84,7 +183,17 @@ export default function AdminUsuario(){
                             </section>
                             <section className='input-perfil'>
                                 <p className='negrita'>Actividad: </p>
-                                <p className='texto-info'>{usuario.tarea}</p>
+                                {editActividad ? (
+                                <form className="editor" onSubmit={handleEditarUsuario}>
+                                    <input
+                                        ref={actividad}
+                                        className='input-editor'
+                                        type="text"
+                                        defaultValue={usuario.tarea}
+                                    />
+                                </form>
+                            ):<p className='texto-info'>{usuario.tarea}</p>}
+                            <div className="btn-cursor btn-edit"  onClick={() => {setEditActividad(!editActividad)}}>{editar} </div>
                             </section>
                             <p>
                                 <span className='negrita'>Organización </span>

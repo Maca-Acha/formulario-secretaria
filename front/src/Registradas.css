@@ -170,6 +170,7 @@ p{
     border-radius: 0;
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 .buscador, .agregar-usuarios-csv{
     display: flex;
@@ -405,14 +406,16 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
         flex-direction: column;
         gap: 10px;
     }
-    .text-exportar {
-        align-self: flex-start;
-    }
-    .btn-exportar {
-        align-self: flex-start;
+    .cont-filtros-buscar{
+        margin: 0;
     }
     .cont-exportar{
-        width: fit-content;
+        width: max-content;
+        flex-direction: row-reverse;
+    }
+    .text-exportar, .btn-exportar{
+        width: max-content;
+        align-self: flex-start;
     }
 }
 @media (max-width: 1030px){
@@ -446,5 +449,14 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
     }
     form{
         padding: 21px
+    }
+}
+@media (max-width:400px){
+    .cont-exportar{
+        flex-direction:column-reverse;
+    }
+    .cont-buscador{
+        width: 100%;
+        align-items: center;
     }
 }

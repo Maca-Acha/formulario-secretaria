@@ -187,8 +187,8 @@ function Registradas() {
                                 </select>
                                 <select className="input-form input-select-buscador" ref={servicio} onChange={(e) => setFiltros({ ...filtros, servicio: e.target.value })}>
                                     <option value="">Todos los servicios</option>
-                                    {Servicios.map((servicio) => (
-                                        <option key={servicio._id} value={servicio.descripcion}>
+                                    {Servicios.map((servicio, index) => (
+                                        <option key={index} value={servicio.descripcion}>
                                             {servicio.descripcion}
                                         </option>
                                         ))

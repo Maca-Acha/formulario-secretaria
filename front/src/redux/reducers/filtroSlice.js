@@ -33,7 +33,7 @@ export const usuariosPorServ = createAsyncThunk("usuarios/usuariosPorServ", asyn
 );
 export const filtroUsuarios = createAsyncThunk("usuarios/filtroUsuarios", async (filtros, thunkAPI) => {
     try {
-        const response = await Axios.get("http://localhost:4000/api/filtrados", {params: filtros})
+        const response = await Axios.get("http://200.58.96.142:4000/api/filtrados", {params: filtros})
             .catch(error => console.error(error));
         return response.data;
     } catch (err) {

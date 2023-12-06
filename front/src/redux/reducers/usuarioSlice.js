@@ -124,7 +124,7 @@ export const borrarUsuario = createAsyncThunk('borrarUsuario', async ({ id }) =>
 );
 export const enviarMensajeUsuarios = createAsyncThunk('enviarMensajeUsuarios', async ({mensaje, email})=>{
     try {
-        const notificacion = await Axios.post('http://localhost:4000/mensaje/usuarios', { mensaje, email });
+        const notificacion = await Axios.post('http://200.58.96.142:4000/mensaje/usuarios', { mensaje, email });
         if (notificacion.data.success) {
             return notificacion.data.response;
         } else {

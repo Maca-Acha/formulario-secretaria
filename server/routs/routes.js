@@ -10,7 +10,6 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-
 // USUARIOS
 router.post("/api/upload", 
     upload.any("archivo"), 
@@ -47,8 +46,6 @@ router.route("/mensaje/usuarios")
 // FILTROS
 router.route("/api/filtrados")
     .get(usuariosController.filtro)
-/* router.route('/api/maca')
-    .get(usuariosController.maca) */
 
 // SERVICIOS
 router.put('/api/servicios/:usuarioId', usuariosController.postServicio)

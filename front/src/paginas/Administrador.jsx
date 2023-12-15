@@ -55,7 +55,7 @@ export default function Administrador(){
                 <h5 className="subtitulo-inicio">como administrador</h5>
                 <input ref={dni} type="text" className="input-inicio" placeholder="DNI" />
                 <input ref={contrasena} type="password" className="input-inicio" placeholder="Contraseña" />
-                <button className="btn-inicio"  onClick={handleSignIn}>Iniciar sesión</button> 
+                <button className="btn-inicio btn-liso"  onClick={handleSignIn}>Iniciar sesión</button> 
             </form>
         </div>
     )

@@ -1,0 +1,7 @@
+Cambiar ministerio por TERA
+Editos de actividades y de herramientas
+Revisar editor de servicios *** 
+Vista en tabla ---> Usuarios
+Referente ---> Servicios
+Editar --->usuarios en lote
+wsp

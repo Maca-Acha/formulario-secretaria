@@ -94,7 +94,7 @@ function RegistrarAdmin() {
                         placeholder="Repita la contraseña"
                     />
                 </label>
-                <input className="btn-enviar" type="submit" value="Enviar" />
+                <input className="btn-enviar btn-liso" type="submit" value="Enviar" />
             </form>
         </main>
     )

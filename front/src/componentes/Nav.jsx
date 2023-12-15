@@ -1,4 +1,4 @@
-import logo from '../assets/min_desarrollo_social.png'
+import logo from '../assets/logoFondoBlanco.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { cerrarSesion, signToken} from "../redux/reducers/usuarioSlice"
@@ -23,8 +23,9 @@ export default function Nav(){
 
     return(
         <div className='encabezado'>
-            <Link to='/' onClick={handleCerrarSesion} >
+            <Link to='/' onClick={handleCerrarSesion} className='cont-logo-nav' >
                 <img src={logo} className='logo_ministerio' alt='min_desarrollo_social'/>
+                <h2 className='title-nav'>Tejiendo Redes que Abrazan</h2>
             </Link>
             {token &&
                 <>

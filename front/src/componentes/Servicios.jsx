@@ -124,9 +124,9 @@ export default function Servicios(){
                             <p>No tiene servicios adquiridos</p>}
                             <form className='servicios' >
                             <div className="cont-btn-serv">
-                                <button className="btn-serv" value={"serv1"} onClick={() => handleNuevoServicio("serv1")} type="button">serv-1</button>
-                                <button className="btn-serv" value={"serv2"} onClick={() => handleNuevoServicio("serv2")} type="button">serv-2</button>
-                                <button className="btn-serv" value={"serv3"} onClick={() => handleNuevoServicio("serv3")} type="button">serv-3</button>
+                                <button className="btn-serv btn-liso" value={"serv1"} onClick={() => handleNuevoServicio("serv1")} type="button">serv-1</button>
+                                <button className="btn-serv btn-liso" value={"serv2"} onClick={() => handleNuevoServicio("serv2")} type="button">serv-2</button>
+                                <button className="btn-serv btn-liso" value={"serv3"} onClick={() => handleNuevoServicio("serv3")} type="button">serv-3</button>
                             </div>
                                 {/* <input ref={descripcion} className="input-form" type="text" placeholder="Describir servicio"  />
                                 <input type="submit" className=" btn-agregar " value="Agregar" />  */}

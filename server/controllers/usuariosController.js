@@ -7,7 +7,6 @@ const transporter = require('../config/mailer')
 const usuariosController = {
   verUsuarios: async (req, res) => {
     try {
-      console.log("soy llamada")
       const usuarios = await Usuario.find().populate('servicios')
       res.json({ response: usuarios })
     } catch (error) {
@@ -212,7 +211,7 @@ const usuariosController = {
           cv: req.body.cv,
           estudios: req.body.estudios,
           genero: req.body.genero,
-          tarea: req.body.tarea,
+          actividad: req.body.actividad,
           organizacion: req.body.organizacion,
           referente: req.body.referente,
           hijos: req.body.hijos,

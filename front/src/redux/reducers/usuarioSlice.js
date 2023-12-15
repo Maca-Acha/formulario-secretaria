@@ -97,6 +97,7 @@ export const editarUsuario = createAsyncThunk('editarUsuario', async ({ id, body
         const headers = {
             Authorization: `Bearer ${token}`,
         };
+        console.log("body: ", body)
         const nuevoUser = await Axios.put(`http://200.58.96.142:4000/usuario/${id}`, body, { headers });
         return nuevoUser.data.response
     }
@@ -135,6 +136,7 @@ export const enviarMensajeUsuarios = createAsyncThunk('enviarMensajeUsuarios', a
         throw error;
     }
 })
+
 export const setToken = (token) => {
     return {
         type: 'usuario/setToken',

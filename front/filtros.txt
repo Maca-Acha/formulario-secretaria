@@ -1,4 +1,0 @@
-Filtro:
--Genero
--Actividad
--Estado

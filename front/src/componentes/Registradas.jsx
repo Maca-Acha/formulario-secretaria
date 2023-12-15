@@ -197,7 +197,7 @@ function Registradas() {
                             </div>
                         </div>
                         <div className='cont-btn-buscar'>
-                            <input type='submit' className='btnBuscar' value='Buscar' />
+                            <input type='submit' className='btnBuscar btn-liso' value='Buscar' />
                         </div>
                     </div>
                 </form>
@@ -208,7 +208,7 @@ function Registradas() {
                     <Modal show={show} onHide={handleClose}>
                         <Form >
                             <Form.Control as="textarea" rows={3} ref={txtMensaje} placeholder='Mensaje de notificación...' />
-                            <div>
+                            <div className='cont-enviar-notificacion'>
                                 <Button variant="secondary" onClick={handleClose}>
                                     Cancelar
                                 </Button>
@@ -268,7 +268,6 @@ function Registradas() {
                                 <Link to={Pdf} target='_blanck'>Ver CV</Link>
                             </div> */}
                             <Link className='cont-agregar' to={`/AdminUsuario/${usuario._id}`} >
-                                
                                 {agregar}
                             </Link>
                         </div>

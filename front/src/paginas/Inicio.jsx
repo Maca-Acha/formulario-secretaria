@@ -62,8 +62,8 @@ export default function Inicio(){
                         {showPassword ? ojo : ojoCerrado} 
                     </div>
                 </div>
-                <button type="submit" className="btn-inicio" >Iniciar sesión</button >
-                <Link to="/Registrarse" className="btn-crear-cuenta">Crear cuenta</Link>
+                <button type="submit" className="btn-inicio btn-liso" >Iniciar sesión</button >
+                <Link to="/Registrarse" className="btn-crear-cuenta btn-borde">Crear cuenta</Link>
                 <Link to="/Administrador" className="soyAdministrador">Soy Administrador</Link>
             </form>
         </div>

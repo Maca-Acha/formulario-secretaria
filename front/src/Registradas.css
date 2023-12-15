@@ -1,15 +1,18 @@
 :root{
     --white:#ffffff;
-    --black:#333333;
-    --blue:#37BBED;
+    --black:#442F4B;
+    --violet:#97579C;
+    --dark-violet:#9a599fda;
+    --blue: #546eb1;
     --gray:#f3f3f3;
     --darkGray:#bebebe;
     --green:#279D2E;
     --lightGreen:rgba(39, 157, 47, 0.267);
     --red: #d42d0b ;
-    --lightRed: #d42d0b42 ;
+    --lightRed: #d42d0b42;
+    --verdeTera:#8CCBB5;
     --yellow: #ffe018 ;
-    --dark-blue:#37bced7d;
+    --amarilloTera: #ECCA5D;
 }
 .cont-contenedor-cards{
     display: flex;
@@ -30,7 +33,6 @@
     padding: 1rem;
     border-radius: 10px;
     border: 1px solid #333333eb;
-/*     box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25); */
 }
 .cont-card-foto{
     display: flex;
@@ -71,14 +73,17 @@ Form{
 .btn-primary{
     height: fit-content;
     align-self: flex-end;
-    background-color: var(--blue);
-    --bs-btn-border-color: var(--blue);
+    background-color: var(--amarilloTera);
+    --bs-btn-border-color: var(--amarilloTera);
     color: var(--black);
     font-weight: 500;
-    --bs-btn-hover-border-color:var(--dark-blue) !important;
-    --bs-btn-hover-bg:var(--dark-blue);
+    --bs-btn-hover-border-color:var(--amarilloTera) !important;
+    --bs-btn-hover-bg: #eccb5dd3;
     --bs-btn-hover-color:var(--black);
     width: 100%;
+}
+.cont-enviar-notificacion{
+    display: flex;
 }
 .btn-enviar-noti{
     margin-left: 10px;
@@ -86,7 +91,7 @@ Form{
 .agregar{
     width: 2em;
     height: 2em;
-    color: var(--blue) ;
+    color: var(--violet) ;
     transition: .5s;
     align-self: center;
     transition: .5s;
@@ -125,13 +130,13 @@ Form{
     color: var(--black);
     font-weight: 600;
     padding: .5rem;
-    background-color: var(--blue);
+    background-color: var(--violet);
     transition: .4s;
     border: none;
     border-radius: .5rem;
 }
 .btn-agregar-csv:hover{
-    background-color: var(--dark-blue);
+    background-color: var(--dark-violet);
     transition: .4s;
 }
 .cont-btn-eliminar{
@@ -202,14 +207,13 @@ p{
 }
 .btnBuscar{
     width: 12vw;
-    background-color: var(--blue);
-    border: solid 3px var(--blue) ;
     padding: .2rem 0;
     transition: .3s;
 }
 .btnBuscar:hover{
+    color: black;
     background-color: var(--white);
-    transition: .3s;
+    transition: .4s;
 }
 
 /* Estado */
@@ -274,20 +278,22 @@ p{
     align-self: center;
 }
 .cont-btn-serv{
+    margin-top: 1rem;
     display: flex;
     gap: 10px;
 }
 .btn-serv{
     cursor: pointer;
-    color: var(--black);
+    color: var(--white);
     font-weight: 500;
-    padding: .5rem 1rem;
+    padding: .3rem 1rem;
     border-radius: .4rem;
-    background-color: var(--blue);
-    border: solid 3px var(--blue);
+    background-color: var(--violet);
+    border: solid 3px var(--violet);
     transition: .3s;
 }
 .btn-serv:hover{
+    color: var(--black);
     background-color: var(--white);
     transition: .3s;
 }
@@ -299,7 +305,7 @@ p{
 .btn-exportar{
     background-color: var(--white);
     color:var(--black);
-    border: 2px solid var(--blue);
+    border: 2px solid var(--verdeTera);
     border-radius: .4rem;
     font-weight: 500;
     padding: 0.4rem 2rem;
@@ -312,7 +318,7 @@ p{
     transition: .3s;
 }
 .btn-exportar:hover{
-    background-color: var(--dark-blue);
+    background-color:#8ccbb5dc;
     transition: .3s;
 }
 .btn-exportar>svg{
@@ -383,20 +389,20 @@ p{
 }
 .btn-agregar{
     transition: .3s;
-    background-color: var(--blue);
+    background-color: var(--violet);
     font-weight: 600;
     padding: .7rem 0;
 }
 .btn-agregar:hover{
     transition: .3s;
-    background-color: var(--dark-blue);
+    background-color: var(--dark-violet);
 }
 div:where(.swal2-icon).swal2-warning {
     border-color: #ebc418 !important;
     color: #ebc418 !important;
 }
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
-    background-color: var(--blue) !important;
+    background-color: var(--violet) !important;
     color: var(--black) !important;
 }
 

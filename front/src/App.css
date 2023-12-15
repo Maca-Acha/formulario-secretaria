@@ -15,7 +15,8 @@
 
   --white:#ffffff;
   --black:#333333;
-  --blue:#37BBED;
+  --violet:#97579C;
+  --dark-violet:#9A599F;
   --gray:#f3f3f3;
   --red:#e53232;
 }
@@ -27,22 +28,34 @@
 /* ENCABEZADO */
 .encabezado{
   width: 100%;
-  background-color: var(--blue);
+  background-color: var(--violet);
   display: flex;
   justify-content: space-between;
 }
+.cont-logo-nav{
+  display: flex;
+  text-decoration: none !important;
+  gap: 1rem;
+}
 .logo_ministerio{
-  max-height: 10vh;
+  max-height: 15vh;
   padding: .5rem;
   align-self: center;
 }
 .nombreLog{
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   align-self: center;
   padding-right: 3vw;
   text-decoration: none;
-  color: var(--black);
+  color: var(--white);
+}
+.title-nav{
+  font-family: 'LettersforLearners', cursive;
+  color: var(--white);
+  font-size: 18px;
+  align-self: center;
+  text-decoration: none !important;
 }
 
 /* INICIO */
@@ -71,41 +84,60 @@
   box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
 }
-.btn-inicio{
+.btn-liso{
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: var(--blue);
-  color: var(--black);
-  padding: .7rem;
+  background-color: var(--violet);
+  color: var(--white);
   border-radius: 7px;
-  border: var(--blue) 3px solid;
-  width: 100%;
+  border: var(--violet) 3px solid;
   font-size: 16px;
   font-weight: 600;
-  transition: .4s;
   text-decoration: none;
   text-align: center;
-}
-.btn-inicio:hover{
-  background-color: #37bced7b;
   transition: .4s;
 }
-.btn-crear-cuenta{
+.btn-liso:hover{
+  background-color: var(--dark-violet);
+  transition: .4s;
+}
+.btn-borde{
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: var(--white);
   color: var(--black);
   padding: .7rem;
   border-radius: 7px;
-  border: var(--blue) 3px solid;
-  width: 19.5vw;
+  border: var(--violet) 3px solid;
   font-size: 16px;
   font-weight: 600 !important;
-  transition: .4s;
   text-decoration: none;
   text-align: center;
-}
-.btn-crear-cuenta:hover{
-  background-color: #37bced7b;
   transition: .4s;
+}
+.btn-borde:hover{
+  color:var(--white);
+  background-color: var(--violet);
+  transition: .4s;
+}
+.btn-inicio{
+  padding: .7rem;
+  border-radius: 7px;
+  width: 100%;
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--violet);
+  color: var(--white); 
+  border: var(--violet) 3px solid;
+  font-size: 16px;
+  font-weight: 600;
+  transition: .4s;
+  text-decoration: none;
+  text-align: center;*/
+}
+.btn-inicio:hover{
+  background-color: var(--dark-violet);
+  transition: .4s;
+}
+.btn-crear-cuenta{
+  width: 19.5vw;
 }
 .input-inicio{
   padding: .7rem;
@@ -137,7 +169,7 @@
   transition: .3s;
 }
 .soyAdministrador:hover{
-  color: var(--blue);
+  color: var(--violet);
   transition: .3s;
 }
 
@@ -206,10 +238,7 @@ input:focus, select:focus {
 }
 .btn-enviar{
   font-size: 16px;
-  background-color: var(--blue);
   padding: 1vh 5vw;
-  border-radius: 5px;
-  border: 2.5px solid var(--blue);
   transition: 0.4s;
 }
 .btn-enviar:hover{
@@ -284,16 +313,7 @@ input:focus, select:focus {
   gap: 10px;
 }
 .btn-individual, .btn-lote, .btn-registrados{
-  background-color: var(--blue);
   padding: .5rem 1rem;
-  color: var(--black);
-  border-radius: 5px;
-  border: 3px solid var(--blue);
-  font-weight: 500;
-  font-size: 18px;
-  transition: .3s;
-  text-decoration: none;
-  text-align: center;
 }
 .mas-agregar{
   margin-left: .7rem;
@@ -303,24 +323,13 @@ input:focus, select:focus {
   align-self: center;
 }
 .btn-individual:hover, .btn-lote:hover, .btn-registrados:hover{
+  color: var(--black);
   background-color: var(--white);
-  transition: .3s;
+  transition: .4s;
 }
 .btn-agregar-admin{
   display: flex;
-  border: 2px solid var(--blue);
-  background-color: #ffffff;
-  color: var(--black);
-  font-size: 18px;
-  border-radius: 5px;
-  padding: .5rem 1rem;
   align-items: center;
-  transition: .3s;
-  text-decoration: none;
-}
-.btn-agregar-admin:hover{
-  background-color: var(--blue);
-  transition: .3s;
 }
 
 /* Registrar Admin */
@@ -331,7 +340,6 @@ input:focus, select:focus {
 }
 .form-registrarse-admin{
   width: 50vw;
-  
 }
 
 /* Responsive */

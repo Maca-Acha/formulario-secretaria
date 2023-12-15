@@ -33,8 +33,8 @@ export default function PerfilAdmin(){
                     <div className="cargar-usuarios-admin">
                         <h2 className="titulos-card-admin">Cargar Usuarios</h2>
                         <div className="btns-cargar-usuarios">
-                            <Link to="/Registrarse"  className="btn-individual">Individual</Link>
-                            <Link className="btn-lote" onClick={() => setcargarLote(!cargarLote)}>En Lote</Link>
+                            <Link to="/Registrarse"  className="btn-individual btn-liso">Individual</Link>
+                            <Link className="btn-lote btn-liso" onClick={() => setcargarLote(!cargarLote)}>En Lote</Link>
 
                         </div>
                         <div className={cargarLote === true ? "esta" : "noesta"}>
@@ -48,11 +48,11 @@ export default function PerfilAdmin(){
                     </div>
                     <div className="direccionAregistradas">
                         <h2 className="titulos-card-admin">Administrar Usuarios</h2>                
-                        <Link to="/Registradas" className="btn-registrados">Usuarios Registrados</Link>
+                        <Link to="/Registradas" className="btn-registrados btn-liso">Usuarios Registrados</Link>
                     </div>
                 </div>
                 <div className="agregar-administrador">
-                    <Link to="/AgregarAdmin" className="btn-agregar-admin"> Agregar Administrador <span className="mas-agregar">{mas}</span></Link>
+                    <Link to="/AgregarAdmin" className="btn-agregar-admin btn-borde"> Agregar Administrador <span className="mas-agregar">{mas}</span></Link>
                 </div> 
             </div>
         </div>
